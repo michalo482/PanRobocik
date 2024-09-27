@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8384484feb523774bbf2b434f0223922, type: 3}
+  m_Name: RifleData
+  m_EditorClassIdentifier: 
+  weaponName: Dupa
+  weaponType: 4
+  shootType: 0
+  bulletsPerShot: 1
+  fireRate: 1.5
+  bulletsInMagazine: 5
+  magazineCapacity: 5
+  totalReserveAmmo: 1000000
+  baseSpread: 0
+  maxSpread: 0
+  spreadIncreaseRate: 0.15
+  reloadSpeed: 1.1
+  equipmentSpeed: 1.2
+  gunDistance: 12
+  cameraDistance: 10
+  burstAvailable: 0
+  burstActive: 0
+  burstBulletsPerShot: 0
+  burstFireRate: 0
+  burstFireDelay: 0.1

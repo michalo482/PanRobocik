@@ -6,6 +6,8 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
 
+    public float impactForce;
+    
     private BoxCollider _cd;
     private Rigidbody _rb;
     private MeshRenderer _meshRenderer;
@@ -41,7 +43,7 @@ public class Bullet : MonoBehaviour
     private void ReturnToPoolIfNeeded()
     {
         if(_trailRenderer.time < 0)
-            ObjectPool.Instance.ReturnBullet(gameObject);
+            ReturnBulletToPool();
     }
 
     private void DisableBulletIfNeeded()
@@ -63,7 +65,30 @@ public class Bullet : MonoBehaviour
     private void OnCollisionEnter(Collision other)
     {
         CreateImpactFX(other);
-        ObjectPool.Instance.ReturnBullet(gameObject);
+        ReturnBulletToPool();
+        Enemy enemy = other.gameObject.GetComponentInParent<Enemy>();
+        EnemyShield shield = other.gameObject.GetComponent<EnemyShield>();
+
+        if (shield != null)
+        {
+            shield.ReduceDurability();
+            return;
+        }
+        
+        if (enemy != null)
+        {
+            Vector3 force = _rb.velocity.normalized * impactForce;
+            Rigidbody hitRb = other.collider.attachedRigidbody;
+            
+            enemy.GetHit();
+            enemy.DeathImpact(force, other.contacts[0].point, hitRb);
+        }
+        
+    }
+
+    private void ReturnBulletToPool()
+    {
+        ObjectPool.Instance.ReturnObject(gameObject);
     }
 
     private void CreateImpactFX(Collision other)
@@ -72,14 +97,17 @@ public class Bullet : MonoBehaviour
         {
             ContactPoint contact = other.contacts[0];
 
-            GameObject newImpactFX = Instantiate(bulletImpactFX, contact.point, Quaternion.LookRotation(contact.normal));
-            
-            Destroy(newImpactFX, 1f);
+            GameObject newImpactFX = ObjectPool.Instance.GetObject(bulletImpactFX);
+                //Instantiate(bulletImpactFX, contact.point, Quaternion.LookRotation(contact.normal));
+            newImpactFX.transform.position = contact.point;
+                
+            ObjectPool.Instance.ReturnObject(newImpactFX, 1f);
         }
     }
 
-    public void BulletSetup(float flyDistance)
+    public void BulletSetup(float flyDistance, float impactForce)
     {
+        this.impactForce = impactForce;
         bulletDisabled = false;
         _cd.enabled = true;
         _meshRenderer.enabled = true;

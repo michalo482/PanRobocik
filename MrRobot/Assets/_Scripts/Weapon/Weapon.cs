@@ -20,48 +20,77 @@ public enum ShootType
 [System.Serializable]
 public class Weapon
 {
-    public WeaponType WeaponType;
-    public ShootType ShootType;
+    public WeaponType weaponType;
+    public ShootType shootType;
     public int bulletsInMagazine;
     public int magazineCapacity;
     public int totalReserveAmmo;
-    [Range(1, 3)]
-    public float ReloadSpeed = 1;
-    [Range(1, 3)]
-    public float EquipSpeed = 1;
-    public float FireRate = 1;
-    [Range(2, 12)] 
-    public float gunDistance = 4;
-    [Range(3, 8)] 
-    public float cameraDistance = 6;
+    public float ReloadSpeed { get; private set; }
+    public float EquipSpeed { get; private set; }
+    public float GunDistance { get; private set; }
+    public float CameraDistance { get; private set; }
 
+    public float fireRate = 1;
     public float defaultFireRate;
 
     private float _lastShootTime;
 
-    public float baseSpread;
-    public float currentSpread = 2;
-    public float maximumSpread = 3;
-    public float spreadIncreaseRate = .15f;
+    private float _baseSpread;
+    private float _currentSpread = 2;
+    private float _maximumSpread = 3;
+    private float _spreadIncreaseRate = .15f;
 
     private float _lastSpreadUpdateTime;
     private float _spreadCooldown = 1;
-    
-    [Header("Burst Fire")]
-    public int bulletsPerShot;
-    public float burstFireDelay = .1f;
-    public int burstModeBulletsPerShot;
-    public float burstModeFireRate;
-    public bool burstAvailable;
-    public bool burstActive;
 
+    public int BulletsPerShot { get; private set; }
+    [Header("Burst Fire")] 
+    private bool _burstAvailable;
+    public bool burstActive;
+    private int _burstBulletsPerShot;
+    private float _burstFireRate;
+    public float BurstFireDelay { get; private set; }
+
+    public WeaponData WeaponData { get; private set; }
+
+
+    public Weapon(WeaponData weaponData)
+    {
+        fireRate = weaponData.fireRate; 
+        weaponType = weaponData.weaponType;
+        _baseSpread = weaponData.baseSpread;
+        _maximumSpread = weaponData.maxSpread;
+        _spreadIncreaseRate = weaponData.spreadIncreaseRate;
+
+        ReloadSpeed = weaponData.reloadSpeed;
+        EquipSpeed = weaponData.equipmentSpeed;
+        GunDistance = weaponData.gunDistance;
+        CameraDistance = weaponData.cameraDistance;
+
+        _burstAvailable = weaponData.burstAvailable;
+        burstActive = weaponData.burstActive;
+        _burstBulletsPerShot = weaponData.burstBulletsPerShot;
+        _burstFireRate = weaponData.burstFireRate;
+        BurstFireDelay = weaponData.burstFireDelay;
+
+        BulletsPerShot = weaponData.bulletsPerShot;
+        shootType = weaponData.shootType;
+
+        bulletsInMagazine = weaponData.bulletsInMagazine;
+        magazineCapacity = weaponData.magazineCapacity;
+        totalReserveAmmo = weaponData.totalReserveAmmo;
+        
+        defaultFireRate = fireRate;
+
+        this.WeaponData = weaponData;
+    }
 
 
     public bool BurstActivated()
     {
-        if (WeaponType == WeaponType.Shotgun)
+        if (weaponType == WeaponType.Shotgun)
         {
-            burstFireDelay = 0;
+            BurstFireDelay = 0;
             return true;
         }
         
@@ -70,26 +99,26 @@ public class Weapon
 
     public void ToggleBurst()
     {
-        if(burstAvailable == false)
+        if(_burstAvailable == false)
             return;
         burstActive = !burstActive;
 
         if (burstActive)
         {
-            bulletsPerShot = burstModeBulletsPerShot;
-            FireRate = burstModeFireRate;
+            BulletsPerShot = _burstBulletsPerShot;
+            fireRate = _burstFireRate;
         }
         else
         {
-            bulletsPerShot = 1;
-            FireRate = defaultFireRate;
+            BulletsPerShot = 1;
+            fireRate = defaultFireRate;
         }
     }
 
     public Vector3 ApplySpread(Vector3 originalDirection)
     {
         UpdateSpread();
-        float randomizedValue = Random.Range(-currentSpread, currentSpread);
+        float randomizedValue = Random.Range(-_currentSpread, _currentSpread);
         
         Quaternion spreadRotation = Quaternion.Euler(randomizedValue, randomizedValue, randomizedValue);
 
@@ -100,7 +129,7 @@ public class Weapon
     {
         if (Time.time > _lastSpreadUpdateTime + _spreadCooldown)
         {
-            currentSpread = baseSpread;
+            _currentSpread = _baseSpread;
         }
         else
         {
@@ -111,12 +140,12 @@ public class Weapon
 
     private void IncreaseSpread()
     {
-        currentSpread = Mathf.Clamp(currentSpread + spreadIncreaseRate, baseSpread, maximumSpread);
+        _currentSpread = Mathf.Clamp(_currentSpread + _spreadIncreaseRate, _baseSpread, _maximumSpread);
     }
     
     private bool ReadyToFire()
     {
-        if (Time.time > _lastShootTime + 1 / FireRate)
+        if (Time.time > _lastShootTime + 1 / fireRate)
         {
             _lastShootTime = Time.time;
             return true;

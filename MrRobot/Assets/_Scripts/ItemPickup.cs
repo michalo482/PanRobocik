@@ -6,9 +6,9 @@ using UnityEngine;
 public class ItemPickup : MonoBehaviour
 {
 
-    [SerializeField] private Weapon weapon;
+    [SerializeField] private WeaponData _weaponData;
     private void OnTriggerEnter(Collider other)
     {
-        other.GetComponent<PlayerWeaponController>()?.PickupWeapon(weapon);
+        //other.GetComponent<PlayerWeaponController>()?.PickupWeapon(_weaponData);
     }
 }

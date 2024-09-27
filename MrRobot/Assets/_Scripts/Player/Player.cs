@@ -9,8 +9,8 @@ public class Player : MonoBehaviour
     public PlayerAim Aim { get; private set; }
     public PlayerMovement Movement { get; private set; }
     public PlayerWeaponController Weapon { get; private set; }
-    
     public PlayerWeaponVisuals WeaponVisuals { get; private set; }
+    public PlayerInteraction PlayerInteraction { get; private set; }
 
     private void Awake()
     {
@@ -19,6 +19,7 @@ public class Player : MonoBehaviour
         Movement = GetComponent<PlayerMovement>();
         Weapon = GetComponent<PlayerWeaponController>();
         WeaponVisuals = GetComponent<PlayerWeaponVisuals>();
+        PlayerInteraction = GetComponent<PlayerInteraction>();
     }
     
     private void OnEnable()

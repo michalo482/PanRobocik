@@ -59,7 +59,7 @@ public class PlayerWeaponVisuals : MonoBehaviour
     {
         WeaponModel weaponModel = null;
 
-        WeaponType weaponType = _player.Weapon.CurrentWeapon().WeaponType;
+        WeaponType weaponType = _player.Weapon.CurrentWeapon().weaponType;
 
         for (int i = 0; i < weaponModels.Length; i++)
         {
@@ -168,7 +168,7 @@ public class PlayerWeaponVisuals : MonoBehaviour
         foreach (BackupWeaponModel weaponModel in backupWeaponModels)
         {
             
-            if (weaponModel.WeaponType == _player.Weapon.CurrentWeapon().WeaponType)
+            if (weaponModel.WeaponType == _player.Weapon.CurrentWeapon().weaponType)
                 continue;
             
             if (_player.Weapon.WeaponInSlot(weaponModel.WeaponType) != null)

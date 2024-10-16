@@ -16,11 +16,13 @@ public class AttackStateMelee : EnemyState
     public override void Enter()
     {
         base.Enter();
-        enemy.EnableWeaponModel(true);
+        enemy.UpdateAttackData();
+        enemy.EnemyVisuals.EnableWeaponModel(true);
+        enemy.EnemyVisuals.EnableWeaponTrail(true);
 
-        attackMoveSpeed = enemy.AttackData.moveSpeed;
-        enemy.Anim.SetFloat("AttackAnimationSpeed", enemy.AttackData.animationSpeed);
-        enemy.Anim.SetFloat("AttackIndex", enemy.AttackData.attackIndex);
+        attackMoveSpeed = enemy.attackDataEnemyMelee.moveSpeed;
+        enemy.Anim.SetFloat("AttackAnimationSpeed", enemy.attackDataEnemyMelee.animationSpeed);
+        enemy.Anim.SetFloat("AttackIndex", enemy.attackDataEnemyMelee.attackIndex);
         enemy.Anim.SetFloat("SlashAttackIndex", Random.Range(0, 5));
         
         
@@ -55,6 +57,8 @@ public class AttackStateMelee : EnemyState
         base.Exit();
 
         SetupNextAttack();
+        
+        enemy.EnemyVisuals.EnableWeaponTrail(false);
     }
 
     private void SetupNextAttack()
@@ -62,21 +66,21 @@ public class AttackStateMelee : EnemyState
         int recoveryIndex = PlayerClose() ? 1 : 0;
         enemy.Anim.SetFloat("RecoveryIndex", recoveryIndex);
 
-        enemy.AttackData = UpdatedAttackData();
+       // enemy.attackDataEnemyMelee = UpdatedAttackData();
     }
 
     private bool PlayerClose() => Vector3.Distance(enemy.transform.position, enemy.Player.position) <= 2;
 
-    private AttackData UpdatedAttackData()
+    private AttackDataEnemyMelee UpdatedAttackData()
     {
-        List<AttackData> validAttacks = new List<AttackData>(enemy.attackList);
+        List<AttackDataEnemyMelee> validAttacks = new List<AttackDataEnemyMelee>(enemy.attackList);
 
         if (PlayerClose())
         {
             validAttacks.RemoveAll(parameter => parameter.AttackTypeMelee == AttackTypeMelee.Charge);
         }
         int random = Random.Range(0, validAttacks.Count);
-
+        Debug.Log("ile ataków jest " + validAttacks.Count);
         return validAttacks[random];
     }
 }

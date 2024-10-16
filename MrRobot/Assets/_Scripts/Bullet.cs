@@ -6,7 +6,7 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
 
-    public float impactForce;
+    private float impactForce;
     
     private BoxCollider _cd;
     private Rigidbody _rb;
@@ -22,7 +22,7 @@ public class Bullet : MonoBehaviour
     private float _flyDistance;
     private bool bulletDisabled;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         _cd = GetComponent<BoxCollider>();
         _rb = GetComponent<Rigidbody>();
@@ -30,7 +30,7 @@ public class Bullet : MonoBehaviour
         _trailRenderer = GetComponent<TrailRenderer>();
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         FadeTrailIfNeeded();
             
@@ -40,13 +40,13 @@ public class Bullet : MonoBehaviour
             
     }
 
-    private void ReturnToPoolIfNeeded()
+    protected void ReturnToPoolIfNeeded()
     {
         if(_trailRenderer.time < 0)
             ReturnBulletToPool();
     }
 
-    private void DisableBulletIfNeeded()
+    protected void DisableBulletIfNeeded()
     {
         if (Vector3.Distance(_startPosition, transform.position) > _flyDistance && !bulletDisabled)
         {
@@ -56,13 +56,13 @@ public class Bullet : MonoBehaviour
         }
     }
 
-    private void FadeTrailIfNeeded()
+    protected void FadeTrailIfNeeded()
     {
         if (Vector3.Distance(_startPosition, transform.position) > _flyDistance - 1.5f)
             _trailRenderer.time -= 2 * Time.deltaTime;
     }
 
-    private void OnCollisionEnter(Collision other)
+    protected virtual void OnCollisionEnter(Collision other)
     {
         CreateImpactFX(other);
         ReturnBulletToPool();
@@ -86,12 +86,12 @@ public class Bullet : MonoBehaviour
         
     }
 
-    private void ReturnBulletToPool()
+    protected void ReturnBulletToPool()
     {
         ObjectPool.Instance.ReturnObject(gameObject);
     }
 
-    private void CreateImpactFX(Collision other)
+    protected void CreateImpactFX(Collision other)
     {
         if (other.contacts.Length > 0)
         {
@@ -105,7 +105,7 @@ public class Bullet : MonoBehaviour
         }
     }
 
-    public void BulletSetup(float flyDistance, float impactForce)
+    public void BulletSetup(float flyDistance = 100, float impactForce = 100)
     {
         this.impactForce = impactForce;
         bulletDisabled = false;

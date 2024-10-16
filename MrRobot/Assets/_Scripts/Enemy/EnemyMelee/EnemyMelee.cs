@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 
 [System.Serializable]
-public struct AttackData
+public struct AttackDataEnemyMelee
 {
     public string attackName;
     public float attackRange;
@@ -41,17 +41,18 @@ public class EnemyMelee : Enemy
     public AbilityStateMelee AbilityStateMelee { get; private set; }
 
 
-    private EnemyVisuals _enemyVisuals;
+    
     
     [Header("Enemy settings")] 
     public EnemyMeleeType MeleeType;
+    public EnemyMeleeWeaponType weaponType;
     public Transform shieldTransform;
     public float dodgeCooldown;
     private float lastTimeDodged = -10;
 
 
-    [Header("Attack data")] 
-    public AttackData AttackData;
+    [FormerlySerializedAs("enemyMeleeAttackData")] [FormerlySerializedAs("meleeAttackData")] [FormerlySerializedAs("AttackData")] [Header("Attack data")] 
+    public AttackDataEnemyMelee attackDataEnemyMelee;
 
     [Header("Axe throw ability")] 
     public GameObject axePrefab;
@@ -61,13 +62,13 @@ public class EnemyMelee : Enemy
     public Transform axeStartPoint;
     private float _lastTimeAxeThrown;
 
-    public List<AttackData> attackList;
+    public List<AttackDataEnemyMelee> attackList;
 
     protected override void Awake()
     {
         base.Awake();
 
-        _enemyVisuals = GetComponent<EnemyVisuals>();
+        
         
         IdleStateMelee = new IdleStateMelee(this, StateMachine, "Idle");
         MoveStateMelee = new MoveStateMelee(this, StateMachine, "Move");
@@ -83,8 +84,10 @@ public class EnemyMelee : Enemy
         base.Start();
         
         StateMachine.Initialize(IdleStateMelee);
-        InitializeSpeciality();
-        _enemyVisuals.SetupRandomLook();
+        InitializePerk();
+        EnemyVisuals.SetupRandomLook();
+        
+        UpdateAttackData();
     }
 
     protected override void Update()
@@ -93,8 +96,7 @@ public class EnemyMelee : Enemy
         
         StateMachine.currentState.Update();
         
-        if(ShouldEnterBattleMode())
-            EnterBattleMode();
+        
     }
 
     public override void EnterBattleMode()
@@ -106,6 +108,17 @@ public class EnemyMelee : Enemy
         StateMachine.ChangeState(RecoveryStateMelee);
     }
 
+    public void UpdateAttackData()
+    {
+        EnemyWeaponModel currentWeapon = EnemyVisuals.CurrentWeaponModel.GetComponent<EnemyWeaponModel>();
+
+        if (currentWeapon.weaponData != null)
+        {
+            attackList = new List<AttackDataEnemyMelee>(currentWeapon.weaponData.attackData);
+            turnSpeed = currentWeapon.weaponData.turnSpeed;
+        }
+    }
+
     public override void GetHit()
     {
         base.GetHit();
@@ -113,39 +126,41 @@ public class EnemyMelee : Enemy
             StateMachine.ChangeState(DeadStateMelee);
     }
 
-    private void InitializeSpeciality()
+    private void InitializePerk()
     {
         if (MeleeType == EnemyMeleeType.AxeThrow)
         {
-            _enemyVisuals.SetupWeaponType(EnemyMeleeWeaponType.Throw);
+            weaponType = EnemyMeleeWeaponType.Throw;
         }
         
         if (MeleeType == EnemyMeleeType.Shield)
         {
             Anim.SetFloat("ChaseIndex", 1);
             shieldTransform.gameObject.SetActive(true);
-            _enemyVisuals.SetupWeaponType(EnemyMeleeWeaponType.OneHand);
+            weaponType = EnemyMeleeWeaponType.OneHand;
+        }
+
+        if (MeleeType == EnemyMeleeType.Dodge)
+        {
+            weaponType = EnemyMeleeWeaponType.Unarmed;
         }
     }
 
-    public void EnableWeaponModel(bool isActive)
-    {
-        _enemyVisuals.CurrentWeaponModel.gameObject.SetActive(isActive);
-    }
+    
 
     protected override void OnDrawGizmos()
     {
         base.OnDrawGizmos();
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, AttackData.attackRange);
+        Gizmos.DrawWireSphere(transform.position, attackDataEnemyMelee.attackRange);
     }
 
     public override void AbilityTrigger()
     {
         base.AbilityTrigger();
-        moveSpeed = moveSpeed * 0.6f;
+        walkSpeed = walkSpeed * 0.6f;
         Debug.Log("siekiera");
-        EnableWeaponModel(false);
+        EnemyVisuals.EnableWeaponModel(false);
     }
 
     public void ActivateDodgeRoll()
@@ -196,5 +211,5 @@ public class EnemyMelee : Enemy
         return false;
     }
     
-    public bool PlayerInAttackRange() => Vector3.Distance(transform.position, Player.position) < AttackData.attackRange;
+    public bool PlayerInAttackRange() => Vector3.Distance(transform.position, Player.position) < attackDataEnemyMelee.attackRange;
 }

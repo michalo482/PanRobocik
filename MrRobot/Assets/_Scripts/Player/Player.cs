@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public Transform PlayerBody;
     public PlayerControlls Controls { get; private set; }
     public PlayerAim Aim { get; private set; }
     public PlayerMovement Movement { get; private set; }

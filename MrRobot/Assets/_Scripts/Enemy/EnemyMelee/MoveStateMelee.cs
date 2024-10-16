@@ -15,18 +15,17 @@ public class MoveStateMelee : EnemyState
     public override void Enter()
     {
         base.Enter();
-        enemy.Agent.speed = enemy.moveSpeed;
+        enemy.Agent.speed = enemy.walkSpeed;
         
         destination = enemy.GetPatrolDestination();
         enemy.Agent.SetDestination(destination);
-        Debug.Log("i enter move state");
+        
     }
 
     public override void Update()
     {
         base.Update();
-
-        Debug.Log("i move");
+        
         enemy.FaceTarget(GetNextPathPoint());
         
         
@@ -38,7 +37,6 @@ public class MoveStateMelee : EnemyState
     {
         base.Exit();
         
-        Debug.Log("i exit move");
     }
 
     

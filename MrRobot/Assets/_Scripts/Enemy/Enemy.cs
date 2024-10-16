@@ -9,7 +9,6 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] protected int healthPoints = 20;
     
-    public float turnSpeed;
     public float aggressionRange;
     public Transform Player { get; private set; }
     
@@ -17,8 +16,9 @@ public class Enemy : MonoBehaviour
     public float idleTime;
 
     [Header("Move data")] 
-    public float moveSpeed;
-    public float chaseSpeed;
+    public float walkSpeed = 1.5f;
+    public float runSpeed = 4;
+    public float turnSpeed;
     private bool _manualMovement;
     private bool _manualRotation;
 
@@ -35,12 +35,15 @@ public class Enemy : MonoBehaviour
     
     public EnemyStateMachine StateMachine { get; private set; }
 
+    public EnemyVisuals EnemyVisuals { get; private set; }
+
     protected virtual void Awake()
     {
         StateMachine = new EnemyStateMachine();
         Agent = GetComponent<NavMeshAgent>();
         Anim = GetComponentInChildren<Animator>();
         Player = GameObject.Find("Player").GetComponent<Transform>();
+        EnemyVisuals = GetComponent<EnemyVisuals>();
     }
 
     protected virtual void Start()
@@ -62,7 +65,8 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Update()
     {
-        
+        if(ShouldEnterBattleMode())
+            EnterBattleMode();
     }
 
     public Vector3 GetPatrolDestination()
@@ -131,11 +135,16 @@ public class Enemy : MonoBehaviour
         inBattleMode = true;
     }
 
+    public bool IsPlayerInAgressionRange()
+    {
+        return Vector3.Distance(transform.position, Player.position) < aggressionRange;
+    }
+
     protected bool ShouldEnterBattleMode()
     {
-        bool inAggressionRange = Vector3.Distance(transform.position, Player.position) < aggressionRange;
+        //bool inAggressionRange = Vector3.Distance(transform.position, Player.position) < aggressionRange;
 
-        if (inAggressionRange && !inBattleMode)
+        if (IsPlayerInAgressionRange() && !inBattleMode)
         {
             EnterBattleMode();
             return true;

@@ -25,6 +25,9 @@ public enum EnemyRangeWeaponType
 
 public class EnemyVisuals : MonoBehaviour
 {
+
+    public GameObject grenadeModel;
+
     [Header("Color")]
     [SerializeField] private Texture[] colorTextures;
     [SerializeField] private SkinnedMeshRenderer skinnedMeshRenderer;
@@ -101,6 +104,11 @@ public class EnemyVisuals : MonoBehaviour
         CurrentWeaponModel.SetActive(true);
 
         OverrideAnimatorControllerIfCan();
+    }
+
+    public void EnableGrenadeModel(bool active)
+    {
+        grenadeModel?.gameObject.SetActive(active);
     }
 
     private GameObject FindRangeWeaponModel()

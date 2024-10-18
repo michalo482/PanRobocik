@@ -36,10 +36,12 @@ public class Enemy : MonoBehaviour
     public EnemyStateMachine StateMachine { get; private set; }
 
     public EnemyVisuals EnemyVisuals { get; private set; }
+    public EnemyRagdoll Ragdoll { get; private set; }
 
     protected virtual void Awake()
     {
         StateMachine = new EnemyStateMachine();
+        Ragdoll = GetComponent<EnemyRagdoll>();
         Agent = GetComponent<NavMeshAgent>();
         Anim = GetComponentInChildren<Animator>();
         Player = GameObject.Find("Player").GetComponent<Transform>();

@@ -7,6 +7,7 @@ public class ThrowGrenadeStateRange : EnemyState
 {
 
     private EnemyRange _enemyRange;
+    public bool finishedThrowingGrenade {  get; private set; }
     public ThrowGrenadeStateRange(Enemy enemyBase, EnemyStateMachine stateMachine, string animBoolName) : base(enemyBase, stateMachine, animBoolName)
     {
         _enemyRange = enemyBase as EnemyRange;
@@ -16,18 +17,20 @@ public class ThrowGrenadeStateRange : EnemyState
     {
         base.AbilityTrigger();
 
+        finishedThrowingGrenade = true;
         _enemyRange.ThrowGrenade();
-
-        
     }
 
     public override void Enter()
     {
         base.Enter();
 
+        finishedThrowingGrenade = false;
+
         _enemyRange.EnemyVisuals.EnableWeaponModel(false);
         _enemyRange.EnemyVisuals.EnableIK(false, false);
         _enemyRange.EnemyVisuals.EnableSecondaryWeaponModel(true);
+        _enemyRange.EnemyVisuals.EnableGrenadeModel(true);
     }
 
     public override void Exit()

@@ -45,8 +45,8 @@ public class EnemyAxe : MonoBehaviour
 
         if (bullet != null || player != null)
         {
-            GameObject newFx = ObjectPool.Instance.GetObject(impactFX);
-            newFx.transform.position = transform.position;
+            GameObject newFx = ObjectPool.Instance.GetObject(impactFX, transform);
+            //newFx.transform.position = transform.position;
             ObjectPool.Instance.ReturnObject(gameObject);
             ObjectPool.Instance.ReturnObject(newFx, 1f);
             

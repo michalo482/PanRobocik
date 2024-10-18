@@ -122,7 +122,8 @@ public class EnemyMelee : Enemy
     public override void GetHit()
     {
         base.GetHit();
-        if(healthPoints <= 0)
+
+        if(healthPoints <= 0 && StateMachine.currentState != DeadStateMelee)
             StateMachine.ChangeState(DeadStateMelee);
     }
 
@@ -195,6 +196,14 @@ public class EnemyMelee : Enemy
         }
         Debug.Log(  clipName + "nie ma takiej animacji");
         return 0f;
+    }
+
+    public void ThrowAxe()
+    {
+        GameObject newAxe = ObjectPool.Instance.GetObject(axePrefab, axeStartPoint);
+        //newAxe.transform.position = enemy.axeStartPoint.position;
+
+        newAxe.GetComponent<EnemyAxe>().AxeSetup(axeFlySpeed, Player, axeAimTimer);
     }
 
     public bool CanThrowAxe()

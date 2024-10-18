@@ -104,7 +104,7 @@ public class BattleStateRange : EnemyState
         {
             coverCheckTimer = 0.5f;
 
-            if (ReadyToChangeCover())
+            if (ReadyToChangeCover() && ReadyToLeaveCover())
             {
                 if (_enemyRange.CanGetCover())
                 {
@@ -161,8 +161,9 @@ public class BattleStateRange : EnemyState
 
         if(Physics.Raycast(_enemyRange.transform.position, directionToPlayer, out RaycastHit hit))
         {
-            Debug.Log(hit.collider.gameObject.GetComponentInParent<Player>());
-            return !hit.collider.gameObject.GetComponentInParent<Player>();
+            //Debug.Log(hit.collider.gameObject.GetComponentInParent<Player>());
+            //return !hit.collider.gameObject.GetComponentInParent<Player>();
+            return hit.transform.parent == _enemyRange.Player; 
         }
         Debug.Log("nie ma gracza");
         return false;

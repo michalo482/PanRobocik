@@ -64,7 +64,7 @@ public class Bullet : MonoBehaviour
 
     protected virtual void OnCollisionEnter(Collision other)
     {
-        CreateImpactFX(other);
+        CreateImpactFX();
         ReturnBulletToPool();
         Enemy enemy = other.gameObject.GetComponentInParent<Enemy>();
         EnemyShield shield = other.gameObject.GetComponent<EnemyShield>();
@@ -91,18 +91,18 @@ public class Bullet : MonoBehaviour
         ObjectPool.Instance.ReturnObject(gameObject);
     }
 
-    protected void CreateImpactFX(Collision other)
+    protected void CreateImpactFX()
     {
-        if (other.contacts.Length > 0)
-        {
-            ContactPoint contact = other.contacts[0];
+        GameObject newImpactFX = ObjectPool.Instance.GetObject(bulletImpactFX, transform);
+        ObjectPool.Instance.ReturnObject(newImpactFX, 1f);
+        //if (other.contacts.Length > 0)
+        //{
+        //    ContactPoint contact = other.contacts[0];
 
-            GameObject newImpactFX = ObjectPool.Instance.GetObject(bulletImpactFX);
-                //Instantiate(bulletImpactFX, contact.point, Quaternion.LookRotation(contact.normal));
-            newImpactFX.transform.position = contact.point;
+        //        //Instantiate(bulletImpactFX, contact.point, Quaternion.LookRotation(contact.normal));
+        //    newImpactFX.transform.position = contact.point;
                 
-            ObjectPool.Instance.ReturnObject(newImpactFX, 1f);
-        }
+        //}
     }
 
     public void BulletSetup(float flyDistance = 100, float impactForce = 100)
@@ -111,6 +111,9 @@ public class Bullet : MonoBehaviour
         bulletDisabled = false;
         _cd.enabled = true;
         _meshRenderer.enabled = true;
+
+        _trailRenderer.Clear();
+
         _trailRenderer.time = .25f;
         _startPosition = transform.position;
         _flyDistance = flyDistance + 1;

@@ -6,12 +6,12 @@ public class DeadStateMelee : EnemyState
 {
 
     private EnemyMelee enemy;
-    private EnemyRagdoll ragdoll;
+    //private EnemyRagdoll ragdoll;
     private bool _interactionDisabled;
     public DeadStateMelee(Enemy enemyBase, EnemyStateMachine stateMachine, string animBoolName) : base(enemyBase, stateMachine, animBoolName)
     {
         enemy = enemyBase as EnemyMelee;
-        ragdoll = enemy.GetComponent<EnemyRagdoll>();
+        //ragdoll = enemy.GetComponent<EnemyRagdoll>();
     }
 
     public override void Enter()
@@ -23,7 +23,7 @@ public class DeadStateMelee : EnemyState
         enemy.Anim.enabled = false;
         enemy.Agent.isStopped = true;
         
-        ragdoll.RagdollActive(true);
+        enemy.Ragdoll.RagdollActive(true);
 
         stateTimer = 1.5f;
     }
@@ -31,12 +31,17 @@ public class DeadStateMelee : EnemyState
     public override void Update()
     {
         base.Update();
-        
+
+        DisableInteractionIfShould();
+    }
+
+    private void DisableInteractionIfShould()
+    {
         if (stateTimer <= 0 && _interactionDisabled == false)
         {
             _interactionDisabled = true;
-            ragdoll.RagdollActive(false);
-            ragdoll.CollidersActive(false);
+            enemy.Ragdoll.RagdollActive(false);
+            enemy.Ragdoll.CollidersActive(false);
         }
     }
 

@@ -16,6 +16,9 @@ public enum GrenadePerk
 }
 public class EnemyRange : Enemy
 {
+    [Header("Dynamic Stats")]
+    [SerializeField] private EnemyDynamicStats dynamicStats;
+
     [Header("Enemy Perks")]
     public CoverPerk coverPerk;
     public GrenadePerk grenadePerk;
@@ -130,26 +133,27 @@ public class EnemyRange : Enemy
         }
     }
 
-    public bool CanThrowGrenade()
+public bool CanThrowGrenade()
+{
+    if (grenadePerk == GrenadePerk.Unavaible)
     {
-        if(grenadePerk == GrenadePerk.Unavaible)
-        {
-            return false;
-        }
-
-        if(Vector3.Distance(Player.transform.position, transform.position) < safeDistance)
-        {
-            return false;
-        }
-
-        if(Time.time > grenadeCooldown + lastTimeGrenadeThrown)
-        {
-            return true;
-        }
-
         return false;
     }
-    public void ThrowGrenade()
+
+    if (Vector3.Distance(Player.transform.position, transform.position) < safeDistance)
+    {
+        return false;
+    }
+
+    if (Time.time > dynamicStats.grenadeCooldown + lastTimeGrenadeThrown)
+    {
+        return true;
+    }
+
+    return false;
+}
+
+   public void ThrowGrenade()
     {
         lastTimeGrenadeThrown = Time.time;
         EnemyVisuals.EnableGrenadeModel(false);
@@ -167,6 +171,9 @@ public class EnemyRange : Enemy
         newGrenadeScript.SetupGrenade(Player.transform.position, timeToTarget, explosionTimer, impactPower);
         Debug.Log("RZUCAAAAM");
     }
+
+
+    
 
     public void FireSingleBullet()
     {

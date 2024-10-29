@@ -6,6 +6,7 @@ using UnityEngine;
 public class EnemyRangeWeaponData : ScriptableObject
 {
     [Header("Weapon Details")]
+
     public EnemyRangeWeaponType weaponType;
     public float fireRate = 1f;
 

@@ -77,6 +77,10 @@ public class PlayerWeaponController : MonoBehaviour
     {
         SetWeaponReady(false);
         _player.WeaponVisuals.PlayReloadAnimation();
+
+        AudioManager.Instance.PlaySFX(1); 
+
+        _player.WeaponVisuals.PlayReloadAnimation();
     }
 
     private void EquipWeapon(int i)

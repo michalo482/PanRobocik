@@ -6,6 +6,7 @@ using UnityEngine.Serialization;
 [System.Serializable]
 public struct AttackDataEnemyMelee
 {
+    public int attackDamage;
     public string attackName;
     public float attackRange;
     public float moveSpeed;
@@ -46,6 +47,8 @@ public class EnemyMelee : Enemy
     [Header("Enemy settings")] 
     public EnemyMeleeType MeleeType;
     public EnemyMeleeWeaponType weaponType;
+
+    public int shieldDurability;
     public Transform shieldTransform;
     public float dodgeCooldown;
     private float lastTimeDodged = -10;
@@ -54,7 +57,8 @@ public class EnemyMelee : Enemy
     [FormerlySerializedAs("enemyMeleeAttackData")] [FormerlySerializedAs("meleeAttackData")] [FormerlySerializedAs("AttackData")] [Header("Attack data")] 
     public AttackDataEnemyMelee attackDataEnemyMelee;
 
-    [Header("Axe throw ability")] 
+    [Header("Axe throw ability")]
+    public int axeDamage;
     public GameObject axePrefab;
     public float axeFlySpeed;
     [FormerlySerializedAs("aimTimer")] public float axeAimTimer;
@@ -63,6 +67,11 @@ public class EnemyMelee : Enemy
     private float _lastTimeAxeThrown;
 
     public List<AttackDataEnemyMelee> attackList;
+
+    private EnemyWeaponModel currentWeapon;
+    private bool isAttackReady;
+
+    [SerializeField] private GameObject meleeAttackFx;
 
     protected override void Awake()
     {
@@ -97,6 +106,8 @@ public class EnemyMelee : Enemy
         StateMachine.currentState.Update();
         
         
+        AttackCheck(currentWeapon.damagePoints, currentWeapon.attackRadius, meleeAttackFx, attackDataEnemyMelee.attackDamage);
+        
     }
 
     public override void EnterBattleMode()
@@ -110,7 +121,7 @@ public class EnemyMelee : Enemy
 
     public void UpdateAttackData()
     {
-        EnemyWeaponModel currentWeapon = EnemyVisuals.CurrentWeaponModel.GetComponent<EnemyWeaponModel>();
+        currentWeapon = EnemyVisuals.CurrentWeaponModel.GetComponent<EnemyWeaponModel>();
 
         if (currentWeapon.weaponData != null)
         {
@@ -119,11 +130,11 @@ public class EnemyMelee : Enemy
         }
     }
 
-    public override void GetHit()
+    public override void Die()
     {
-        base.GetHit();
+        base.Die();
 
-        if(healthPoints <= 0 && StateMachine.currentState != DeadStateMelee)
+        if(StateMachine.currentState != DeadStateMelee)
             StateMachine.ChangeState(DeadStateMelee);
     }
 
@@ -203,7 +214,7 @@ public class EnemyMelee : Enemy
         GameObject newAxe = ObjectPool.Instance.GetObject(axePrefab, axeStartPoint);
         //newAxe.transform.position = enemy.axeStartPoint.position;
 
-        newAxe.GetComponent<EnemyAxe>().AxeSetup(axeFlySpeed, Player, axeAimTimer);
+        newAxe.GetComponent<EnemyAxe>().AxeSetup(axeFlySpeed, Player, axeAimTimer, axeDamage);
     }
 
     public bool CanThrowAxe()

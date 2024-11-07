@@ -39,6 +39,11 @@ public class PlayerAim : MonoBehaviour
 
     private void Update()
     {
+        if(_player.PlayerHealth.IsDead)
+        {
+            return;
+        }
+
         if (Input.GetKeyDown(KeyCode.P))
         {
             isAimingPrecisly = !isAimingPrecisly;

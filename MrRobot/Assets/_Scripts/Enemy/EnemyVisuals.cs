@@ -55,9 +55,11 @@ public class EnemyVisuals : MonoBehaviour
 
     private void Update()
     {
-        /*leftHandIkConstrains.weight = AdjustIKWeight(leftHandIkConstrains.weight, _leftHandTargetWeight);
-        Debug.Log("leftHandIkConstr.weight + " + leftHandIkConstrains.weight + " + " + _leftHandTargetWeight);
-        weaponAimConstrains.weight = AdjustIKWeight(weaponAimConstrains.weight, _weaponAimTargetWeight);*/
+        if(leftHandIkConstrains != null)
+            leftHandIkConstrains.weight = AdjustIKWeight(leftHandIkConstrains.weight, _leftHandTargetWeight);
+
+        if(weaponAimConstrains != null)
+            weaponAimConstrains.weight = AdjustIKWeight(weaponAimConstrains.weight, _weaponAimTargetWeight);
     }
     /*private void Awake()
     {

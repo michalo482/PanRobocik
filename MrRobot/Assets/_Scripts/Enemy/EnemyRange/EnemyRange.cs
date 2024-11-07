@@ -17,10 +17,12 @@ public enum GrenadePerk
 public class EnemyRange : Enemy
 {
     [Header("Enemy Perks")]
+    public EnemyRangeWeaponType weaponType;
     public CoverPerk coverPerk;
     public GrenadePerk grenadePerk;
 
     [Header("Grenade Perk")]
+    public int grenadeDamage;
     public float grenadeCooldown;
     public float lastTimeGrenadeThrown = -10;
     public GameObject grenadePrefab;
@@ -44,7 +46,6 @@ public class EnemyRange : Enemy
     //public List<Cover> allCovers;
 
     [Header("Weapon Details")]
-    public EnemyRangeWeaponType weaponType;
     public EnemyRangeWeaponData weaponData;
     public float attackDelay;
     [Space]
@@ -103,11 +104,11 @@ public class EnemyRange : Enemy
         StateMachine.currentState.Update();
     }
 
-    public override void GetHit()
+    public override void Die()
     {
-        base.GetHit();
+        base.Die();
 
-        if(healthPoints <= 0 && StateMachine.currentState != DeadStateRange)
+        if(StateMachine.currentState != DeadStateRange)
         {
             StateMachine.ChangeState(DeadStateRange);
         }
@@ -160,11 +161,11 @@ public class EnemyRange : Enemy
 
         if(StateMachine.currentState == DeadStateRange)
         {
-            newGrenadeScript.SetupGrenade(transform.position, 1, explosionTimer, impactPower);
+            newGrenadeScript.SetupGrenade(whatIsAlly, transform.position, 1, explosionTimer, impactPower, grenadeDamage);
             return;
         }
 
-        newGrenadeScript.SetupGrenade(Player.transform.position, timeToTarget, explosionTimer, impactPower);
+        newGrenadeScript.SetupGrenade(whatIsAlly, Player.transform.position, timeToTarget, explosionTimer, impactPower, grenadeDamage);
         Debug.Log("RZUCAAAAM");
     }
 
@@ -178,7 +179,7 @@ public class EnemyRange : Enemy
         //newBullet.transform.position = gunPoint.position;
         newBullet.transform.rotation = Quaternion.LookRotation(gunPoint.forward);
 
-        newBullet.GetComponent<EnemyBullet>().BulletSetup();
+        newBullet.GetComponent<Bullet>().BulletSetup(whatIsAlly, weaponData.bulletDamage);
 
         Rigidbody rbNewBullet = newBullet.GetComponent<Rigidbody>();
 
@@ -306,7 +307,7 @@ public class EnemyRange : Enemy
 
         if(Physics.Raycast(myPosition, directionToPlayer, out RaycastHit hit, Mathf.Infinity, ~WhatToIgnore))
         {
-            if(hit.transform == Player)
+            if(hit.transform.root == Player.root)
             {
                 UpdateAimPosition();
                 return true;

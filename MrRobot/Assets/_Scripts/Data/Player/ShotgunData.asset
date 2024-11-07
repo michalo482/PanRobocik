@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: ShotgunData
   m_EditorClassIdentifier: 
   weaponName: Demonic
+  bulletDamage: 10
   weaponType: 3
   shootType: 0
   bulletsPerShot: 5

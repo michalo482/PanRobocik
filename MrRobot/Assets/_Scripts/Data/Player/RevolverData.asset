@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: RevolverData
   m_EditorClassIdentifier: 
   weaponName: Desert Eagle
+  bulletDamage: 30
   weaponType: 1
   shootType: 0
   bulletsPerShot: 1

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: RifleData
   m_EditorClassIdentifier: 
   weaponName: Dupa
+  bulletDamage: 40
   weaponType: 4
   shootType: 0
   bulletsPerShot: 1

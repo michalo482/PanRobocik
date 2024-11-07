@@ -11,21 +11,17 @@ public class EnemyAxe : MonoBehaviour
 
     private Transform _player;
     private float _flySpeed;
-    private float _rotationSpeed = 1600;
+    private float _rotationSpeed;
     private Vector3 _direction;
 
     private float _timer = 1;
 
-    public void AxeSetup(float flySpeed, Transform player, float timer)
-    {
-        _flySpeed = flySpeed;
-        _player = player;
-        _timer = timer;
-    }
+    private int damage;
+
     
     private void Update()
     {
-        axeVisuals.Rotate(Vector3.right * _rotationSpeed * Time.deltaTime);
+        axeVisuals.Rotate(_rotationSpeed * Time.deltaTime * Vector3.right);
 
         _timer -= Time.deltaTime;
 
@@ -33,24 +29,44 @@ public class EnemyAxe : MonoBehaviour
         {
             _direction = _player.position + Vector3.up - transform.position;
         }
-        rb.velocity = _direction.normalized * _flySpeed;
 
         transform.forward = rb.velocity;
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void FixedUpdate()
     {
-        Bullet bullet = other.GetComponent<Bullet>();
-        Player player = other.GetComponent<Player>();
-
-        if (bullet != null || player != null)
-        {
-            GameObject newFx = ObjectPool.Instance.GetObject(impactFX, transform);
-            //newFx.transform.position = transform.position;
-            ObjectPool.Instance.ReturnObject(gameObject);
-            ObjectPool.Instance.ReturnObject(newFx, 1f);
-            
-        }
-
+        rb.velocity = _direction.normalized * _flySpeed;
+        
     }
+
+    public void AxeSetup(float flySpeed, Transform player, float timer, int damage)
+    {
+        _rotationSpeed = 1600;
+        this.damage = damage;
+        _flySpeed = flySpeed;
+        _player = player;
+        _timer = timer;
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        IDamagable damagable = collision.gameObject.GetComponent<IDamagable>();
+        damagable?.TakeDamage(damage);
+
+        GameObject newFx = ObjectPool.Instance.GetObject(impactFX, transform);
+        //newFx.transform.position = transform.position;
+        ObjectPool.Instance.ReturnObject(gameObject);
+        ObjectPool.Instance.ReturnObject(newFx, 1f);
+    }
+
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    IDamagable damagable = other.GetComponent<IDamagable>();
+    //    if (damagable != null)
+    //    {
+
+            
+    //    }
+        
+
+    //}
 }

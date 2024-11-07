@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: AutoRifleData
   m_EditorClassIdentifier: 
   weaponName: AK 47
+  bulletDamage: 15
   weaponType: 2
   shootType: 1
   bulletsPerShot: 1

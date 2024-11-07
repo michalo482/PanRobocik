@@ -54,6 +54,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        if(_player.PlayerHealth.IsDead) return;
+
+
         ApplyMovement();
 
         ApplyRotation();

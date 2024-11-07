@@ -7,7 +7,7 @@ public class ThrowGrenadeStateRange : EnemyState
 {
 
     private EnemyRange _enemyRange;
-    public bool finishedThrowingGrenade {  get; private set; }
+    public bool finishedThrowingGrenade { get; private set; } = true;
     public ThrowGrenadeStateRange(Enemy enemyBase, EnemyStateMachine stateMachine, string animBoolName) : base(enemyBase, stateMachine, animBoolName)
     {
         _enemyRange = enemyBase as EnemyRange;

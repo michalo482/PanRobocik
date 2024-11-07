@@ -22,6 +22,7 @@ public class Weapon
 {
     public WeaponType weaponType;
     public ShootType shootType;
+    public int bulletDamage;
     public int bulletsInMagazine;
     public int magazineCapacity;
     public int totalReserveAmmo;
@@ -56,6 +57,8 @@ public class Weapon
 
     public Weapon(WeaponData weaponData)
     {
+        bulletDamage = weaponData.bulletDamage;
+
         fireRate = weaponData.fireRate; 
         weaponType = weaponData.weaponType;
         _baseSpread = weaponData.baseSpread;
@@ -120,7 +123,7 @@ public class Weapon
         UpdateSpread();
         float randomizedValue = Random.Range(-_currentSpread, _currentSpread);
         
-        Quaternion spreadRotation = Quaternion.Euler(randomizedValue, randomizedValue, randomizedValue);
+        Quaternion spreadRotation = Quaternion.Euler(randomizedValue, randomizedValue / 2, randomizedValue);
 
         return spreadRotation * originalDirection;
     }

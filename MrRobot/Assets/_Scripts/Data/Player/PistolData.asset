@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: PistolData
   m_EditorClassIdentifier: 
   weaponName: TVT PF5
+  bulletDamage: 20
   weaponType: 0
   shootType: 0
   bulletsPerShot: 1

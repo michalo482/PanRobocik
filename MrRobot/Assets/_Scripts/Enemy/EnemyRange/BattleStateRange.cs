@@ -97,7 +97,7 @@ public class BattleStateRange : EnemyState
         {
             return;
         }
-        Debug.Log("sprawdzam czy trza zmienic cover");
+        //Debug.Log("sprawdzam czy trza zmienic cover");
         coverCheckTimer -= Time.deltaTime;
 
         if (coverCheckTimer < 0)
@@ -163,9 +163,10 @@ public class BattleStateRange : EnemyState
         {
             //Debug.Log(hit.collider.gameObject.GetComponentInParent<Player>());
             //return !hit.collider.gameObject.GetComponentInParent<Player>();
-            return hit.transform.parent == _enemyRange.Player; 
+            if (hit.transform.root == _enemyRange.Player.root)
+                return true;
         }
-        Debug.Log("nie ma gracza");
+        //Debug.Log("nie ma gracza");
         return false;
     }
 

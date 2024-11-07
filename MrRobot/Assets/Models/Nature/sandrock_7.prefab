@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5159162795487079284}
   - component: {fileID: 4033123661908436157}
   - component: {fileID: 3200114542032173386}
+  - component: {fileID: 2601084954963482697}
   m_Layer: 0
   m_Name: sandrock_7
   m_TagString: Untagged
@@ -83,3 +84,24 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!135 &2601084954963482697
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6142963679230853272}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 3.4977055
+  m_Center: {x: -0.19168663, y: 2.4393506, z: -0.078279495}

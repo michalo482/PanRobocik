@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Serialization;
 
+
 public enum WeaponType
 {
     Pistol,
@@ -20,6 +21,7 @@ public enum ShootType
 [System.Serializable]
 public class Weapon
 {
+
     public WeaponType weaponType;
     public ShootType shootType;
     public int bulletsInMagazine;
@@ -56,6 +58,7 @@ public class Weapon
 
     public Weapon(WeaponData weaponData)
     {
+
         fireRate = weaponData.fireRate; 
         weaponType = weaponData.weaponType;
         _baseSpread = weaponData.baseSpread;
@@ -85,6 +88,10 @@ public class Weapon
         this.WeaponData = weaponData;
     }
 
+    public bool IsMagazineEmpty()
+{
+    return bulletsInMagazine <= 0;
+}
 
     public bool BurstActivated()
     {
@@ -205,4 +212,8 @@ public class Weapon
             totalReserveAmmo = 0;
         }
     }
+    public WeaponData GetWeaponData()
+{
+    return WeaponData;
+}
 }

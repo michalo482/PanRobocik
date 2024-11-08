@@ -9,7 +9,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioSource[] sfx; // Tablica SFX
     [SerializeField] private AudioSource[] bgm; // Tablica muzyki
 
-    public bool playBgm; // Czy graæ BGM?
+    public bool playBgm; 
     private int bgmIndex;
 
     protected virtual void Awake()
@@ -27,9 +27,9 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
-        playBgm = true; // Ustaw playBgm na true, aby w³¹czyæ muzykê
-        PlayRandomBGM(); // Losowo odtwarzaj muzykê
-        PlaySFX(0); // Odtwarzaj SFX z indeksu 0 lub odpowiedni, w zale¿noœci od dostêpnych dŸwiêków
+        playBgm = true;
+        PlayRandomBGM();
+        PlaySFX(0); // Odtwarzaj SFX z indeksu 0 lub odpowiedni
     }
 
     private void Update()
@@ -40,10 +40,9 @@ public class AudioManager : MonoBehaviour
         }
         else
         {
-            // Upewnij siê, ¿e bgmIndex nie przekracza zakresu
             if (bgmIndex < bgm.Length && !bgm[bgmIndex].isPlaying)
             {
-                PlayNextBGM(); // Odtwarzaj nastêpny utwór
+                PlayNextBGM(); 
             }
         }
     }
@@ -55,6 +54,8 @@ public class AudioManager : MonoBehaviour
             sfx[_sfxIndex].Play();
         }
     }
+
+  
 
     public void StopSFX(int _index) 
     {
@@ -79,12 +80,12 @@ public class AudioManager : MonoBehaviour
 
     public void PlayNextBGM()
     {
-        bgmIndex++; // PrzechodŸ do nastêpnego utworu
-        if (bgmIndex >= bgm.Length) // SprawdŸ, czy nie przekracza d³ugoœci
+        bgmIndex++; 
+        if (bgmIndex >= bgm.Length)
         {
-            bgmIndex = 0; // Zresetuj do 0, aby odtwarzaæ od pocz¹tku
+            bgmIndex = 0;
         }
-        PlayBGM(bgmIndex); // Odtwarzaj nastêpny utwór
+        PlayBGM(bgmIndex); 
     }
 
     public void StopAllBGM()

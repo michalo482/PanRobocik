@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerWeaponController : MonoBehaviour
 {
@@ -27,10 +28,22 @@ public class PlayerWeaponController : MonoBehaviour
 
     private bool _weaponReady;
     private bool _isShooting;
+   
+    //audioSO
+    [SerializeField] private AudioEvent weaponPickupAudioEvent;
+
+    [SerializeField] private WeaponAudioData weaponAudioData;
+    private AudioSource audioSource;
+    [Header("Audio Cooldowns")]
+    [SerializeField] private float shootSoundCooldown = 0.1f;
     
+    private bool isOutOfAmmo = false;
+    private float lastShootSoundTime = -1f;
+
 
     private void Start()
     {
+        audioSource = gameObject.AddComponent<AudioSource>();
         _player = GetComponent<Player>();
 
         AssignInputEvents();
@@ -75,27 +88,33 @@ public class PlayerWeaponController : MonoBehaviour
 
     private void Reload()
     {
-        SetWeaponReady(false);
-        _player.WeaponVisuals.PlayReloadAnimation();
+         isOutOfAmmo = false;  // Reset flagi przy prze³adowaniu
+         SetWeaponReady(false);
+         _player.WeaponVisuals.PlayReloadAnimation();
 
-        AudioManager.Instance.PlaySFX(1); 
-
-        _player.WeaponVisuals.PlayReloadAnimation();
-    }
-
+    // Odtwarzanie dŸwiêku prze³adowania
+        if (weaponAudioData.reloadSound != null)
+        {
+            audioSource.PlayOneShot(weaponAudioData.reloadSound);
+        }
+}
     private void EquipWeapon(int i)
     {
-        if(i >= weaponSlots.Count)
-            return;
+        if (i >= weaponSlots.Count)
+        return;
 
         SetWeaponReady(false);
         currentWeapon = weaponSlots[i];
 
+        // Aktualizowanie audioSO dla nowej broni
+        weaponAudioData = currentWeapon.GetWeaponData().weaponAudioData;
+
         //_player.WeaponVisuals.SwitchOffWeaponModels();
         _player.WeaponVisuals.PlayWeaponEquipAnimation();
-        
+
         CameraManager.instance.ChangeCameraDistance(currentWeapon.CameraDistance);
     }
+
 
     private void DropWeapon()
     {
@@ -140,28 +159,35 @@ public class PlayerWeaponController : MonoBehaviour
 
     public bool HasOnlyOneWeapon() => weaponSlots.Count <= 1;
 
-    public void PickupWeapon(Weapon newWeapon)
+public void PickupWeapon(Weapon newWeapon)
+{
+    if (WeaponInSlot(newWeapon.weaponType) != null)
     {
-
-        if (WeaponInSlot(newWeapon.weaponType) != null)
-        {
-            WeaponInSlot(newWeapon.weaponType).totalReserveAmmo += newWeapon.bulletsInMagazine;
-            return;
-        }
-        
-        if (weaponSlots.Count >= maxSlots && newWeapon.weaponType != currentWeapon.weaponType)
-        {
-            int weaponIndex = weaponSlots.IndexOf(currentWeapon);
-            _player.WeaponVisuals.SwitchOffWeaponModels();
-            weaponSlots[weaponIndex] = newWeapon;
-            CreateWeaponOnTheGround();
-            EquipWeapon(weaponIndex);
-            return;
-        }
-        
-        weaponSlots.Add(newWeapon);
-        _player.WeaponVisuals.SwitchOnBackupWeaponModel();
+        WeaponInSlot(newWeapon.weaponType).totalReserveAmmo += newWeapon.bulletsInMagazine;
+        return;
     }
+    
+    if (weaponSlots.Count >= maxSlots && newWeapon.weaponType != currentWeapon.weaponType)
+    {
+        int weaponIndex = weaponSlots.IndexOf(currentWeapon);
+        _player.WeaponVisuals.SwitchOffWeaponModels();
+        weaponSlots[weaponIndex] = newWeapon;
+        CreateWeaponOnTheGround();
+        EquipWeapon(weaponIndex);
+        
+        // Odpal audio przy podnoszeniu broni
+        weaponPickupAudioEvent?.Raise();
+        
+        return;
+    }
+    
+    weaponSlots.Add(newWeapon);
+    _player.WeaponVisuals.SwitchOnBackupWeaponModel();
+
+    // Odpal audio przy podnoszeniu broni
+    weaponPickupAudioEvent?.Raise();
+}
+
     
     private void EquipStartingWeapon()
     {
@@ -198,49 +224,65 @@ public class PlayerWeaponController : MonoBehaviour
         }
     }
 
-    private void Shoot()
+private void Shoot()
+{
+    if (!WeaponReady())
+        return;
+
+    // Sprawdzenie liczby naboi przed strza³em
+    if (currentWeapon.bulletsInMagazine <= 0)
     {
-        if (WeaponReady() == false)
-            return;
-        
-        if (currentWeapon.CanShoot() == false)
-            return;
-        
-        _player.WeaponVisuals.PlayFireAnimation();
-
-        if (currentWeapon.shootType == ShootType.Single)
-            _isShooting = false;
-
-        if (currentWeapon.BurstActivated() == true)
+        // Jeœli broñ nie ma amunicji i odtwarzamy dŸwiêk pustego magazynku
+        if (!isOutOfAmmo && weaponAudioData.emptyMagazineSound != null)
         {
-            StartCoroutine(BurstFire());
-            return;
+            audioSource.PlayOneShot(weaponAudioData.emptyMagazineSound);
+            isOutOfAmmo = true; 
         }
-        
-        FireSingleBullet();
-        
-        TriggerEnemyDodge();
-
+        return; 
     }
 
-    private void FireSingleBullet()
+    isOutOfAmmo = false;
+
+    _player.WeaponVisuals.PlayFireAnimation();
+    if (currentWeapon.shootType == ShootType.Single)
+        _isShooting = false;
+
+    if (currentWeapon.BurstActivated())
     {
-        currentWeapon.bulletsInMagazine--;
-        
-        GameObject newBullet = ObjectPool.Instance.GetObject(bulletPrefab, GunPoint());
-        //newBullet.transform.position = GunPoint().position;
-        newBullet.transform.rotation = Quaternion.LookRotation(GunPoint().forward);
-        //Instantiate(bulletPrefab, gunPoint.position, Quaternion.LookRotation(gunPoint.forward));
-        Rigidbody rbNewBullet = newBullet.GetComponent<Rigidbody>();
-
-        Bullet bulletScript = newBullet.GetComponent<Bullet>();
-        bulletScript.BulletSetup(currentWeapon.GunDistance, bulletImpactForce);
-        
-        Vector3 bulletsDirection = currentWeapon.ApplySpread(BulletDirection());
-        
-        rbNewBullet.mass = REFERENCE_BULLET_SPEED / bulletSpeed;
-        rbNewBullet.velocity = bulletsDirection * bulletSpeed;
+        StartCoroutine(BurstFire());
+        return;
     }
+
+    FireSingleBullet();
+    TriggerEnemyDodge();
+}
+
+
+
+private void FireSingleBullet()
+{
+    currentWeapon.bulletsInMagazine--;
+
+    // Odtwarzanie dŸwiêku strza³u z CD
+    if (weaponAudioData.shootSound != null && Time.time >= lastShootSoundTime + shootSoundCooldown)
+    {
+        audioSource.PlayOneShot(weaponAudioData.shootSound);
+        lastShootSoundTime = Time.time;
+    }
+
+    GameObject newBullet = ObjectPool.Instance.GetObject(bulletPrefab, GunPoint());
+    newBullet.transform.rotation = Quaternion.LookRotation(GunPoint().forward);
+    Rigidbody rbNewBullet = newBullet.GetComponent<Rigidbody>();
+
+    Bullet bulletScript = newBullet.GetComponent<Bullet>();
+    bulletScript.BulletSetup(currentWeapon.GunDistance, bulletImpactForce);
+    
+    Vector3 bulletsDirection = currentWeapon.ApplySpread(BulletDirection());
+    
+    rbNewBullet.mass = REFERENCE_BULLET_SPEED / bulletSpeed;
+    rbNewBullet.velocity = bulletsDirection * bulletSpeed;
+}
+
 
     public Vector3 BulletDirection()
     {

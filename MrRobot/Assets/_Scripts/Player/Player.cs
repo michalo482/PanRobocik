@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Player : MonoBehaviour
 {
@@ -13,6 +14,9 @@ public class Player : MonoBehaviour
     public PlayerWeaponVisuals WeaponVisuals { get; private set; }
     public PlayerInteraction PlayerInteraction { get; private set; }
 
+    [SerializeField] private AudioEvent startGameAudioEvent;
+
+
     private void Awake()
     {
         Controls = new PlayerControlls();
@@ -21,8 +25,13 @@ public class Player : MonoBehaviour
         Weapon = GetComponent<PlayerWeaponController>();
         WeaponVisuals = GetComponent<PlayerWeaponVisuals>();
         PlayerInteraction = GetComponent<PlayerInteraction>();
+
+        // Wywo³anie muzyki przy starcie gry
+        startGameAudioEvent?.Raise();
+
     }
     
+
     private void OnEnable()
     {
         Controls.Enable();

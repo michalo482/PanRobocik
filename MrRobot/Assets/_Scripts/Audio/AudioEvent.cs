@@ -6,17 +6,18 @@ using UnityEngine.Events;
 [CreateAssetMenu(menuName = "Audio/Events/AudioEvent")]
 public class AudioEvent : ScriptableObject
 {
-    public UnityEvent OnPlayAudio;
-
+    public UnityEvent OnPlayAudio;    // Event uruchamiaj¹cy dŸwiêk
+    public UnityEvent OnStopAudio;    // Event zatrzymuj¹cy dŸwiêk
     private bool isRaising = false;
 
-    public void Raise()
-  {
-    if (isRaising) return; // Sprawdza, czy jest ju¿ uruchomiony
+    private AudioSource audioSource; // Przechowywanie referencji do AudioSource
 
-    isRaising = true;
-    OnPlayAudio?.Invoke();
-    isRaising = false;
+    public void Raise()
+    {
+        if (isRaising) return; // Jeœli dŸwiêk ju¿ jest odtwarzany, nie wywo³uj ponownie
+        isRaising = true;
+        OnPlayAudio?.Invoke();
+        isRaising = false;
     }
 
 }

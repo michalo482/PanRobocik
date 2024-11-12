@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: RevolverData
   m_EditorClassIdentifier: 
   weaponName: Desert Eagle
+  bulletDamage: 30
   weaponType: 1
   shootType: 0
   bulletsPerShot: 1
@@ -23,7 +24,7 @@ MonoBehaviour:
   baseSpread: 0.25
   maxSpread: 2.5
   spreadIncreaseRate: 0.3
-  reloadSpeed: 1.5
+  reloadSpeed: 1.1
   equipmentSpeed: 3
   gunDistance: 7
   cameraDistance: 9

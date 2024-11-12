@@ -5,9 +5,12 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
 
+[RequireComponent(typeof(NavMeshAgent))]
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] protected int healthPoints = 20;
+    public LayerMask whatIsAlly;
+    public LayerMask whatIsPlayer;
+    //public int healthPoints = 20;
     
     public float aggressionRange;
     public Transform Player { get; private set; }
@@ -25,6 +28,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] private Transform[] patrolPoints;
     private int _currentPatrolIndex;
     private Vector3[] _patrolPointsPosition;
+
+    protected bool isMeleeAttackReady;
     
     
     public bool inBattleMode { get; private set; }
@@ -36,12 +41,15 @@ public class Enemy : MonoBehaviour
     public EnemyStateMachine StateMachine { get; private set; }
 
     public EnemyVisuals EnemyVisuals { get; private set; }
-    public EnemyRagdoll Ragdoll { get; private set; }
+    public EnemyHealth EnemyHealth { get; private set; }
+    public Ragdoll Ragdoll { get; private set; }
 
     protected virtual void Awake()
     {
         StateMachine = new EnemyStateMachine();
-        Ragdoll = GetComponent<EnemyRagdoll>();
+
+        EnemyHealth = GetComponent<EnemyHealth>();
+        Ragdoll = GetComponent<Ragdoll>();
         Agent = GetComponent<NavMeshAgent>();
         Anim = GetComponentInChildren<Animator>();
         Player = GameObject.Find("Player").GetComponent<Transform>();
@@ -81,10 +89,15 @@ public class Enemy : MonoBehaviour
         return destination;
     }
 
-    public void FaceTarget(Vector3 target)
+    public void FaceTarget(Vector3 target, float turnSpeed = 0)
     {
         Quaternion targetRotation = Quaternion.LookRotation(target - transform.position);
         Vector3 currentEulerAngels = transform.rotation.eulerAngles;
+
+        if(turnSpeed == 0)
+        {
+            turnSpeed = this.turnSpeed;
+        }
 
         float yRotation = Mathf.LerpAngle(currentEulerAngels.y, targetRotation.eulerAngles.y, turnSpeed * Time.deltaTime);
         
@@ -109,15 +122,60 @@ public class Enemy : MonoBehaviour
     public bool ManualRotationActive() => _manualRotation;
     
 
-    public virtual void GetHit()
+    public virtual void GetHit(int damage)
     {
+        EnemyHealth.ReduceHealth(damage);
+        if(EnemyHealth.ShouldDie())
+        {
+            Die();
+        }
+
         EnterBattleMode();
-        healthPoints--;
     }
 
-    public virtual void DeathImpact(Vector3 force, Vector3 hitPoint, Rigidbody rb)
+    public virtual void Die()
     {
-        StartCoroutine(DeathImpactCoroutine(force, hitPoint, rb));
+
+    }
+
+    public virtual void AttackCheck(Transform[] damagePoints, float attackRadius, GameObject meleeAttackFx, int damage)
+    {
+        if (isMeleeAttackReady == false)
+        {
+            return;
+        }
+
+        foreach (Transform attackPoint in damagePoints)
+        {
+            Collider[] detectedHits = Physics.OverlapSphere(attackPoint.position, attackRadius, whatIsPlayer);
+            for (int i = 0; i < detectedHits.Length; i++)
+            {
+                IDamagable damagable = detectedHits[i].GetComponent<IDamagable>();
+                if (damagable != null)
+                {
+                    damagable.TakeDamage(damage);
+                    isMeleeAttackReady = false;
+                    GameObject newAttackFx = ObjectPool.Instance.GetObject(meleeAttackFx, attackPoint);
+
+                    ObjectPool.Instance.ReturnObject(newAttackFx, 1);
+                    return;
+                }
+            }
+        }
+    }
+
+    public void EnableAttackCheck(bool enable)
+    {
+        isMeleeAttackReady = enable;
+    }
+
+
+    public virtual void BulletImpact(Vector3 force, Vector3 hitPoint, Rigidbody rb)
+    {
+        if (EnemyHealth.ShouldDie())
+        {
+            StartCoroutine(DeathImpactCoroutine(force, hitPoint, rb));
+        }
     }
 
     private IEnumerator DeathImpactCoroutine(Vector3 force, Vector3 hitPoint, Rigidbody rb)

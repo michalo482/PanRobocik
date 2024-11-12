@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
+
 
 public class ThrowGrenadeStateRange : EnemyState
 {
-
     private EnemyRange _enemyRange;
-    public bool finishedThrowingGrenade {  get; private set; }
+    public bool finishedThrowingGrenade { get; private set; } = true;
+
     public ThrowGrenadeStateRange(Enemy enemyBase, EnemyStateMachine stateMachine, string animBoolName) : base(enemyBase, stateMachine, animBoolName)
     {
         _enemyRange = enemyBase as EnemyRange;
@@ -18,7 +20,7 @@ public class ThrowGrenadeStateRange : EnemyState
         base.AbilityTrigger();
 
         finishedThrowingGrenade = true;
-        _enemyRange.ThrowGrenade();
+        _enemyRange.ThrowGrenade();  
     }
 
     public override void Enter()
@@ -50,9 +52,10 @@ public class ThrowGrenadeStateRange : EnemyState
         _enemyRange.FaceTarget(playerPos);
         _enemyRange.Aim.position = playerPos;
 
-        if(triggerCalled)
+        if (triggerCalled)
         {
-            stateMachine.ChangeState(_enemyRange.BattleStateRange);
+            stateMachine.ChangeState(_enemyRange.BattleStateRange); // Przechodzimy do walki po zakoñczeniu rzutu.
         }
-     }
+    }
 }
+

@@ -6,10 +6,14 @@ using UnityEngine;
 public class EnemyAnimationEvents : MonoBehaviour
 {
     private Enemy _enemy;
+    private EnemyMelee _enemyMelee;
+    private EnemyBoss _enemyBoss;
 
     private void Awake()
     {
         _enemy = GetComponentInParent<Enemy>();
+        _enemyMelee = GetComponentInParent<EnemyMelee>();
+        _enemyBoss = GetComponentInParent<EnemyBoss>();
     }
 
     public void AnimationTrigger() => _enemy.AnimationTrigger();
@@ -27,4 +31,24 @@ public class EnemyAnimationEvents : MonoBehaviour
         _enemy.EnemyVisuals.EnableWeaponModel(true);
         _enemy.EnemyVisuals.EnableSecondaryWeaponModel(false);
     }
+
+    public void BossJumpImpact()
+    {
+        //if(_enemyBoss == null)
+        //{
+        //    _enemyBoss = GetComponentInParent<EnemyBoss>();
+        //}
+        _enemyBoss?.JumpImpact();
+    }
+
+    public void BeginMeleeAttackCheck()
+    {
+        _enemy?.EnableAttackCheck(true);
+    }
+
+    public void FinishMeleeAttackCheck() 
+    {
+        _enemy?.EnableAttackCheck(false);
+    }
+
 }

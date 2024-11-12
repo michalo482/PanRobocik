@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-
+    private int bulletDamage;
     private float impactForce;
     
     private BoxCollider _cd;
@@ -21,6 +21,8 @@ public class Bullet : MonoBehaviour
     private Vector3 _startPosition;
     private float _flyDistance;
     private bool bulletDisabled;
+
+    private LayerMask allyLayerMask;
 
     protected virtual void Awake()
     {
@@ -64,31 +66,42 @@ public class Bullet : MonoBehaviour
 
     protected virtual void OnCollisionEnter(Collision other)
     {
+        if(FriendlyFire() == false)
+        {
+            if((allyLayerMask.value & (1 << other.gameObject.layer)) > 0)
+            {
+                ReturnBulletToPool(10);
+                return;
+            }
+        }
+
         CreateImpactFX();
         ReturnBulletToPool();
-        Enemy enemy = other.gameObject.GetComponentInParent<Enemy>();
-        EnemyShield shield = other.gameObject.GetComponent<EnemyShield>();
 
-        if (shield != null)
-        {
-            shield.ReduceDurability();
-            return;
-        }
+        IDamagable damagable = other.gameObject.GetComponent<IDamagable>();
+        damagable?.TakeDamage(bulletDamage);
+
         
+
+        ApplyBulletImpactToEnemy(other);
+
+    }
+
+    private void ApplyBulletImpactToEnemy(Collision other)
+    {
+        Enemy enemy = other.gameObject.GetComponentInParent<Enemy>();
         if (enemy != null)
         {
             Vector3 force = _rb.velocity.normalized * impactForce;
             Rigidbody hitRb = other.collider.attachedRigidbody;
-            
-            enemy.GetHit();
-            enemy.DeathImpact(force, other.contacts[0].point, hitRb);
+
+            enemy.BulletImpact(force, other.contacts[0].point, hitRb);
         }
-        
     }
 
-    protected void ReturnBulletToPool()
+    protected void ReturnBulletToPool(float delay = 0)
     {
-        ObjectPool.Instance.ReturnObject(gameObject);
+        ObjectPool.Instance.ReturnObject(gameObject, delay);
     }
 
     protected void CreateImpactFX()
@@ -105,9 +118,11 @@ public class Bullet : MonoBehaviour
         //}
     }
 
-    public void BulletSetup(float flyDistance = 100, float impactForce = 100)
+    public void BulletSetup(LayerMask allyLayer, int bulletDamage, float flyDistance = 100, float impactForce = 100)
     {
         this.impactForce = impactForce;
+        this.allyLayerMask = allyLayer;
+        this.bulletDamage = bulletDamage;
         bulletDisabled = false;
         _cd.enabled = true;
         _meshRenderer.enabled = true;
@@ -118,5 +133,10 @@ public class Bullet : MonoBehaviour
         _startPosition = transform.position;
         _flyDistance = flyDistance + 1;
         
+    }
+
+    public bool FriendlyFire()
+    {
+        return GameManager.Instance.friendlyFire;
     }
 }

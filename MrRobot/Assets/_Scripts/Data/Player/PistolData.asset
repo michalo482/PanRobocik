@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: PistolData
   m_EditorClassIdentifier: 
   weaponName: TVT PF5
+  bulletDamage: 20
   weaponType: 0
   shootType: 0
   bulletsPerShot: 1
@@ -23,7 +24,7 @@ MonoBehaviour:
   baseSpread: 0.25
   maxSpread: 2
   spreadIncreaseRate: 0.15
-  reloadSpeed: 2
+  reloadSpeed: 1.1
   equipmentSpeed: 3
   gunDistance: 6
   cameraDistance: 8

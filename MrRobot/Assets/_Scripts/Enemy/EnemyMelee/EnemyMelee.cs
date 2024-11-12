@@ -6,11 +6,12 @@ using UnityEngine.Serialization;
 [System.Serializable]
 public struct AttackDataEnemyMelee
 {
+    public int attackDamage;
     public string attackName;
     public float attackRange;
     public float moveSpeed;
     public float attackIndex;
-    [Range(1, 2)]
+    [Range(1,2)]
     public float animationSpeed;
     public AttackTypeMelee AttackTypeMelee;
 }
@@ -29,12 +30,9 @@ public enum EnemyMeleeType
     AxeThrow
 }
 
+
 public class EnemyMelee : Enemy
 {
-    [Header("Dynamic Stats")]
-    [SerializeField] private EnemyMeleeDynamicStats meleeDynamicStats; 
-    [SerializeField] private EnemyMeleeDynamicStats2 meleeDynamicStats2;
-
     public IdleStateMelee IdleStateMelee { get; private set; }
     public MoveStateMelee MoveStateMelee { get; private set; }
     public RecoveryStateMelee RecoveryStateMelee { get; private set; }
@@ -43,31 +41,44 @@ public class EnemyMelee : Enemy
     public DeadStateMelee DeadStateMelee { get; private set; }
     public AbilityStateMelee AbilityStateMelee { get; private set; }
 
+
+    
+    
     [Header("Enemy settings")] 
     public EnemyMeleeType MeleeType;
     public EnemyMeleeWeaponType weaponType;
+
+    public int shieldDurability;
     public Transform shieldTransform;
     public float dodgeCooldown;
     private float lastTimeDodged = -10;
 
-    [FormerlySerializedAs("enemyMeleeAttackData")] [FormerlySerializedAs("meleeAttackData")] [FormerlySerializedAs("AttackData")]
-    [Header("Attack data")] 
+
+    [FormerlySerializedAs("enemyMeleeAttackData")] [FormerlySerializedAs("meleeAttackData")] [FormerlySerializedAs("AttackData")] [Header("Attack data")] 
     public AttackDataEnemyMelee attackDataEnemyMelee;
 
-    [Header("Axe throw ability")] 
+    [Header("Axe throw ability")]
+    public int axeDamage;
     public GameObject axePrefab;
     public float axeFlySpeed;
-    public float axeAimTimer;
-    private float axeThrowCooldown;
+    [FormerlySerializedAs("aimTimer")] public float axeAimTimer;
+    public float axeThrowCooldown;
     public Transform axeStartPoint;
     private float _lastTimeAxeThrown;
 
     public List<AttackDataEnemyMelee> attackList;
 
+    private EnemyWeaponModel currentWeapon;
+    private bool isAttackReady;
+
+    [SerializeField] private GameObject meleeAttackFx;
+
     protected override void Awake()
     {
         base.Awake();
 
+        
+        
         IdleStateMelee = new IdleStateMelee(this, StateMachine, "Idle");
         MoveStateMelee = new MoveStateMelee(this, StateMachine, "Move");
         RecoveryStateMelee = new RecoveryStateMelee(this, StateMachine, "Recovery");
@@ -77,36 +88,31 @@ public class EnemyMelee : Enemy
         AbilityStateMelee = new AbilityStateMelee(this, StateMachine, "AxeThrow");
     }
 
-protected override void Start()
-{
-    base.Start();
-    
-    StateMachine.Initialize(IdleStateMelee);
-    InitializePerk();
-    EnemyVisuals.SetupRandomLook();
-    
-    if (meleeDynamicStats != null)
+    protected override void Start()
     {
-        axeThrowCooldown = meleeDynamicStats.axeCooldown;
+        base.Start();
+        
+        StateMachine.Initialize(IdleStateMelee);
+        InitializePerk();
+        EnemyVisuals.SetupRandomLook();
+        
+        UpdateAttackData();
     }
-    else
-    {
-        axeThrowCooldown = 5f; // domyœlna wartoœæ, jeœli meleeDynamicStats nie jest przypisany
-    }
-
-    UpdateAttackData();
-}
 
     protected override void Update()
     {
         base.Update();
         
         StateMachine.currentState.Update();
+        
+        
+        AttackCheck(currentWeapon.damagePoints, currentWeapon.attackRadius, meleeAttackFx, attackDataEnemyMelee.attackDamage);
+        
     }
 
     public override void EnterBattleMode()
     {
-        if (inBattleMode)
+        if(inBattleMode)
             return;
         
         base.EnterBattleMode();
@@ -115,7 +121,7 @@ protected override void Start()
 
     public void UpdateAttackData()
     {
-        EnemyWeaponModel currentWeapon = EnemyVisuals.CurrentWeaponModel.GetComponent<EnemyWeaponModel>();
+        currentWeapon = EnemyVisuals.CurrentWeaponModel.GetComponent<EnemyWeaponModel>();
 
         if (currentWeapon.weaponData != null)
         {
@@ -124,11 +130,11 @@ protected override void Start()
         }
     }
 
-    public override void GetHit()
+    public override void Die()
     {
-        base.GetHit();
+        base.Die();
 
-        if (healthPoints <= 0 && StateMachine.currentState != DeadStateMelee)
+        if(StateMachine.currentState != DeadStateMelee)
             StateMachine.ChangeState(DeadStateMelee);
     }
 
@@ -152,19 +158,13 @@ protected override void Start()
         }
     }
 
-       protected override void OnDrawGizmos()
-    {
-           base.OnDrawGizmos();
     
-    Gizmos.color = Color.yellow;
-    Gizmos.DrawWireSphere(transform.position, attackDataEnemyMelee.attackRange);
 
-    if (meleeDynamicStats2 != null)
+    protected override void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, meleeDynamicStats2.aggression);
-    }
-       
+        base.OnDrawGizmos();
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, attackDataEnemyMelee.attackRange);
     }
 
     public override void AbilityTrigger()
@@ -177,11 +177,11 @@ protected override void Start()
 
     public void ActivateDodgeRoll()
     {
-        if (MeleeType != EnemyMeleeType.Dodge)
+        if(MeleeType != EnemyMeleeType.Dodge)
             return;
-        if (StateMachine.currentState != ChaseStateMelee)
+        if(StateMachine.currentState != ChaseStateMelee)
             return;
-        if (Vector3.Distance(transform.position, Player.position) < 2f)
+        if(Vector3.Distance(transform.position, Player.position) < 2f)
             return;
 
         float dodgeAnimationDuration = GetAnimationClipDuration("Roll");
@@ -191,6 +191,7 @@ protected override void Start()
             lastTimeDodged = Time.time;
             Anim.SetTrigger("DodgeRoll");
         }
+            
     }
 
     private float GetAnimationClipDuration(string clipName)
@@ -204,21 +205,23 @@ protected override void Start()
                 return clip.length;
             }
         }
-        Debug.Log(clipName + "nie ma takiej animacji");
+        Debug.Log(  clipName + "nie ma takiej animacji");
         return 0f;
     }
 
     public void ThrowAxe()
     {
         GameObject newAxe = ObjectPool.Instance.GetObject(axePrefab, axeStartPoint);
-        newAxe.GetComponent<EnemyAxe>().AxeSetup(axeFlySpeed, Player, axeAimTimer);
+        //newAxe.transform.position = enemy.axeStartPoint.position;
+
+        newAxe.GetComponent<EnemyAxe>().AxeSetup(axeFlySpeed, Player, axeAimTimer, axeDamage);
     }
 
     public bool CanThrowAxe()
     {
         if (MeleeType != EnemyMeleeType.AxeThrow)
             return false;
-
+        
         if (Time.time > _lastTimeAxeThrown + axeThrowCooldown)
         {
             _lastTimeAxeThrown = Time.time;
@@ -228,14 +231,5 @@ protected override void Start()
         return false;
     }
     
- public bool PlayerInAttackRange() => Vector3.Distance(transform.position, Player.position) < attackDataEnemyMelee.attackRange;
-
-public bool PlayerInAggressionRange()
-{
-    if (meleeDynamicStats2 != null)
-    {
-        return Vector3.Distance(transform.position, Player.position) < meleeDynamicStats2.aggression;
-    }
-    
-    return false; // lub domyœlna logika, jeœli brak przypisania
-}}
+    public bool PlayerInAttackRange() => Vector3.Distance(transform.position, Player.position) < attackDataEnemyMelee.attackRange;
+}

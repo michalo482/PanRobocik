@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+
 
 
 public enum CoverPerk
@@ -20,10 +22,12 @@ public class EnemyRange : Enemy
     [SerializeField] private EnemyDynamicStats dynamicStats;
 
     [Header("Enemy Perks")]
+    public EnemyRangeWeaponType weaponType;
     public CoverPerk coverPerk;
     public GrenadePerk grenadePerk;
 
     [Header("Grenade Perk")]
+    public int grenadeDamage;
     public float grenadeCooldown;
     public float lastTimeGrenadeThrown = -10;
     public GameObject grenadePrefab;
@@ -47,7 +51,6 @@ public class EnemyRange : Enemy
     //public List<Cover> allCovers;
 
     [Header("Weapon Details")]
-    public EnemyRangeWeaponType weaponType;
     public EnemyRangeWeaponData weaponData;
     public float attackDelay;
     [Space]
@@ -63,6 +66,9 @@ public class EnemyRange : Enemy
     public Transform Aim;
     public Transform PlayersBody;
     public LayerMask WhatToIgnore;
+
+    [Header("Weapon Audio Data")]
+    [SerializeField] private WeaponAudioDataEnemy weaponAudioDataEnemy;
     
     
     
@@ -106,11 +112,31 @@ public class EnemyRange : Enemy
         StateMachine.currentState.Update();
     }
 
-    public override void GetHit()
-    {
-        base.GetHit();
 
-        if(healthPoints <= 0 && StateMachine.currentState != DeadStateRange)
+    //audioenemies
+    private void PlayShootSound()
+{
+    if (weaponAudioDataEnemy.shootSound != null)
+    {
+        AudioSource.PlayClipAtPoint(weaponAudioDataEnemy.shootSound, transform.position);
+    }
+}
+
+    private void PlayGrenadeSound()
+    {
+        if (weaponAudioDataEnemy.granadeSound != null)
+        {
+            AudioSource.PlayClipAtPoint(weaponAudioDataEnemy.granadeSound, transform.position);
+        }
+    }
+
+
+
+    public override void Die()
+    {
+        base.Die();
+
+        if(StateMachine.currentState != DeadStateRange)
         {
             StateMachine.ChangeState(DeadStateRange);
         }
@@ -154,23 +180,29 @@ public bool CanThrowGrenade()
 }
 
    public void ThrowGrenade()
+{
+    lastTimeGrenadeThrown = Time.time;
+
+    EnemyVisuals.EnableGrenadeModel(false);
+
+    GameObject newGrenade = ObjectPool.Instance.GetObject(grenadePrefab, grenadeStartPoint);
+
+    EnemyGrenade newGrenadeScript = newGrenade.GetComponent<EnemyGrenade>();
+
+    // Przypisanie dŸwiêku granata 
+    newGrenadeScript.explosionSound = weaponAudioDataEnemy.granadeSound;
+
+    if (StateMachine.currentState == DeadStateRange)
     {
-        lastTimeGrenadeThrown = Time.time;
-        EnemyVisuals.EnableGrenadeModel(false);
-        GameObject newGrenade = ObjectPool.Instance.GetObject(grenadePrefab, grenadeStartPoint);
-        //newGrenade.transform.position = grenadeStartPoint.transform.position;
-
-        EnemyGrenade newGrenadeScript = newGrenade.GetComponent<EnemyGrenade>();
-
-        if(StateMachine.currentState == DeadStateRange)
-        {
-            newGrenadeScript.SetupGrenade(transform.position, 1, explosionTimer, impactPower);
-            return;
-        }
-
-        newGrenadeScript.SetupGrenade(Player.transform.position, timeToTarget, explosionTimer, impactPower);
-        Debug.Log("RZUCAAAAM");
+        newGrenadeScript.SetupGrenade(whatIsAlly, transform.position, 1, explosionTimer, impactPower, grenadeDamage);
+        return;
     }
+
+    newGrenadeScript.SetupGrenade(whatIsAlly, Player.transform.position, timeToTarget, explosionTimer, impactPower, grenadeDamage);
+
+    Debug.Log("RZUCAAAAM");
+}
+
 
 
     
@@ -179,13 +211,17 @@ public bool CanThrowGrenade()
     {
         Anim.SetTrigger("Shoot");
 
+        //shootsounds
+        PlayShootSound(); 
+
+
         Vector3 bulletDirection = (Aim.position - gunPoint.position).normalized;
 
         GameObject newBullet = ObjectPool.Instance.GetObject(bulletPrefab, gunPoint);
         //newBullet.transform.position = gunPoint.position;
         newBullet.transform.rotation = Quaternion.LookRotation(gunPoint.forward);
 
-        newBullet.GetComponent<EnemyBullet>().BulletSetup();
+        newBullet.GetComponent<Bullet>().BulletSetup(whatIsAlly, weaponData.bulletDamage);
 
         Rigidbody rbNewBullet = newBullet.GetComponent<Rigidbody>();
 
@@ -313,7 +349,7 @@ public bool CanThrowGrenade()
 
         if(Physics.Raycast(myPosition, directionToPlayer, out RaycastHit hit, Mathf.Infinity, ~WhatToIgnore))
         {
-            if(hit.transform == Player)
+            if(hit.transform.root == Player.root)
             {
                 UpdateAimPosition();
                 return true;

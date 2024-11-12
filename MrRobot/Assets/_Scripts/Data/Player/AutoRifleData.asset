@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: AutoRifleData
   m_EditorClassIdentifier: 
   weaponName: AK 47
+  bulletDamage: 15
   weaponType: 2
   shootType: 1
   bulletsPerShot: 1
@@ -23,7 +24,7 @@ MonoBehaviour:
   baseSpread: 0.15
   maxSpread: 3
   spreadIncreaseRate: 0.15
-  reloadSpeed: 2
+  reloadSpeed: 1.1
   equipmentSpeed: 2
   gunDistance: 6
   cameraDistance: 6

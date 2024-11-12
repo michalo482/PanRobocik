@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: ShotgunData
   m_EditorClassIdentifier: 
   weaponName: Demonic
+  bulletDamage: 10
   weaponType: 3
   shootType: 0
   bulletsPerShot: 5
@@ -23,7 +24,7 @@ MonoBehaviour:
   baseSpread: 15
   maxSpread: 15
   spreadIncreaseRate: 0.15
-  reloadSpeed: 1.2
+  reloadSpeed: 1.1
   equipmentSpeed: 2
   gunDistance: 4.5
   cameraDistance: 6

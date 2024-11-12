@@ -6,6 +6,10 @@ using UnityEngine;
 public class WeaponData : ScriptableObject
 {
     public string weaponName;
+
+    [Header("Bullet")]
+    public int bulletDamage;
+
     public WeaponType weaponType;
     public ShootType shootType;
     public int bulletsPerShot = 1;
@@ -26,7 +30,7 @@ public class WeaponData : ScriptableObject
     public float reloadSpeed = 1;
     [Range(1, 3)] 
     public float equipmentSpeed = 1;
-    [Range(3, 12)] 
+    [Range(3, 25)] 
     public float gunDistance = 4;
     [Range(4, 10)] 
     public float cameraDistance = 6;

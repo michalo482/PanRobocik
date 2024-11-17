@@ -16,29 +16,29 @@ public class EnemyAxe : MonoBehaviour
 
     private float _timer = 1;
     private float timeSinceLaunch = 0f; // Licznik czasu od momentu rzutu toporkiem
-    private float lifetime = 4f; // Czas, po którym toporek zostanie zniszczony (5 sekund)
+    private float lifetime = 4f; // Czas, po którym toporek zostanie zatrzymany
 
     private int damage;
 
-    [SerializeField] private AudioSource audioSource; // Dodaj zmienn¹ AudioSource
-    [SerializeField] private AudioClip flySound; // Zmienna dla dŸwiêku lotu
+    [SerializeField] private AudioSource audioSource;       // AudioSource do odtwarzania dŸwiêków
+    [SerializeField] private AudioClip flySound;            // DŸwiêk lotu topora
 
     private void Start()
     {
-        // Upewnij siê, ¿e dŸwiêk bêdzie odtwarzany tylko w locie
+        // Upewnij siê, ¿e AudioSource i dŸwiêk lotu s¹ przypisane
         if (audioSource != null && flySound != null)
         {
             audioSource.clip = flySound;
-            audioSource.loop = true;  // Zapêtlenie dŸwiêku
-            audioSource.Play(); // Rozpoczêcie odtwarzania
+            audioSource.loop = true;  // Zapêtlenie dŸwiêku lotu
+            audioSource.Play();       // Rozpoczêcie odtwarzania dŸwiêku lotu
         }
     }
     private void Update()
     {
         axeVisuals.Rotate(_rotationSpeed * Time.deltaTime * Vector3.right);
-
         _timer -= Time.deltaTime;
 
+        // Jeœli timer > 0, aktualizuj kierunek lotu topora w stronê gracza
         if (_timer > 0)
         {
             _direction = _player.position + Vector3.up - transform.position;
@@ -46,21 +46,33 @@ public class EnemyAxe : MonoBehaviour
 
         transform.forward = rb.velocity;
 
+        // Aktualizacja g³oœnoœci dŸwiêku na podstawie odleg³oœci od gracza
+        UpdateSoundVolume();
+
         // Zwiêksz licznik czasu
         timeSinceLaunch += Time.deltaTime;
 
-        // Jeœli minê³o 5 sekund od rzutu toporkiem, zniszcz go
-        if (timeSinceLaunch >= lifetime)
+        // Jeœli minê³o lifetime sekund, zatrzymaj dŸwiêk lotu
+        if (timeSinceLaunch >= lifetime && audioSource.isPlaying)
         {
-            Destroy(gameObject); // Zniszczenie toporka
+            audioSource.Stop(); // Zatrzymaj dŸwiêk po zakoñczeniu lotu
         }
     }
-
 
     private void FixedUpdate()
     {
         rb.velocity = _direction.normalized * _flySpeed;
         
+    }
+        // Aktualizacja g³oœnoœci dŸwiêku na podstawie odleg³oœci od gracza
+    private void UpdateSoundVolume()
+    {
+        if (_player != null && audioSource != null)
+        {
+            float distance = Vector3.Distance(transform.position, _player.position);
+            // Ustawienie g³oœnoœci na podstawie odleg³oœci (im bli¿ej, tym g³oœniej)
+            audioSource.volume = Mathf.Clamp(1 / (distance + 1), 0.6f, 1f); // Ograniczenie g³oœnoœci miêdzy 0.6 a 1
+        }
     }
 
     public void AxeSetup(float flySpeed, Transform player, float timer, int damage)
@@ -76,17 +88,24 @@ public class EnemyAxe : MonoBehaviour
         IDamagable damagable = collision.gameObject.GetComponent<IDamagable>();
         damagable?.TakeDamage(damage);
 
-        // Stwórz efekty wizualne
+        // Pobierz obiekt efektu uderzenia z ObjectPool
         GameObject newFx = ObjectPool.Instance.GetObject(impactFX, transform);
+
+        // ZnajdŸ AudioSource na ImpactFX
+        AudioSource impactAudioSource = newFx.GetComponent<AudioSource>();
+
+        // Dynamicznie dostosuj g³oœnoœæ dŸwiêku uderzenia w zale¿noœci od odleg³oœci od gracza
+        if (impactAudioSource != null)
+        {
+            float distance = Vector3.Distance(transform.position, _player.position);
+            impactAudioSource.volume = Mathf.Clamp(1 / (distance + 1), 0.6f, 1f);
+            impactAudioSource.Play();
+        }
+
         ObjectPool.Instance.ReturnObject(gameObject);
         ObjectPool.Instance.ReturnObject(newFx, 1f);
-
-        // Zatrzymaj dŸwiêk po uderzeniu
-        if (audioSource != null)
-        {
-            audioSource.Stop(); // Zatrzymanie dŸwiêku
-        }
     }
+
 
 
     //private void OnTriggerEnter(Collider other)
@@ -101,3 +120,4 @@ public class EnemyAxe : MonoBehaviour
 
     //}
 }
+

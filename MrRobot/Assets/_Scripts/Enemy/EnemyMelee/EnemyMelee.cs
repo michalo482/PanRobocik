@@ -73,11 +73,17 @@ public class EnemyMelee : Enemy
 
     [SerializeField] private GameObject meleeAttackFx;
 
+    [Header("Audio Settings")]
+    public AudioClip attackSound;
+    private AudioSource audioSource;
+
     protected override void Awake()
     {
         base.Awake();
 
-        
+        audioSource = gameObject.AddComponent<AudioSource>();
+  
+        audioSource.clip = attackSound; // przypisanie klipu dŸwiêkowego
         
         IdleStateMelee = new IdleStateMelee(this, StateMachine, "Idle");
         MoveStateMelee = new MoveStateMelee(this, StateMachine, "Move");
@@ -86,6 +92,15 @@ public class EnemyMelee : Enemy
         AttackStateMelee = new AttackStateMelee(this, StateMachine, "Attack");
         DeadStateMelee = new DeadStateMelee(this, StateMachine, "Idle");
         AbilityStateMelee = new AbilityStateMelee(this, StateMachine, "AxeThrow");
+    }
+
+
+    public void PlayAttackSound()
+    {
+        if (audioSource != null && attackSound != null)
+        {
+            audioSource.Play();
+        }
     }
 
     protected override void Start()

@@ -17,8 +17,6 @@ public class Player : MonoBehaviour
     public Ragdoll Ragdoll { get; private set; }
     public Animator Animator { get; private set; }
 
-    [SerializeField] private AudioEvent startGameAudioEvent;
-
 
     private void Awake()
     {
@@ -33,8 +31,6 @@ public class Player : MonoBehaviour
         WeaponVisuals = GetComponent<PlayerWeaponVisuals>();
         PlayerInteraction = GetComponent<PlayerInteraction>();
 
-        // Wywo³anie muzyki przy starcie gry
-        startGameAudioEvent?.Raise();
 
     }
     

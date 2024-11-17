@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 1630307386821552028}
   - component: {fileID: 3731433433469920869}
   - component: {fileID: 492133601466266342}
-  - component: {fileID: 1615985872093483482}
+  - component: {fileID: -4887422335726380533}
   m_Layer: 12
   m_Name: EnemyAxe
   m_TagString: Untagged
@@ -182,9 +182,11 @@ MonoBehaviour:
   impactFX: {fileID: 1136154018357497869, guid: 05111c6ce07bd7742a781537c5011d30, type: 3}
   rb: {fileID: 3731433433469920869}
   axeVisuals: {fileID: 2297647214632831471}
-  audioSource: {fileID: 1615985872093483482}
+  hitPlayerSound: {fileID: 8300000, guid: 8ddf57a09c6c6194cad025e1b34ecc54, type: 3}
+  hitObstacleSound: {fileID: 8300000, guid: a5ea2d0bcae82aa46a92cf756005d431, type: 3}
+  audioSource: {fileID: -4887422335726380533}
   flySound: {fileID: 8300000, guid: f3106930412efc640ad121555939d38d, type: 3}
---- !u!82 &1615985872093483482
+--- !u!82 &-4887422335726380533
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -194,7 +196,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: f3106930412efc640ad121555939d38d, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -240,7 +242,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0

@@ -250,6 +250,7 @@ MonoBehaviour:
   boxModels:
   - {fileID: 3600231443495680441}
   - {fileID: 211508035789246234}
+  pickupAmmoAudioEvent: {fileID: 11400000, guid: a25c1ea628b23bc4aa10745799328b40, type: 2}
 --- !u!65 &8423388722395780753
 BoxCollider:
   m_ObjectHideFlags: 0

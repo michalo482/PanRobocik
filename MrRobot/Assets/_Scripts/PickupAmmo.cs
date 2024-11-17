@@ -25,6 +25,7 @@ public class PickupAmmo : Interactable
    [SerializeField] private List<AmmoData> bigBoxAmmo;
 
    [SerializeField] private GameObject[] boxModels;
+   [SerializeField] private AudioEvent pickupAmmoAudioEvent;
 
    protected override void Start()
    {
@@ -71,7 +72,8 @@ public class PickupAmmo : Interactable
 
          AddBulletsToWeapon(weapon, GetBulletsAmount(ammo));
       }
-      
+      // Wywo³anie dŸwiêku podnoszenia amunicji
+      pickupAmmoAudioEvent?.Raise();
       ObjectPool.Instance.ReturnObject(gameObject);
    }
 

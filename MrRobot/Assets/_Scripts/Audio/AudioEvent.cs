@@ -7,7 +7,6 @@ using UnityEngine.Events;
 public class AudioEvent : ScriptableObject
 {
     public UnityEvent OnPlayAudio;    // Event uruchamiaj¹cy dŸwiêk
-    public UnityEvent OnStopAudio;    // Event zatrzymuj¹cy dŸwiêk
     private bool isRaising = false;
 
     private AudioSource audioSource; // Przechowywanie referencji do AudioSource

@@ -3,7 +3,14 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - SpawnPoint
+  - Paths
+  - Desert
+  - LevelPiece
+  - Enemy
+  - PathBag
+  - LevelParts
   layers:
   - Default
   - TransparentFX
@@ -25,7 +32,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - OverlapCheck
   - 
   - 
   - 

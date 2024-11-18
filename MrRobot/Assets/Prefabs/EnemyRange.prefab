@@ -1855,6 +1855,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5157768385604337118}
+  - component: {fileID: 170901241820595507}
+  - component: {fileID: -3584148873345805455}
   - component: {fileID: 7451097201282998205}
   - component: {fileID: 3065369354607491309}
   - component: {fileID: 389590654121091333}
@@ -1862,7 +1864,7 @@ GameObject:
   - component: {fileID: 5800238479649056001}
   m_Layer: 11
   m_Name: EnemyRange
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1886,6 +1888,31 @@ Transform:
   - {fileID: 3233706878009994290}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &170901241820595507
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1936142128480129758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 703768c8fa72cb9419a3b02acc118b0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyRig: {fileID: 5176525892260731543}
+--- !u!114 &-3584148873345805455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1936142128480129758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66cc41270fda99248a7b5debb641f12e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!195 &7451097201282998205
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1966,7 +1993,9 @@ MonoBehaviour:
   whatIsAlly:
     serializedVersion: 2
     m_Bits: 2048
-  healthPoints: 10
+  whatIsPlayer:
+    serializedVersion: 2
+    m_Bits: 256
   aggressionRange: 10
   idleTime: 1.5
   walkSpeed: 1.5
@@ -1976,8 +2005,10 @@ MonoBehaviour:
   - {fileID: 6727581686335947421}
   - {fileID: 474895539333824031}
   - {fileID: 3654698151114215636}
+  weaponType: 3
   coverPerk: 0
   grenadePerk: 0
+  grenadeDamage: 0
   grenadeCooldown: 2
   lastTimeGrenadeThrown: -10
   grenadePrefab: {fileID: 9222756545599460560, guid: c223dfc47210d9a4fa24a1f594f63fc7, type: 3}
@@ -1990,7 +2021,6 @@ MonoBehaviour:
   advanceTime: 2.5
   minCoverTime: 4
   safeDistance: 2
-  weaponType: 3
   weaponData: {fileID: 0}
   attackDelay: 1
   gunPoint: {fileID: 4967232834036177959}
@@ -6369,12 +6399,7 @@ Animator:
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
-  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
-    are already bound by a Humanoid avatar. These transforms can only be changed
-    by Humanoid clips.\n\tTransform 'mixamorig:LeftArm'\n\tTransform 'mixamorig:RightHand'\n\tTransform
-    'mixamorig:LeftForeArm'\n\tTransform 'mixamorig:RightForeArm'\n\tTransform 'mixamorig:LeftHand'\n\tTransform
-    'mixamorig:LeftArm'\n\tTransform 'mixamorig:RightHand'\n\tTransform 'mixamorig:LeftForeArm'\n\tTransform
-    'mixamorig:RightForeArm'\n\tTransform 'mixamorig:LeftHand'\n\tand more ..."
+  m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0

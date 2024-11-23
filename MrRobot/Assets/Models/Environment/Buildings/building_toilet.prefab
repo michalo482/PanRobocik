@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3635305741117185559}
   - component: {fileID: 5649737706528521916}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -63,7 +63,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7598522625091066692}
   - component: {fileID: 8940268790009768780}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -116,7 +116,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4275846244409760340}
   - component: {fileID: 8138717656077065652}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -169,7 +169,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8233693995744966402}
   - component: {fileID: 5168517818049305274}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -222,7 +222,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2034810034052111455}
   - component: {fileID: 1199188805445348236}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -278,7 +278,7 @@ GameObject:
   - component: {fileID: 7920921674117330649}
   - component: {fileID: 1385515531186102541}
   - component: {fileID: 8644852489346198580}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: building_toilet
   m_TagString: Untagged
   m_Icon: {fileID: 0}

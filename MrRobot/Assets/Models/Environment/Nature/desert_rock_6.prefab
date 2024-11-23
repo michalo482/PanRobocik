@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7063531679146240255}
   - component: {fileID: 3152153045115836928}
   - component: {fileID: 6912229156857718445}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: desert_rock_6
   m_TagString: Untagged
   m_Icon: {fileID: 0}

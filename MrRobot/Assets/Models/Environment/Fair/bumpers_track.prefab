@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8952572079116589416}
   - component: {fileID: 2927959043726306361}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -65,7 +65,7 @@ GameObject:
   - component: {fileID: 2447611656084417888}
   - component: {fileID: 4500385855248109859}
   - component: {fileID: 1095538214463748756}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: bumper_car_green
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -171,7 +171,7 @@ GameObject:
   - component: {fileID: 2136114990481961107}
   - component: {fileID: 8604874377321690591}
   - component: {fileID: 4361357633179129106}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: bumpers_track
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -303,7 +303,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2891059234452169699}
   - component: {fileID: 6152645310607387048}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -356,7 +356,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7330598340791762852}
   - component: {fileID: 7131968283539748680}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -411,7 +411,7 @@ GameObject:
   - component: {fileID: 7418888665586164379}
   - component: {fileID: 747767802341385923}
   - component: {fileID: 5306913884212987354}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: bumper_car_red
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -514,7 +514,7 @@ GameObject:
   m_Component:
   - component: {fileID: 43988947191139869}
   - component: {fileID: 1553730894126873501}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -567,7 +567,7 @@ GameObject:
   m_Component:
   - component: {fileID: 490413086151139483}
   - component: {fileID: 268876834551308710}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -622,7 +622,7 @@ GameObject:
   - component: {fileID: 4700680839406427441}
   - component: {fileID: 4502558698054624828}
   - component: {fileID: 5823412805710932499}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: bumper_car_blue
   m_TagString: Untagged
   m_Icon: {fileID: 0}

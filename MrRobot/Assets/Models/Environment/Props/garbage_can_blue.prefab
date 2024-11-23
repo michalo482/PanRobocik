@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5763362012987468610}
   - component: {fileID: 4914172063600124852}
   - component: {fileID: 4920341307437909674}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: garbage_can_blue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -148,7 +148,7 @@ GameObject:
   - component: {fileID: 736488988904328064}
   - component: {fileID: 8856171121109770242}
   - component: {fileID: 4412604927967087398}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: garbage_can_lid_green
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 9220555906723573300}
   - component: {fileID: 4046351238704076706}
   - component: {fileID: 8637157119242974416}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: sofa_green
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6809563990559566592}
   - component: {fileID: 6941113892196518045}
   - component: {fileID: -1155817001779616587}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: concrete_block_brown
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8971360692875548457}
   - component: {fileID: 4124810073458961323}
   - component: {fileID: 5934784497962011080}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: carousel_wheel_small_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -145,7 +145,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9046988541523631874}
   - component: {fileID: 3025684601925398600}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -198,7 +198,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7140786607250451267}
   - component: {fileID: 6970014956692761155}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5500328984806309174}
   - component: {fileID: 4083822967015703414}
   - component: {fileID: 3761947836083670394}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: dumpcar_stack_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

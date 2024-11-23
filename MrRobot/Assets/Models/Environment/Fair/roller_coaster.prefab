@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 905140692106603574}
   - component: {fileID: 8465514802261181370}
   - component: {fileID: 68095131823238566}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: roller_coaster
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -120,7 +120,7 @@ GameObject:
   - component: {fileID: 4652222890850570355}
   - component: {fileID: 9194565759124959339}
   - component: {fileID: 2277725028037092221}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: roller_cart
   m_TagString: Untagged
   m_Icon: {fileID: 0}

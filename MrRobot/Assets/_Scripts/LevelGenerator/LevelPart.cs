@@ -69,4 +69,6 @@ public class LevelPart : MonoBehaviour
 
         return null;
     }
+
+    public Enemy[] MyEnemies() => GetComponentsInChildren<Enemy>(true);
 }

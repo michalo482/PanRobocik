@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7794066742159407308}
   - component: {fileID: 97952781204478069}
   - component: {fileID: 3221169552066690943}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: concrete_tube_small
   m_TagString: Untagged
   m_Icon: {fileID: 0}

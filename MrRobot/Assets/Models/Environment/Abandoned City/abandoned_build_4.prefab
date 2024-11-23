@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3535858621970588367}
   - component: {fileID: 1932634994716096786}
   - component: {fileID: 3209787324706327556}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: rail_2_rusted (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 9038423778048020248}
   - component: {fileID: 6065141494141920222}
   - component: {fileID: 5022011345234413126}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: abandoned_build_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -203,7 +203,7 @@ GameObject:
   - component: {fileID: 1258017642638570128}
   - component: {fileID: 4230742100433496397}
   - component: {fileID: 932227940471954523}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: rail_2_rusted (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -286,7 +286,7 @@ GameObject:
   - component: {fileID: 830217951241660246}
   - component: {fileID: 2325681724675914891}
   - component: {fileID: 1594018004214630813}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: rail_2_rusted (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -369,7 +369,7 @@ GameObject:
   - component: {fileID: 262596638742504825}
   - component: {fileID: 2911317294203338404}
   - component: {fileID: 2179318351276690354}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: rail_2_rusted
   m_TagString: Untagged
   m_Icon: {fileID: 0}

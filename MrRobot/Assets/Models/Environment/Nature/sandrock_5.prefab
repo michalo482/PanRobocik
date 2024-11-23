@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 9092734025811759921}
   - component: {fileID: 765702552221811514}
   - component: {fileID: -5123779705013728417}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: sandrock_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3489924447396437792}
   - component: {fileID: 701179347202246858}
   - component: {fileID: 4618703138140285913}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: road_block_concrete
   m_TagString: Untagged
   m_Icon: {fileID: 0}

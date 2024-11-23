@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 847912815363550964}
   - component: {fileID: 4749083571240143559}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -65,7 +65,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8287929270931348715}
   - component: {fileID: 7136290829507157651}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -118,7 +118,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1247208469034447535}
   - component: {fileID: 7518618069600738183}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -172,7 +172,7 @@ GameObject:
   - component: {fileID: 5911926150357605963}
   - component: {fileID: 4143323534243833895}
   - component: {fileID: 1512983636231127407}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: park_bakery_shop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -260,7 +260,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1352593792576863154}
   - component: {fileID: 3186535876575491521}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -313,7 +313,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6634991914494682332}
   - component: {fileID: 7527814730625119114}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -368,7 +368,7 @@ GameObject:
   - component: {fileID: 3274054611128565174}
   - component: {fileID: 129781280164965194}
   - component: {fileID: 3259610626511314692}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}

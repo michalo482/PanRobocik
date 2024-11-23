@@ -175,6 +175,10 @@ PrefabInstance:
       value: dune_low_1 (1)
       objectReference: {fileID: 0}
     - target: {fileID: 3875376039508007351, guid: be3bd8e0961573b40b8aa57a3c47ef12, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3875376039508007351, guid: be3bd8e0961573b40b8aa57a3c47ef12, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}

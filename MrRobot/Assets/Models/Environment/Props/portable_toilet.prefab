@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4822120762751583094}
   - component: {fileID: 7609895772492573112}
   - component: {fileID: 1550729802860100712}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: portable_toilet
   m_TagString: Untagged
   m_Icon: {fileID: 0}

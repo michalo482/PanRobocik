@@ -6,6 +6,6 @@ public class LevelPartTemplates : MonoBehaviour
 {
     public Transform lastLevelPart;
     public List<Transform> levelParts;
-    // public List<Transform> currentLevelParts;
+    public List<Transform> currentLevelParts;
     public List<Transform> generatedLevelParts = new List<Transform>();
 }

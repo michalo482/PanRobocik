@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1317340309687022560}
   - component: {fileID: 5987858318583784638}
   - component: {fileID: 5353218104807215139}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: banch_dark
   m_TagString: Untagged
   m_Icon: {fileID: 0}

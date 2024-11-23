@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4843224741187828866}
   - component: {fileID: 4319642191591002550}
   - component: {fileID: 7540946192372261885}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: abandoned_build_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -139,7 +139,7 @@ GameObject:
   - component: {fileID: 4748987807883696812}
   - component: {fileID: 8610773774203205671}
   - component: {fileID: 4334550500387691687}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: bathtub
   m_TagString: Untagged
   m_Icon: {fileID: 0}

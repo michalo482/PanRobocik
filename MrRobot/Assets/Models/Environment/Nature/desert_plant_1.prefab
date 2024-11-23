@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 675101591108066997}
   - component: {fileID: 932349222731804407}
   - component: {fileID: 4743633913888353389}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: desert_plant_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4620034559508966058}
   - component: {fileID: 7619724849359654099}
   - component: {fileID: 1586705713852583666}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RV_trailer_1_red
   m_TagString: Untagged
   m_Icon: {fileID: 0}

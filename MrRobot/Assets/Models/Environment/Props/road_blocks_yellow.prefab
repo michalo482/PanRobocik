@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4662503291875597296}
   - component: {fileID: 2363237938696457269}
   - component: {fileID: 1593255084243059974}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: road_blocks_yellow
   m_TagString: Untagged
   m_Icon: {fileID: 0}

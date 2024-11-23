@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7058039853692223257}
   - component: {fileID: 8503433862383262836}
   - component: {fileID: 2429113354095479539}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: garbage_bin_blue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -147,7 +147,7 @@ GameObject:
   - component: {fileID: 1649566643455401749}
   - component: {fileID: 336691607123342186}
   - component: {fileID: 7697602608038333025}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: garbage_bin_lid_grey
   m_TagString: Untagged
   m_Icon: {fileID: 0}

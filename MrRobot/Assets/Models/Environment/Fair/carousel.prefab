@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5354344983171956325}
   - component: {fileID: 2110290597122454156}
   - component: {fileID: 597949404590039753}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: carousel_wheel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -118,7 +118,7 @@ GameObject:
   - component: {fileID: 6926636271808801112}
   - component: {fileID: 8463898141750053148}
   - component: {fileID: 6544586581318263024}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: carousel_seat_orange
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -224,7 +224,7 @@ GameObject:
   - component: {fileID: 3920542156234288565}
   - component: {fileID: 53944528111507617}
   - component: {fileID: 9205849442641626146}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: carousel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -333,7 +333,7 @@ GameObject:
   - component: {fileID: 1601869639306275607}
   - component: {fileID: 1846240822302643550}
   - component: {fileID: 8230396767016538569}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: carousel_seat_red
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.AI.Navigation;
 using UnityEngine;
 
 public class LevelGenerator : MonoBehaviour
 {
+    // [SerializeField] private NavMeshSurface navMeshSurface;
     private LevelPartTemplates templates;
+    public List<Enemy> enemyList;
 
     [SerializeField] private SnapPoint nextSnapPoint;
     private SnapPoint defaultSnapPoint;
@@ -18,7 +21,8 @@ public class LevelGenerator : MonoBehaviour
 
     private void Start()
     {
-        templates = GameObject.FindGameObjectWithTag("LevelParts").GetComponent<LevelPartTemplates>();
+        templates = GameObject.FindGameObjectWithTag("LevelParts").GetComponent<LevelPartTemplates>(); 
+        enemyList = new List<Enemy>();       
         defaultSnapPoint = nextSnapPoint;
         InitializeGeneration();
     }
@@ -49,25 +53,38 @@ public class LevelGenerator : MonoBehaviour
     {
         nextSnapPoint = defaultSnapPoint;
         generationOver = false;
-        // templates.currentLevelParts = new List<Transform>(templates.levelParts);
+        templates.currentLevelParts = new List<Transform>(templates.levelParts);
 
-        DestroyOldLevelParts();
+        DestroyOldLevelPartsandEnemies();        
     }
 
-    private void DestroyOldLevelParts()
+    private void DestroyOldLevelPartsandEnemies()
     {
         foreach (Transform t in templates.generatedLevelParts)
         {
             Destroy(t.gameObject);
         }
 
+        foreach (Enemy enemy in enemyList)
+        {
+            Destroy(enemy.gameObject);
+        }
+
         templates.generatedLevelParts = new List<Transform>();
-    }
+        enemyList = new List<Enemy>();
+    }    
 
     private void FinishGeneration()
     {
         generationOver = true;
         GenerateNextLevelPart();
+
+        // navMeshSurface.BuildNavMesh();
+
+        foreach (Enemy enemy in enemyList){
+            enemy.transform.parent = null;
+            enemy.gameObject.SetActive(true);
+        }
     }
 
     [ContextMenu("Create new level part")]
@@ -92,15 +109,16 @@ public class LevelGenerator : MonoBehaviour
         }
 
         nextSnapPoint = levelPartScript.GetExitPoint();
+        enemyList.AddRange(levelPartScript.MyEnemies());
     }
 
     private Transform ChooseRandomPart()
     {
-        int randomIndex = Random.Range(0, templates.levelParts.Count);
+        int randomIndex = Random.Range(0, templates.currentLevelParts.Count);
 
-        Transform choosenPart = templates.levelParts[randomIndex];
+        Transform choosenPart = templates.currentLevelParts[randomIndex];
 
-        // templates.currentLevelParts.RemoveAt(randomIndex);
+        templates.currentLevelParts.RemoveAt(randomIndex);
 
         return choosenPart;
     }

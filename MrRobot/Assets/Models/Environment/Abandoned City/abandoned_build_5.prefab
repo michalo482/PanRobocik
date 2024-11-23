@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4098725516240066751}
   - component: {fileID: 2100867153216785480}
   - component: {fileID: 5061774025509385840}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: abandoned_build_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -120,7 +120,7 @@ GameObject:
   - component: {fileID: 927880776267360142}
   - component: {fileID: 4878014585065173793}
   - component: {fileID: 407196697216463029}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: bicycle_old
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -204,7 +204,7 @@ GameObject:
   - component: {fileID: 1005122196840630381}
   - component: {fileID: 4897505970829660857}
   - component: {fileID: 636867870066485352}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: bicycle_wheel_old
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -287,7 +287,7 @@ GameObject:
   - component: {fileID: 2978468147194613323}
   - component: {fileID: 6273359630374682514}
   - component: {fileID: 6361797343951042899}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: small_fridge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -370,7 +370,7 @@ GameObject:
   - component: {fileID: 4174857537714617138}
   - component: {fileID: 2376094242010416544}
   - component: {fileID: 3527253530168199146}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: car_chassis
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -453,7 +453,7 @@ GameObject:
   - component: {fileID: 8982406075082809325}
   - component: {fileID: 22553957296835598}
   - component: {fileID: 792469019097224741}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: car_truck_disk_new
   m_TagString: Untagged
   m_Icon: {fileID: 0}

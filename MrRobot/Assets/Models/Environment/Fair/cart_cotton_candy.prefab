@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 758821538761559554}
   - component: {fileID: 2374970784318370210}
   - component: {fileID: 1105068320629151294}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: cart_cotton_candy_sign
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -147,7 +147,7 @@ GameObject:
   - component: {fileID: 5130755133337759920}
   - component: {fileID: 7115351908286629756}
   - component: {fileID: 6855035780881455153}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: cart_cotton_candy
   m_TagString: Untagged
   m_Icon: {fileID: 0}

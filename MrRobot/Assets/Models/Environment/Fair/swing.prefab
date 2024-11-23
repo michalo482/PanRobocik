@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7211588291310039679}
   - component: {fileID: 1276285771072219042}
   - component: {fileID: 7253864815279942324}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: swing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -118,7 +118,7 @@ GameObject:
   - component: {fileID: 5778899703938084745}
   - component: {fileID: 6316521494460551744}
   - component: {fileID: 7829870146646211529}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: swing_move
   m_TagString: Untagged
   m_Icon: {fileID: 0}

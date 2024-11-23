@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3622352889456940625}
   - component: {fileID: 2061985638741653314}
   - component: {fileID: 7031374238602581012}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: abandoned_build_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -139,7 +139,7 @@ GameObject:
   - component: {fileID: 1703691710602438534}
   - component: {fileID: 2105878280487538949}
   - component: {fileID: 6495777493714467999}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: slate_dark_brown
   m_TagString: Untagged
   m_Icon: {fileID: 0}

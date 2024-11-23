@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 239545921127255843}
   - component: {fileID: 914598950047122253}
   - component: {fileID: 7358388546848539139}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: wooden_pallet
   m_TagString: Untagged
   m_Icon: {fileID: 0}

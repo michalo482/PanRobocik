@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 313809873266480766}
   - component: {fileID: 4744686688993249519}
   - component: {fileID: 1744316313414367265}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: garbage_can_big
   m_TagString: Untagged
   m_Icon: {fileID: 0}

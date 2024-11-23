@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5934697859658133346}
   - component: {fileID: 703319268106820843}
   - component: {fileID: 5408725664734208070}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: abandoned_fence_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}

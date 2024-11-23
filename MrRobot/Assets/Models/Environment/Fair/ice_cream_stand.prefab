@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6650424820232555495}
   - component: {fileID: 935835001334229125}
   - component: {fileID: 5876510001624052996}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ice_cream_stand
   m_TagString: Untagged
   m_Icon: {fileID: 0}

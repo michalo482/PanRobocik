@@ -448,7 +448,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: slate_graffiti_2
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5545741959089998629, guid: ef3f3de08837dac4d99e8d2c582e3a2a, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -472,7 +473,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2444515898996931710, guid: fd5f9b5645b3c4f41822269f1833ce60, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.36
+      value: -0.28
       objectReference: {fileID: 0}
     - target: {fileID: 2444515898996931710, guid: fd5f9b5645b3c4f41822269f1833ce60, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1006,7 +1007,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -1.577
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4732544081827424736, guid: 8a63c9def96b0c14c9e9effc05304ab3, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -1068,7 +1070,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: catwalk_01
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7878047963132684794, guid: e38edd9bb8080cb46ae678dae2124877, type: 3}
+    - {fileID: 8501979250965069421, guid: e38edd9bb8080cb46ae678dae2124877, type: 3}
+    - {fileID: 5814140266674066755, guid: e38edd9bb8080cb46ae678dae2124877, type: 3}
+    - {fileID: 317413626668944624, guid: e38edd9bb8080cb46ae678dae2124877, type: 3}
+    - {fileID: 5613878035654236345, guid: e38edd9bb8080cb46ae678dae2124877, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

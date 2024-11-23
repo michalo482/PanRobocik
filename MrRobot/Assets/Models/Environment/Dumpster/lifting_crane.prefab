@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 151776671777702156}
   - component: {fileID: 5167499171752676275}
   - component: {fileID: 3619138793815873682}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: lifting_crane
   m_TagString: Untagged
   m_Icon: {fileID: 0}

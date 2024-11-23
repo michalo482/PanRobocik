@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 9157634560358315765}
   - component: {fileID: 2375478089134401382}
   - component: {fileID: 7265619524270215501}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: sofa_red
   m_TagString: Untagged
   m_Icon: {fileID: 0}

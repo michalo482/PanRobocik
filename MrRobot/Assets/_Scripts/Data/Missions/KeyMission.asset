@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98943c61702380647a552dc707794aa3, type: 3}
+  m_Name: KeyMission
+  m_EditorClassIdentifier: 
+  missionName: Znajdz klucza
+  missionDescription: zabij fagasa, zabierz klucz i sie zwijaj
+  key: {fileID: 9095666355982429289, guid: ca81647267862594b8a16270b0a473be, type: 3}

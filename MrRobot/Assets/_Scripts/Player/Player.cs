@@ -33,6 +33,7 @@ public class Player : MonoBehaviour
     private void OnEnable()
     {
         Controls.Enable();
+        Controls.Character.UIMissionTooltipSwitch.performed += ctx => UI.instance.inGameUI.SwitchMissionTooltip();
     }
 
     private void OnDisable()

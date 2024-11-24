@@ -19352,6 +19352,7 @@ GameObject:
   - component: {fileID: 110264706670160608}
   - component: {fileID: 5539254498696842050}
   - component: {fileID: 2206256152805635227}
+  - component: {fileID: 5283678567685970551}
   m_Layer: 0
   m_Name: EnemyBossHammer
   m_TagString: Untagged
@@ -19418,7 +19419,6 @@ MonoBehaviour:
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 256
-  healthPoints: 100
   aggressionRange: 15
   idleTime: 3
   walkSpeed: 2
@@ -19502,6 +19502,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 2000
   currentHealth: 0
+--- !u!114 &5283678567685970551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8815864557767966731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9403d71099d283f45815e6c0d82d751a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8884291930431162733
 GameObject:
   m_ObjectHideFlags: 0

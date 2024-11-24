@@ -93,6 +93,8 @@ public class PlayerWeaponController : MonoBehaviour
         _player.WeaponVisuals.PlayWeaponEquipAnimation();
         
         CameraManager.instance.ChangeCameraDistance(currentWeapon.CameraDistance);
+
+        UpdateWeaponUI();
     }
 
     private void DropWeapon()
@@ -159,6 +161,8 @@ public class PlayerWeaponController : MonoBehaviour
         
         weaponSlots.Add(newWeapon);
         _player.WeaponVisuals.SwitchOnBackupWeaponModel();
+
+        UpdateWeaponUI();
     }
     
     private void EquipStartingWeapon()
@@ -196,6 +200,11 @@ public class PlayerWeaponController : MonoBehaviour
         }
     }
 
+    public void UpdateWeaponUI()
+    {
+        UI.instance.inGameUI.UpdateWeaponUI(weaponSlots, currentWeapon);
+    }
+
     private void Shoot()
     {
         if (WeaponReady() == false)
@@ -224,6 +233,7 @@ public class PlayerWeaponController : MonoBehaviour
     private void FireSingleBullet()
     {
         currentWeapon.bulletsInMagazine--;
+        UpdateWeaponUI();
         
         GameObject newBullet = ObjectPool.Instance.GetObject(bulletPrefab, GunPoint());
         //newBullet.transform.position = GunPoint().position;

@@ -1860,6 +1860,8 @@ GameObject:
   - component: {fileID: 389590654121091333}
   - component: {fileID: 4308154173256682721}
   - component: {fileID: 5800238479649056001}
+  - component: {fileID: 2136693804554064088}
+  - component: {fileID: -3649167007998833220}
   m_Layer: 11
   m_Name: EnemyRange
   m_TagString: Untagged
@@ -1960,10 +1962,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c68ba6046aaf4d4288e65c9eb5d9f6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyType: 0
   whatIsAlly:
     serializedVersion: 2
     m_Bits: 2048
-  healthPoints: 10
+  whatIsPlayer:
+    serializedVersion: 2
+    m_Bits: 0
   aggressionRange: 10
   idleTime: 1.5
   walkSpeed: 1.5
@@ -1973,8 +1978,10 @@ MonoBehaviour:
   - {fileID: 6727581686335947421}
   - {fileID: 474895539333824031}
   - {fileID: 3654698151114215636}
+  weaponType: 3
   coverPerk: 0
   grenadePerk: 0
+  grenadeDamage: 0
   grenadeCooldown: 2
   lastTimeGrenadeThrown: -10
   grenadePrefab: {fileID: 9222756545599460560, guid: c223dfc47210d9a4fa24a1f594f63fc7, type: 3}
@@ -1987,7 +1994,6 @@ MonoBehaviour:
   advanceTime: 2.5
   minCoverTime: 4
   safeDistance: 2
-  weaponType: 3
   weaponData: {fileID: 0}
   attackDelay: 1
   gunPoint: {fileID: 4967232834036177959}
@@ -2020,6 +2026,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 3
   currentHealth: 0
+--- !u!114 &2136693804554064088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1936142128480129758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9403d71099d283f45815e6c0d82d751a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  missionObjectKey: {fileID: 0}
+--- !u!114 &-3649167007998833220
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1936142128480129758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a1d5d53f7f761e4f863583acb4d0799, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1999767109087299575
 GameObject:
   m_ObjectHideFlags: 0

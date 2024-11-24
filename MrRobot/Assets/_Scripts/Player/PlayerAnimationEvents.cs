@@ -26,6 +26,7 @@ public class PlayerAnimationEvents : MonoBehaviour
         _playerWeaponVisuals.MaximizeRigWeight();
         _playerWeaponController.CurrentWeapon().RefillBullets();
         _playerWeaponController.SetWeaponReady(true);
+        _playerWeaponController.UpdateWeaponUI();
     }
 
     public void ReturnRig()

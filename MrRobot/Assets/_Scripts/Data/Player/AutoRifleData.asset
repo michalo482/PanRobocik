@@ -33,3 +33,4 @@ MonoBehaviour:
   burstBulletsPerShot: 3
   burstFireRate: 1.5
   burstFireDelay: 0.1
+  weaponIcon: {fileID: -91878611, guid: 3477fe9a26e0faa42b5a9b5b258229c1, type: 3}

@@ -42,5 +42,6 @@ public class WeaponData : ScriptableObject
     public float burstFireRate;
     public float burstFireDelay = .1f;
 
-
+    [Header("UI elements")]
+    public Sprite weaponIcon;
 }

@@ -12,13 +12,13 @@ GameObject:
   - component: {fileID: 7498691793755225732}
   - component: {fileID: 1170266101308210279}
   - component: {fileID: 8821340630649056913}
-  - component: {fileID: 3074254918515023231}
+  - component: {fileID: 688613790074079831}
   m_Layer: 0
   m_Name: garbage_bag_smooth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &6265020249085672408
 Transform:
@@ -112,8 +112,8 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!64 &3074254918515023231
-MeshCollider:
+--- !u!136 &688613790074079831
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -130,7 +130,8 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 918446480760034212, guid: 986ccecd6edd47845abe932f5f674bb8, type: 3}
+  serializedVersion: 2
+  m_Radius: 0.13746539
+  m_Height: 0.39182782
+  m_Direction: 1
+  m_Center: {x: -0.00033150986, y: 0.19727322, z: 0.0077530816}

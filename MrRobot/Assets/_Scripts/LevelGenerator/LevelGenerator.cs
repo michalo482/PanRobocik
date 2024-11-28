@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.AI;
 using Unity.AI.Navigation;
 using UnityEngine;
 
 public class LevelGenerator : MonoBehaviour
 {
-    // [SerializeField] private NavMeshSurface navMeshSurface;
+    [SerializeField] private NavMeshSurface navMeshs;
     private LevelPartTemplates templates;
     public List<Enemy> enemyList;
 
@@ -48,7 +49,6 @@ public class LevelGenerator : MonoBehaviour
         }
     }
 
-    [ContextMenu("Restart generation")]
     private void InitializeGeneration()
     {
         nextSnapPoint = defaultSnapPoint;
@@ -79,23 +79,32 @@ public class LevelGenerator : MonoBehaviour
         generationOver = true;
         GenerateNextLevelPart();
 
-        // navMeshSurface.BuildNavMesh();
-
         foreach (Enemy enemy in enemyList){
             enemy.transform.parent = null;
             enemy.gameObject.SetActive(true);
         }
     }
 
-    [ContextMenu("Create new level part")]
     private void GenerateNextLevelPart()
     {
         Transform newPart = null;
 
         if (generationOver)
+        {
             newPart = Instantiate(templates.lastLevelPart);
+            
+            newPart.rotation = nextSnapPoint.transform.rotation;
+            newPart.rotation = Quaternion.Euler(newPart.rotation.eulerAngles.x, newPart.rotation.eulerAngles.y + 180f, newPart.rotation.eulerAngles.z);
+            
+            newPart.position = nextSnapPoint.transform.position;
+            newPart.position += newPart.transform.forward * -5f;
+            
+            StartCoroutine(RebuildNavMeshAsync());
+        }
         else
+        {
             newPart = Instantiate(ChooseRandomPart());
+        }
 
         templates.generatedLevelParts.Add(newPart);
 
@@ -111,6 +120,24 @@ public class LevelGenerator : MonoBehaviour
         nextSnapPoint = levelPartScript.GetExitPoint();
         enemyList.AddRange(levelPartScript.MyEnemies());
     }
+
+    private IEnumerator RebuildNavMeshAsync()
+    {
+        if (navMeshs.navMeshData == null)
+        {
+            navMeshs.navMeshData = new NavMeshData();
+            NavMesh.AddNavMeshData(navMeshs.navMeshData);
+        }
+
+        var operation = navMeshs.UpdateNavMesh(navMeshs.navMeshData);
+
+        while (!operation.isDone)
+        {
+            yield return null; 
+        }
+    }
+
+
 
     private Transform ChooseRandomPart()
     {

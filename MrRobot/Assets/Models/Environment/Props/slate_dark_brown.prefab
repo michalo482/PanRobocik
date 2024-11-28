@@ -13,12 +13,12 @@ GameObject:
   - component: {fileID: 2756549010173014193}
   - component: {fileID: 3291203494017713320}
   - component: {fileID: 6508461465685478804}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: slate_dark_brown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &7764244357409844136
 Transform:

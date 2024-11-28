@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 359476297266893169}
   - component: {fileID: 4075280210140174219}
   - component: {fileID: 2774118136981640153}
+  - component: {fileID: 1250897688472997544}
   m_Layer: 0
   m_Name: SnapPoint - ENTER
   m_TagString: Untagged
@@ -119,3 +120,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pointType: 0
+--- !u!208 &1250897688472997544
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3621660039799194699}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5

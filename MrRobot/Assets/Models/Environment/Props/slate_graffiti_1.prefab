@@ -13,12 +13,12 @@ GameObject:
   - component: {fileID: 1161400514232213438}
   - component: {fileID: 3639783814865895271}
   - component: {fileID: 9105916359486478940}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: slate_graffiti_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &6064397761286473445
 Transform:

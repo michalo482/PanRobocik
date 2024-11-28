@@ -10,6 +10,8 @@ public class EnemySpawner : MonoBehaviour
     void Start()
     {
         int rand = Random.Range(0, enemy.Length);
-        Instantiate(enemy[rand], transform.position, transform.rotation * Quaternion.Euler (0f, 180f, 0f));        
+        GameObject instance = (GameObject)Instantiate(enemy[rand], transform.position, transform.rotation * Quaternion.Euler (0f, 180f, 0f));
+        instance.transform.parent = transform.parent;
+        // Instantiate(enemy[rand], transform.position, transform.rotation * Quaternion.Euler (0f, 180f, 0f));        
     }
 }

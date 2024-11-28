@@ -9,6 +9,8 @@ public class LevelPart : MonoBehaviour
     [SerializeField] private Collider[] overlapCheckColliders;
     [SerializeField] private Transform overlapCheckParent;
 
+    public Enemy[] MyEnemies() => GetComponentsInChildren<Enemy>(true);
+
     public bool OverlapDetected()
     {
         Physics.SyncTransforms();
@@ -69,6 +71,4 @@ public class LevelPart : MonoBehaviour
 
         return null;
     }
-
-    public Enemy[] MyEnemies() => GetComponentsInChildren<Enemy>(true);
 }

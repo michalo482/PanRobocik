@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 839633245424167723}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: dumpster_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,6 +44,38 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 839633245424167723}
     m_Modifications:
+    - target: {fileID: 399366400368591271, guid: 573d411e3cf8b494f86a5ba05663106d, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 452475293186765678, guid: 573d411e3cf8b494f86a5ba05663106d, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1852940157265539515, guid: 573d411e3cf8b494f86a5ba05663106d, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2202493603562746851, guid: 573d411e3cf8b494f86a5ba05663106d, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4699695381844744338, guid: 573d411e3cf8b494f86a5ba05663106d, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5892184527796645601, guid: 573d411e3cf8b494f86a5ba05663106d, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6640782945710939798, guid: 573d411e3cf8b494f86a5ba05663106d, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6688768830728456504, guid: 573d411e3cf8b494f86a5ba05663106d, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 6724884685478902785, guid: 573d411e3cf8b494f86a5ba05663106d, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.88
@@ -127,6 +159,14 @@ PrefabInstance:
     - target: {fileID: 8725888504392908728, guid: 573d411e3cf8b494f86a5ba05663106d, type: 3}
       propertyPath: m_Name
       value: car_truck
+      objectReference: {fileID: 0}
+    - target: {fileID: 8725888504392908728, guid: 573d411e3cf8b494f86a5ba05663106d, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8868659355043841147, guid: 573d411e3cf8b494f86a5ba05663106d, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -313,6 +353,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: road_sign_stop
       objectReference: {fileID: 0}
+    - target: {fileID: 7369855383567535066, guid: 7d084d45ce0233b409b30e5eccf00595, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -497,6 +541,14 @@ PrefabInstance:
     - target: {fileID: 3706159899766307478, guid: 219946d211e79094381fffb032d542b8, type: 3}
       propertyPath: m_Name
       value: power_pole_2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3706159899766307478, guid: 219946d211e79094381fffb032d542b8, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4605885139788478116, guid: 219946d211e79094381fffb032d542b8, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

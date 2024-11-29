@@ -114,6 +114,7 @@ public class EnemyRange : Enemy
         }
     }
 
+
     public override void EnterBattleMode()
     {
         

@@ -27,10 +27,10 @@ public class MissionManager : MonoBehaviour
     public void SetMission(Mission newMission)
     {
         currentMission = newMission;
-        StartMission();
+        //StartMission();
     }
 
-    private void StartMission() => currentMission.StartMission();
+    public void StartMission() => currentMission.StartMission();
 
     public bool MissionCompleted() => currentMission.MissionCompleted();
 }

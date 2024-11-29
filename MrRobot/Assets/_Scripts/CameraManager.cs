@@ -11,7 +11,7 @@ public class CameraManager : MonoBehaviour
     private CinemachineVirtualCamera _virtualCamera;
     private CinemachineFramingTransposer _transposer;
 
-    private float _targetCameraDistance;
+    [SerializeField] private float _targetCameraDistance;
     [SerializeField] private float _distanceChangeRate;
 
     [SerializeField] private bool canChangeCameraDistance;

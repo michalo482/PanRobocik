@@ -152,6 +152,15 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""UIPause"",
+                    ""type"": ""Button"",
+                    ""id"": ""c57260d8-9375-44b3-808c-af798924eec6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -352,6 +361,45 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
                     ""action"": ""UIMissionTooltipSwitch"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b30932eb-0b40-437f-8721-14789c428dc7"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UIPause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""UI"",
+            ""id"": ""b881cf57-387a-4e1a-8271-868668a2d35e"",
+            ""actions"": [
+                {
+                    ""name"": ""UIPause"",
+                    ""type"": ""Button"",
+                    ""id"": ""f939eb05-485b-41e9-9d1a-ba74fc876c35"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""9b93a160-8430-479f-bab2-7361829299f0"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UIPause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -374,6 +422,10 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
         m_Character_ToggleWeaponMode = m_Character.FindAction("ToggleWeaponMode", throwIfNotFound: true);
         m_Character_Interaction = m_Character.FindAction("Interaction", throwIfNotFound: true);
         m_Character_UIMissionTooltipSwitch = m_Character.FindAction("UIMissionTooltipSwitch", throwIfNotFound: true);
+        m_Character_UIPause = m_Character.FindAction("UIPause", throwIfNotFound: true);
+        // UI
+        m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
+        m_UI_UIPause = m_UI.FindAction("UIPause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -449,6 +501,7 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Character_ToggleWeaponMode;
     private readonly InputAction m_Character_Interaction;
     private readonly InputAction m_Character_UIMissionTooltipSwitch;
+    private readonly InputAction m_Character_UIPause;
     public struct CharacterActions
     {
         private @PlayerControlls m_Wrapper;
@@ -467,6 +520,7 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
         public InputAction @ToggleWeaponMode => m_Wrapper.m_Character_ToggleWeaponMode;
         public InputAction @Interaction => m_Wrapper.m_Character_Interaction;
         public InputAction @UIMissionTooltipSwitch => m_Wrapper.m_Character_UIMissionTooltipSwitch;
+        public InputAction @UIPause => m_Wrapper.m_Character_UIPause;
         public InputActionMap Get() { return m_Wrapper.m_Character; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -518,6 +572,9 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
             @UIMissionTooltipSwitch.started += instance.OnUIMissionTooltipSwitch;
             @UIMissionTooltipSwitch.performed += instance.OnUIMissionTooltipSwitch;
             @UIMissionTooltipSwitch.canceled += instance.OnUIMissionTooltipSwitch;
+            @UIPause.started += instance.OnUIPause;
+            @UIPause.performed += instance.OnUIPause;
+            @UIPause.canceled += instance.OnUIPause;
         }
 
         private void UnregisterCallbacks(ICharacterActions instance)
@@ -564,6 +621,9 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
             @UIMissionTooltipSwitch.started -= instance.OnUIMissionTooltipSwitch;
             @UIMissionTooltipSwitch.performed -= instance.OnUIMissionTooltipSwitch;
             @UIMissionTooltipSwitch.canceled -= instance.OnUIMissionTooltipSwitch;
+            @UIPause.started -= instance.OnUIPause;
+            @UIPause.performed -= instance.OnUIPause;
+            @UIPause.canceled -= instance.OnUIPause;
         }
 
         public void RemoveCallbacks(ICharacterActions instance)
@@ -581,6 +641,52 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
         }
     }
     public CharacterActions @Character => new CharacterActions(this);
+
+    // UI
+    private readonly InputActionMap m_UI;
+    private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
+    private readonly InputAction m_UI_UIPause;
+    public struct UIActions
+    {
+        private @PlayerControlls m_Wrapper;
+        public UIActions(@PlayerControlls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @UIPause => m_Wrapper.m_UI_UIPause;
+        public InputActionMap Get() { return m_Wrapper.m_UI; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(UIActions set) { return set.Get(); }
+        public void AddCallbacks(IUIActions instance)
+        {
+            if (instance == null || m_Wrapper.m_UIActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_UIActionsCallbackInterfaces.Add(instance);
+            @UIPause.started += instance.OnUIPause;
+            @UIPause.performed += instance.OnUIPause;
+            @UIPause.canceled += instance.OnUIPause;
+        }
+
+        private void UnregisterCallbacks(IUIActions instance)
+        {
+            @UIPause.started -= instance.OnUIPause;
+            @UIPause.performed -= instance.OnUIPause;
+            @UIPause.canceled -= instance.OnUIPause;
+        }
+
+        public void RemoveCallbacks(IUIActions instance)
+        {
+            if (m_Wrapper.m_UIActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IUIActions instance)
+        {
+            foreach (var item in m_Wrapper.m_UIActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_UIActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public UIActions @UI => new UIActions(this);
     public interface ICharacterActions
     {
         void OnFire(InputAction.CallbackContext context);
@@ -597,5 +703,10 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
         void OnToggleWeaponMode(InputAction.CallbackContext context);
         void OnInteraction(InputAction.CallbackContext context);
         void OnUIMissionTooltipSwitch(InputAction.CallbackContext context);
+        void OnUIPause(InputAction.CallbackContext context);
+    }
+    public interface IUIActions
+    {
+        void OnUIPause(InputAction.CallbackContext context);
     }
 }

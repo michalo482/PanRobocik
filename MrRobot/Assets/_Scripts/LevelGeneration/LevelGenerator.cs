@@ -3,7 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class LevelGenerator : MonoBehaviour
+
+
 {
+    public static LevelGenerator instance;
+    
+    
     [SerializeField] private Transform lastLevelPart;
     [SerializeField] private List<Transform> levelParts;
     private List<Transform> currentLevelParts;
@@ -14,14 +19,19 @@ public class LevelGenerator : MonoBehaviour
 
     [SerializeField] private float generationCooldown;
     private float cooldownTimer;
-    private bool generationOver;
+    private bool generationOver = true;
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     private void Start()
     {
         defaultSnapPoint = nextSnapPoint;
         //generatedLevelParts = new List<Transform>();
         //currentLevelParts = new List<Transform>(levelParts);
-        InitializeGeneration();
+        //InitializeGeneration();
     }
 
     private void Update()
@@ -35,7 +45,7 @@ public class LevelGenerator : MonoBehaviour
 
         if (cooldownTimer < 0)
         {
-            if (currentLevelParts.Count > 0)
+            if(currentLevelParts.Count > 0)
             {
                 cooldownTimer = generationCooldown;
                 GenerateNextLevelPart();
@@ -50,7 +60,7 @@ public class LevelGenerator : MonoBehaviour
     }
 
     [ContextMenu("Restart generation")]
-    private void InitializeGeneration()
+    public void InitializeGeneration()
     {
         nextSnapPoint = defaultSnapPoint;
         generationOver = false;
@@ -74,6 +84,8 @@ public class LevelGenerator : MonoBehaviour
         generationOver = true;
         GenerateNextLevelPart();
 
+
+        MissionManager.instance.StartMission();
     }
 
     [ContextMenu("Create new level part")]
@@ -95,7 +107,7 @@ public class LevelGenerator : MonoBehaviour
 
         levelPartScript.SnapAndAlignPartTo(nextSnapPoint);
 
-        if (levelPartScript.IntersectionDetected())
+        if(levelPartScript.IntersectionDetected())
         {
             Debug.LogWarning("Sie nalozyly");
             InitializeGeneration();

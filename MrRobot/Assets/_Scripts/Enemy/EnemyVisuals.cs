@@ -19,7 +19,8 @@ public enum EnemyRangeWeaponType
     Revolver,
     Shotgun,
     AutoRifle,
-    Rifle
+    Rifle,
+    Random
 }
 
 

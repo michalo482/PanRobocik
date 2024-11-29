@@ -18,6 +18,9 @@ public class MissionEndTrigger : MonoBehaviour
             return;
         }
         if(MissionManager.instance.MissionCompleted())
+        {
+            GameManager.Instance.GameCompleted();
             Debug.Log("Level completed");
+        }
     }
 }

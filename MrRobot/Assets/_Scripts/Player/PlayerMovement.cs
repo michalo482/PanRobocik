@@ -78,7 +78,17 @@ public class PlayerMovement : MonoBehaviour
 
     private void ApplyMovement()
     {
-        _movementDirection = new Vector3(moveInput.x, 0, moveInput.y);
+
+        if (moveInput.magnitude > 0)
+        {
+            _movementDirection = new Vector3(moveInput.x, 0, moveInput.y);
+        }
+        else
+        {
+            _movementDirection = Vector3.zero;
+        }
+
+        //_movementDirection = new Vector3(moveInput.x, 0, moveInput.y);
         ApplyGravity();
         
         if (_movementDirection.magnitude > 0)
@@ -102,16 +112,17 @@ public class PlayerMovement : MonoBehaviour
 
     private void AnimatorControllers()
     {
-        float xVelocity = Vector3.Dot(_movementDirection.normalized, transform.right);
-        float zVelocity = Vector3.Dot(_movementDirection.normalized, transform.forward);
-        
-        _animator.SetFloat(XVelocity, xVelocity, 0.1f, Time.deltaTime);
-        _animator.SetFloat(ZVelocity, zVelocity, 0.1f, Time.deltaTime);
+        Vector3 horizontalMovement = new Vector3(_movementDirection.x, 0, _movementDirection.z).normalized;
 
-        bool playRunAnimation = _isRunning && _movementDirection.magnitude > 0;
+
+        float xVelocity = Vector3.Dot(horizontalMovement, transform.right);
+        float zVelocity = Vector3.Dot(horizontalMovement, transform.forward);
+        
+        _animator.SetFloat(XVelocity, xVelocity);
+        _animator.SetFloat(ZVelocity, zVelocity);
+
+        bool playRunAnimation = _isRunning && moveInput.magnitude > 0;
         
         _animator.SetBool(IsRunning, playRunAnimation);
-    }
-
-    
+    }  
 }

@@ -1962,13 +1962,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c68ba6046aaf4d4288e65c9eb5d9f6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyType: 0
+  enemyType: 1
   whatIsAlly:
     serializedVersion: 2
     m_Bits: 2048
   whatIsPlayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   aggressionRange: 10
   idleTime: 1.5
   walkSpeed: 1.5
@@ -2978,7 +2978,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3140096151846969978}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1

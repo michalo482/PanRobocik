@@ -17,7 +17,7 @@ public class PlayerWeaponController : MonoBehaviour
 
     private const float REFERENCE_BULLET_SPEED = 20f;
 
-    [SerializeField] private WeaponData defaultWeaponData;
+    [SerializeField] private List<WeaponData> defaultWeaponData;
     
     [SerializeField] private Transform weaponHolder;
 
@@ -38,7 +38,7 @@ public class PlayerWeaponController : MonoBehaviour
         AssignInputEvents();
 
         
-        Invoke("EquipStartingWeapon", .1f);
+        //Invoke("EquipStartingWeapon", .1f);
         //currentWeapon.bulletsInMagazine = currentWeapon.totalReserveAmmo;
     }
 
@@ -92,7 +92,7 @@ public class PlayerWeaponController : MonoBehaviour
         //_player.WeaponVisuals.SwitchOffWeaponModels();
         _player.WeaponVisuals.PlayWeaponEquipAnimation();
         
-        CameraManager.instance.ChangeCameraDistance(currentWeapon.CameraDistance);
+        //CameraManager.instance.ChangeCameraDistance(currentWeapon.CameraDistance);
 
         UpdateWeaponUI();
     }
@@ -165,10 +165,16 @@ public class PlayerWeaponController : MonoBehaviour
         UpdateWeaponUI();
     }
     
-    private void EquipStartingWeapon()
+    public void SetDefaultWeapon(List<WeaponData> newWeaponData)
     {
-        weaponSlots[0] = new Weapon(defaultWeaponData);
-        
+        defaultWeaponData = new List<WeaponData>(newWeaponData);
+        weaponSlots.Clear();
+
+        foreach (var weaponData in newWeaponData)
+        {
+            PickupWeapon(new Weapon(weaponData));
+        }
+
         EquipWeapon(0);
     }
 

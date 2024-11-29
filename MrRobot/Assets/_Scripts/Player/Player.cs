@@ -16,10 +16,12 @@ public class Player : MonoBehaviour
     public Ragdoll Ragdoll { get; private set; }
     public Animator Animator { get; private set; }
 
+    public bool ControlsEnabled { get; private set; }
+
     private void Awake()
     {
         Controls = new PlayerControlls();
-
+        //Controls = ControlsManager.Instance.Controls;
         Animator = GetComponentInChildren<Animator>();
         Ragdoll = GetComponent<Ragdoll>();
         PlayerHealth = GetComponent<PlayerHealth>();
@@ -34,10 +36,16 @@ public class Player : MonoBehaviour
     {
         Controls.Enable();
         Controls.Character.UIMissionTooltipSwitch.performed += ctx => UI.instance.inGameUI.SwitchMissionTooltip();
+        Controls.Character.UIPause.performed += ctx => UI.instance.PauseSwitch(); 
     }
 
     private void OnDisable()
     {
         Controls.Disable();
+    }
+
+    public void SetControlsEnabledTo(bool enabled)
+    { 
+        ControlsEnabled = enabled;
     }
 }

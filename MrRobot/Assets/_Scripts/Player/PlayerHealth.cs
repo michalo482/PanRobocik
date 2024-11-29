@@ -27,8 +27,15 @@ public class PlayerHealth : HealthController
 
     private void Die()
     {
+        if (IsDead)
+        {
+            return;
+        }
+
         IsDead = true;
         player.Animator.enabled = false;
         player.Ragdoll.RagdollActive(true);
+
+        GameManager.Instance.GameOver();
     }
 }

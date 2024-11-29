@@ -34,3 +34,4 @@ MonoBehaviour:
   burstFireRate: 0
   burstFireDelay: 0.1
   weaponIcon: {fileID: -664407478, guid: 3477fe9a26e0faa42b5a9b5b258229c1, type: 3}
+  weaponInfo: Pew Pew z daleka

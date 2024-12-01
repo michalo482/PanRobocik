@@ -118,13 +118,14 @@ public class EnemyBoss : Enemy
 
     public void ActivateFlamethrower(bool activate)
     {
-
         flamethrowActive = activate;
 
-        if(!activate)
+        if (!activate)
         {
             flamethrower.Stop();
             Anim.SetTrigger("StopFlamethrower");
+        
+           
             return;
         }
 
@@ -134,10 +135,11 @@ public class EnemyBoss : Enemy
         mainModule.duration = flamethrowDuration;
         extraModule.duration = flamethrowDuration;
 
-
         flamethrower.Clear();
         flamethrower.Play();
+
     }
+
 
     public void ActivateHammer()
     {

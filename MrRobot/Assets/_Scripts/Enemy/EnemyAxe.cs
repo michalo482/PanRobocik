@@ -15,22 +15,21 @@ public class EnemyAxe : MonoBehaviour
     private Vector3 _direction;
 
     private float _timer = 1;
-    private float timeSinceLaunch = 0f; // Licznik czasu od momentu rzutu toporkiem
-    private float lifetime = 4f; // Czas, po którym toporek zostanie zatrzymany
+    private float timeSinceLaunch = 0f; 
+    private float lifetime = 4f; 
 
     private int damage;
 
-    [SerializeField] private AudioSource audioSource;       // AudioSource do odtwarzania dŸwiêków
-    [SerializeField] private AudioClip flySound;            // DŸwiêk lotu topora
+    [SerializeField] private AudioSource audioSource;       
+    [SerializeField] private AudioClip flySound;           
 
     private void Start()
     {
-        // Upewnij siê, ¿e AudioSource i dŸwiêk lotu s¹ przypisane
         if (audioSource != null && flySound != null)
         {
             audioSource.clip = flySound;
-            audioSource.loop = true;  // Zapêtlenie dŸwiêku lotu
-            audioSource.Play();       // Rozpoczêcie odtwarzania dŸwiêku lotu
+            audioSource.loop = true;  
+            audioSource.Play();      
         }
     }
     private void Update()
@@ -38,7 +37,6 @@ public class EnemyAxe : MonoBehaviour
         axeVisuals.Rotate(_rotationSpeed * Time.deltaTime * Vector3.right);
         _timer -= Time.deltaTime;
 
-        // Jeœli timer > 0, aktualizuj kierunek lotu topora w stronê gracza
         if (_timer > 0)
         {
             _direction = _player.position + Vector3.up - transform.position;
@@ -46,16 +44,12 @@ public class EnemyAxe : MonoBehaviour
 
         transform.forward = rb.velocity;
 
-        // Aktualizacja g³oœnoœci dŸwiêku na podstawie odleg³oœci od gracza
         UpdateSoundVolume();
-
-        // Zwiêksz licznik czasu
         timeSinceLaunch += Time.deltaTime;
 
-        // Jeœli minê³o lifetime sekund, zatrzymaj dŸwiêk lotu
         if (timeSinceLaunch >= lifetime && audioSource.isPlaying)
         {
-            audioSource.Stop(); // Zatrzymaj dŸwiêk po zakoñczeniu lotu
+            audioSource.Stop(); 
         }
     }
 
@@ -64,14 +58,12 @@ public class EnemyAxe : MonoBehaviour
         rb.velocity = _direction.normalized * _flySpeed;
         
     }
-        // Aktualizacja g³oœnoœci dŸwiêku na podstawie odleg³oœci od gracza
     private void UpdateSoundVolume()
     {
         if (_player != null && audioSource != null)
         {
             float distance = Vector3.Distance(transform.position, _player.position);
-            // Ustawienie g³oœnoœci na podstawie odleg³oœci (im bli¿ej, tym g³oœniej)
-            audioSource.volume = Mathf.Clamp(1 / (distance + 1), 0.6f, 1f); // Ograniczenie g³oœnoœci miêdzy 0.6 a 1
+            audioSource.volume = Mathf.Clamp(1 / (distance + 1), 0.6f, 1f); 
         }
     }
 
@@ -88,19 +80,8 @@ public class EnemyAxe : MonoBehaviour
         IDamagable damagable = collision.gameObject.GetComponent<IDamagable>();
         damagable?.TakeDamage(damage);
 
-        // Pobierz obiekt efektu uderzenia z ObjectPool
         GameObject newFx = ObjectPool.Instance.GetObject(impactFX, transform);
 
-        // ZnajdŸ AudioSource na ImpactFX
-        AudioSource impactAudioSource = newFx.GetComponent<AudioSource>();
-
-        // Dynamicznie dostosuj g³oœnoœæ dŸwiêku uderzenia w zale¿noœci od odleg³oœci od gracza
-        if (impactAudioSource != null)
-        {
-            float distance = Vector3.Distance(transform.position, _player.position);
-            impactAudioSource.volume = Mathf.Clamp(1 / (distance + 1), 0.6f, 1f);
-            impactAudioSource.Play();
-        }
 
         ObjectPool.Instance.ReturnObject(gameObject);
         ObjectPool.Instance.ReturnObject(newFx, 1f);
@@ -108,16 +89,5 @@ public class EnemyAxe : MonoBehaviour
 
 
 
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    IDamagable damagable = other.GetComponent<IDamagable>();
-    //    if (damagable != null)
-    //    {
-
-            
-    //    }
-        
-
-    //}
 }
 

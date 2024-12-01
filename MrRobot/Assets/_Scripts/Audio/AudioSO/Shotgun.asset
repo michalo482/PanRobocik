@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78cb9e43055ef494ea0ce6c5e5a618ad, type: 3}
   m_Name: Shotgun
   m_EditorClassIdentifier: 
-  shootSound: {fileID: 8300000, guid: 8d12dccd8a7f48c49b97c6ef96c4aad3, type: 3}
+  shootSound: {fileID: 8300000, guid: 7d986e47882f2144da57594820d3d392, type: 3}
   reloadSound: {fileID: 8300000, guid: 13b8a5be0c99b164798d022ef3c6cee3, type: 3}
   emptyMagazineSound: {fileID: 8300000, guid: 496a23c1553da7540bb2518592940a7c, type: 3}
   weaponSwitchSound: {fileID: 8300000, guid: 3f32e7c5ea0787f4facea726897e54a6, type: 3}

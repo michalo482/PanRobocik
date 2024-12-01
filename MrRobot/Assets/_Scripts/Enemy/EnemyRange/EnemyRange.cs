@@ -18,8 +18,7 @@ public enum GrenadePerk
 }
 public class EnemyRange : Enemy
 {
-    [Header("Dynamic Stats")]
-    [SerializeField] private EnemyDynamicStats dynamicStats;
+
 
     [Header("Enemy Perks")]
     public EnemyRangeWeaponType weaponType;
@@ -171,7 +170,7 @@ public bool CanThrowGrenade()
         return false;
     }
 
-    if (Time.time > dynamicStats.grenadeCooldown + lastTimeGrenadeThrown)
+    if (Time.time > grenadeCooldown + lastTimeGrenadeThrown)
     {
         return true;
     }

@@ -12,6 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3785bd86e81cd32448078235dc60d963, type: 3}
   m_Name: EnemyPistol
   m_EditorClassIdentifier: 
-  shootSound: {fileID: 8300000, guid: 21a6ada290b563d4a8ad8640268ae24d, type: 3}
-  reloadSound: {fileID: 8300000, guid: 13b8a5be0c99b164798d022ef3c6cee3, type: 3}
+  shootSound: {fileID: 8300000, guid: cf2c98fa699ef5243ae85de3410b50c3, type: 3}
   granadeSound: {fileID: 8300000, guid: 7337a0b5864c4cf4d88d2baf294c079d, type: 3}

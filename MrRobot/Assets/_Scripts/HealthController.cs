@@ -7,43 +7,45 @@ public class HealthController : MonoBehaviour
     public int maxHealth;
     public int currentHealth;
 
-    //audio
-    public AudioClip damageSound;
-    public AudioClip healSound;
-    public AudioClip deathSound;
-    private AudioSource audioSource;
+    public AudioSource damageAudioSource;
+    public AudioSource healAudioSource;
+    public AudioSource healAudioSource2;
+    public AudioSource deathAudioSource;
+    public AudioSource lowHealthAudioSource;
+
+    private bool lowHealthPlayed = false;
 
     protected virtual void Awake()
     {
         currentHealth = maxHealth;
-
-        audioSource = GetComponent<AudioSource>();
     }
 
     public virtual void ReduceHealth(int damage)
     {
         currentHealth -= damage;
 
-        if (damageSound != null && audioSource != null)
+        if (damageAudioSource != null)
         {
-            audioSource.clip = damageSound;
-            audioSource.Play();
+            damageAudioSource.Play();
         }
+
+        CheckLowHealth();
     }
 
     public virtual void IncreaseHealth()
     {
-        currentHealth++;
+        currentHealth = Mathf.Min(currentHealth + 1, maxHealth);
 
-        if (currentHealth > maxHealth)
+        if (healAudioSource && healAudioSource2 != null)
         {
-            currentHealth = maxHealth;
+            healAudioSource.Play();
+            healAudioSource2.Play();
+
         }
 
-        if (healSound != null && audioSource != null)
+        if (currentHealth > maxHealth * 0.33f)
         {
-            audioSource.clip = healSound;
-            audioSource.Play();
+            lowHealthPlayed = false; // Resetowanie flagi, gdy zdrowie wzrasta powy¿ej 33%
         }
     }
 
@@ -51,14 +53,45 @@ public class HealthController : MonoBehaviour
     {
         if (currentHealth <= 0)
         {
-            // Odtwarzamy dŸwiêk œmierci, jeœli jest przypisany
-            if (deathSound != null && audioSource != null)
+            if (deathAudioSource != null && !deathAudioSource.isPlaying)
             {
-                audioSource.clip = deathSound;
-                audioSource.Play();
+                deathAudioSource.Play();
             }
             return true;
         }
         return false;
+    }
+
+    private void CheckLowHealth()
+    {
+        if (lowHealthAudioSource == null)
+            return;
+
+        //przy smierci brak dzwieku lowhealth i reset pitcha do 1
+        if (currentHealth <= 0)
+        {
+            if (lowHealthAudioSource.isPlaying)
+                lowHealthAudioSource.Stop();
+
+            lowHealthAudioSource.pitch = 1.0f;
+            return;
+        }
+
+        float healthPercentage = (float)currentHealth / maxHealth * 100f;
+
+        // Odtwarzanie dŸwiêku niskiego zdrowia
+        if (healthPercentage <= 33f && !lowHealthPlayed)
+        {
+            lowHealthAudioSource.Play();
+            lowHealthPlayed = true;
+        }
+
+        // Ustawienie pitch w zale¿noœci od zdrowia
+        if (healthPercentage <= 10f)
+            lowHealthAudioSource.pitch = 1.3f;
+        else if (healthPercentage <= 19f)
+            lowHealthAudioSource.pitch = 1.2f;
+        else if (healthPercentage <= 30f)
+            lowHealthAudioSource.pitch = 1.0f;
     }
 }

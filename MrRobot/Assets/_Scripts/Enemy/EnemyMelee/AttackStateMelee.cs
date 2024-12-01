@@ -18,7 +18,6 @@ public class AttackStateMelee : EnemyState
     {
         base.Enter();
 
-        enemy.PlayAttackSound();
 
         enemy.UpdateAttackData();
         enemy.EnemyVisuals.EnableWeaponModel(true);

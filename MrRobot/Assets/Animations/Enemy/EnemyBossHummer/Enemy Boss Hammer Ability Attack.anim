@@ -109839,6 +109839,20 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
+  - time: 0
+    functionName: PlayHammerAttack3SFX
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.6666667
+    functionName: PlayUltiHammerSFX
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 0.96666664
     functionName: AbilityEvent
     data: 
@@ -109862,6 +109876,13 @@ AnimationClip:
     messageOptions: 0
   - time: 1.1
     functionName: AbilityEvent
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 1.8
+    functionName: PlayTauntSFX
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

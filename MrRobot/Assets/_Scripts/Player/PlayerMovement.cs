@@ -14,14 +14,6 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 _movementDirection;
     private Animator _animator;
 
-    [Header("Footstep Sounds")]
-    [SerializeField] private AudioSource footstepSource;
-    [SerializeField] private AudioClip walkClip1;
-    [SerializeField] private AudioClip walkClip2;
-    [SerializeField] private AudioClip runClip1;
-    [SerializeField] private AudioClip runClip2;
-    private bool _isPlayingFootstep;
-    private bool _useFirstClip; // Zmienna do prze³¹czania miêdzy dŸwiêkami
 
     public Vector2 moveInput { get; private set; }
     private bool _isRunning;
@@ -64,7 +56,6 @@ public class PlayerMovement : MonoBehaviour
         ApplyMovement();
         ApplyRotation();
         AnimatorControllers();
-        HandleFootstepSounds();
     }
 
     private void ApplyRotation()
@@ -81,7 +72,15 @@ public class PlayerMovement : MonoBehaviour
 
     private void ApplyMovement()
     {
-        _movementDirection = new Vector3(moveInput.x, 0, moveInput.y);
+        if (moveInput.magnitude > 0)
+        {
+            _movementDirection = new Vector3(moveInput.x, 0, moveInput.y);
+        }
+        else
+        {
+            _movementDirection = Vector3.zero;
+
+        }
         ApplyGravity();
 
         if (_movementDirection.magnitude > 0)
@@ -105,45 +104,21 @@ public class PlayerMovement : MonoBehaviour
 
     private void AnimatorControllers()
     {
-        float xVelocity = Vector3.Dot(_movementDirection.normalized, transform.right);
-        float zVelocity = Vector3.Dot(_movementDirection.normalized, transform.forward);
+        Vector3 horizontalMovement = new Vector3(_movementDirection.x, 0, _movementDirection.z).normalized;
 
-        _animator.SetFloat(XVelocity, xVelocity, 0.1f, Time.deltaTime);
-        _animator.SetFloat(ZVelocity, zVelocity, 0.1f, Time.deltaTime);
+
+        float xVelocity = Vector3.Dot(_movementDirection, transform.right);
+        float zVelocity = Vector3.Dot(_movementDirection, transform.forward);
+
+        _animator.SetFloat(XVelocity, xVelocity);
+        _animator.SetFloat(ZVelocity, zVelocity);
 
         bool playRunAnimation = _isRunning && _movementDirection.magnitude > 0;
 
         _animator.SetBool(IsRunning, playRunAnimation);
     }
 
-    private void HandleFootstepSounds()
-    {
-        if (_movementDirection.magnitude > 0 && _characterController.isGrounded)
-        {
-            if (!_isPlayingFootstep)
-            {
-                StartCoroutine(PlayFootstepSound());
-            }
-        }
-    }
 
-    private IEnumerator PlayFootstepSound()
-    {
-        _isPlayingFootstep = true;
 
-        // Wybór dŸwiêku na podstawie trybu (bieg/chód) i prze³¹czania miêdzy dwoma klipami
-        AudioClip clip = _isRunning
-            ? (_useFirstClip ? runClip1 : runClip2)
-            : (_useFirstClip ? walkClip1 : walkClip2);
 
-        footstepSource.clip = clip;
-        footstepSource.pitch = _isRunning ? 1.4f : 1f; // Przyspieszenie dŸwiêku podczas biegu
-        footstepSource.Play();
-
-        // Prze³¹czamy na kolejny klip przy nastêpnym kroku
-        _useFirstClip = !_useFirstClip;
-
-        yield return new WaitForSeconds(footstepSource.clip.length / footstepSource.pitch);
-        _isPlayingFootstep = false;
-    }
 }

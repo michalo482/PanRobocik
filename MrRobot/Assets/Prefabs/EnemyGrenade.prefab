@@ -431,3 +431,4 @@ MonoBehaviour:
   explosionFX: {fileID: 358637981425055526, guid: d67c169cb68b71e46bf7093621b9dd2c, type: 3}
   impactRadius: 2
   upwardsMultiplayer: 1
+  explosionSound: {fileID: 8300000, guid: 7337a0b5864c4cf4d88d2baf294c079d, type: 3}

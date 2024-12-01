@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47101b1e1d6160c4dad52490a89c6118, type: 3}
   m_Name: Ranges
   m_EditorClassIdentifier: 
-  grenadeCooldown: 15
+  grenadeCooldown: 5

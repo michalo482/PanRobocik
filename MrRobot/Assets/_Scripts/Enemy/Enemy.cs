@@ -5,9 +5,18 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
 
+public enum EnemyType
+{
+    MELEE,
+    RANGE,
+    BOSS,
+    RANDOM
+}
+
 [RequireComponent(typeof(NavMeshAgent))]
 public class Enemy : MonoBehaviour
 {
+    public EnemyType enemyType;
     public LayerMask whatIsAlly;
     public LayerMask whatIsPlayer;
     //public int healthPoints = 20;
@@ -30,6 +39,8 @@ public class Enemy : MonoBehaviour
     private Vector3[] _patrolPointsPosition;
 
     protected bool isMeleeAttackReady;
+
+    public EnemyDropController DropController {  get; private set; }
     
     
     public bool inBattleMode { get; private set; }
@@ -55,6 +66,7 @@ public class Enemy : MonoBehaviour
         Anim = GetComponentInChildren<Animator>();
         Player = GameObject.Find("Player").GetComponent<Transform>();
         EnemyVisuals = GetComponent<EnemyVisuals>();
+        DropController = GetComponent<EnemyDropController>();
     }
 
     protected virtual void Start()
@@ -128,6 +140,7 @@ public class Enemy : MonoBehaviour
         EnemyHealth.ReduceHealth(damage);
         if(EnemyHealth.ShouldDie())
         {
+            DropController.DropItem();
             Die();
         }
 
@@ -136,7 +149,8 @@ public class Enemy : MonoBehaviour
 
     public virtual void Die()
     {
-
+        MissionObjectHuntTarget huntTarget = GetComponent<MissionObjectHuntTarget>();
+        huntTarget?.InvokeOnTargetKilled();
     }
 
     public virtual void AttackCheck(Transform[] damagePoints, float attackRadius, GameObject meleeAttackFx, int damage)
@@ -212,5 +226,16 @@ public class Enemy : MonoBehaviour
         }
 
         return false;
+    }
+}
+
+
+    public virtual void MakeEnemyVIP()
+    {
+        int additionalHealth = Mathf.RoundToInt(EnemyHealth.currentHealth * 1.5f);
+
+        EnemyHealth.currentHealth += additionalHealth;
+
+        transform.localScale = transform.localScale * 1.25f;
     }
 }

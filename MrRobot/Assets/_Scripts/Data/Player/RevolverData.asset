@@ -33,4 +33,9 @@ MonoBehaviour:
   burstBulletsPerShot: 0
   burstFireRate: 0
   burstFireDelay: 0.1
+<<<<<<< HEAD
   weaponAudioData: {fileID: 11400000, guid: ff579cba181947b449716176bef66273, type: 2}
+=======
+  weaponIcon: {fileID: 1440921872, guid: 3477fe9a26e0faa42b5a9b5b258229c1, type: 3}
+  weaponInfo: Ihaaa komboju
+>>>>>>> 925deadaba6b035a6698e4c61e8ceeea8d1a09bb

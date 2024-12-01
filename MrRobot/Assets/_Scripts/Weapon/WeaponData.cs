@@ -45,4 +45,7 @@ public class WeaponData : ScriptableObject
     // AudioSO
     [Header("Weapon Sounds")]
     public WeaponAudioData weaponAudioData; // DŸwiêki dla tej broni
+    [Header("UI elements")]
+    public Sprite weaponIcon;
+    public string weaponInfo;
 }

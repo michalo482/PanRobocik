@@ -33,4 +33,9 @@ MonoBehaviour:
   burstBulletsPerShot: 3
   burstFireRate: 1.5
   burstFireDelay: 0.1
+<<<<<<< HEAD
   weaponAudioData: {fileID: 11400000, guid: ca776351061027b42aa01276777c0c85, type: 2}
+=======
+  weaponIcon: {fileID: -91878611, guid: 3477fe9a26e0faa42b5a9b5b258229c1, type: 3}
+  weaponInfo: Taki tam futurystyczny AK
+>>>>>>> 925deadaba6b035a6698e4c61e8ceeea8d1a09bb

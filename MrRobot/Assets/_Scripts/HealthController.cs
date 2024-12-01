@@ -14,6 +14,7 @@ public class HealthController : MonoBehaviour
     public AudioSource lowHealthAudioSource;
 
     private bool lowHealthPlayed = false;
+    private bool isDead;
 
     protected virtual void Awake()
     {
@@ -45,9 +46,10 @@ public class HealthController : MonoBehaviour
 
         if (currentHealth > maxHealth * 0.33f)
         {
-            lowHealthPlayed = false; // Resetowanie flagi, gdy zdrowie wzrasta powy¿ej 33%
+            lowHealthPlayed = false; 
         }
     }
+
 
     public bool ShouldDie() 
     {
@@ -67,7 +69,7 @@ public class HealthController : MonoBehaviour
         if (lowHealthAudioSource == null)
             return;
 
-        //przy smierci brak dzwieku lowhealth i reset pitcha do 1
+      
         if (currentHealth <= 0)
         {
             if (lowHealthAudioSource.isPlaying)
@@ -79,14 +81,13 @@ public class HealthController : MonoBehaviour
 
         float healthPercentage = (float)currentHealth / maxHealth * 100f;
 
-        // Odtwarzanie dŸwiêku niskiego zdrowia
+
         if (healthPercentage <= 33f && !lowHealthPlayed)
         {
             lowHealthAudioSource.Play();
             lowHealthPlayed = true;
         }
 
-        // Ustawienie pitch w zale¿noœci od zdrowia
         if (healthPercentage <= 10f)
             lowHealthAudioSource.pitch = 1.3f;
         else if (healthPercentage <= 19f)
@@ -94,4 +95,19 @@ public class HealthController : MonoBehaviour
         else if (healthPercentage <= 30f)
             lowHealthAudioSource.pitch = 1.0f;
     }
+
+    public bool ShouldDie()
+    {
+        if (isDead)
+            return false;
+
+        if(currentHealth <= 0)
+        {
+            isDead = true;
+            return true;
+        }
+
+        return false;
+    }
+
 }

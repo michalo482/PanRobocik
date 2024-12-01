@@ -19,7 +19,7 @@ public class PlayerWeaponController : MonoBehaviour
 
     private const float REFERENCE_BULLET_SPEED = 20f;
 
-    [SerializeField] private WeaponData defaultWeaponData;
+    [SerializeField] private List<WeaponData> defaultWeaponData;
     
     [SerializeField] private Transform weaponHolder;
 
@@ -55,6 +55,13 @@ private void Start()
     if (audioSource == null)
     {
         audioSource = gameObject.AddComponent<AudioSource>();
+        _player = GetComponent<Player>();
+
+        AssignInputEvents();
+
+        
+        //Invoke("EquipStartingWeapon", .1f);
+        //currentWeapon.bulletsInMagazine = currentWeapon.totalReserveAmmo;
     }
 
     AssignInputEvents();
@@ -130,7 +137,11 @@ private void Start()
 
         CameraManager.instance.ChangeCameraDistance(currentWeapon.CameraDistance);
 }
+        
+        //CameraManager.instance.ChangeCameraDistance(currentWeapon.CameraDistance);
 
+        UpdateWeaponUI();
+    }
 
     private void DropWeapon()
     {
@@ -184,6 +195,27 @@ public void PickupWeapon(Weapon newWeapon)
     {
         WeaponInSlot(newWeapon.weaponType).totalReserveAmmo += newWeapon.bulletsInMagazine;
         return;
+
+        if (WeaponInSlot(newWeapon.weaponType) != null)
+        {
+            WeaponInSlot(newWeapon.weaponType).totalReserveAmmo += newWeapon.bulletsInMagazine;
+            return;
+        }
+        
+        if (weaponSlots.Count >= maxSlots && newWeapon.weaponType != currentWeapon.weaponType)
+        {
+            int weaponIndex = weaponSlots.IndexOf(currentWeapon);
+            _player.WeaponVisuals.SwitchOffWeaponModels();
+            weaponSlots[weaponIndex] = newWeapon;
+            CreateWeaponOnTheGround();
+            EquipWeapon(weaponIndex);
+            return;
+        }
+        
+        weaponSlots.Add(newWeapon);
+        _player.WeaponVisuals.SwitchOnBackupWeaponModel();
+
+        UpdateWeaponUI();
     }
 
     if (weaponSlots.Count >= maxSlots && newWeapon.weaponType != currentWeapon.weaponType)
@@ -202,10 +234,16 @@ public void PickupWeapon(Weapon newWeapon)
 }
 
     
-    private void EquipStartingWeapon()
+    public void SetDefaultWeapon(List<WeaponData> newWeaponData)
     {
-        weaponSlots[0] = new Weapon(defaultWeaponData);
-        
+        defaultWeaponData = new List<WeaponData>(newWeaponData);
+        weaponSlots.Clear();
+
+        foreach (var weaponData in newWeaponData)
+        {
+            PickupWeapon(new Weapon(weaponData));
+        }
+
         EquipWeapon(0);
     }
 
@@ -243,6 +281,13 @@ private void Shoot()
         return;
 
     if (currentWeapon.bulletsInMagazine <= 0)
+
+    public void UpdateWeaponUI()
+    {
+        UI.instance.inGameUI.UpdateWeaponUI(weaponSlots, currentWeapon);
+    }
+
+    private void Shoot()
     {
         if (!isOutOfAmmo && weaponAudioData != null && weaponAudioData.emptyMagazineSound != null)
         {
@@ -272,6 +317,15 @@ private void Shoot()
     private void FireSingleBullet()
 {
     currentWeapon.bulletsInMagazine--;
+    {
+        currentWeapon.bulletsInMagazine--;
+        UpdateWeaponUI();
+        
+        GameObject newBullet = ObjectPool.Instance.GetObject(bulletPrefab, GunPoint());
+        //newBullet.transform.position = GunPoint().position;
+        newBullet.transform.rotation = Quaternion.LookRotation(GunPoint().forward);
+        //Instantiate(bulletPrefab, gunPoint.position, Quaternion.LookRotation(gunPoint.forward));
+        Rigidbody rbNewBullet = newBullet.GetComponent<Rigidbody>();
 
     // Odtwarzanie dŸwiêku strza³u z CD
     if (weaponAudioData != null && weaponAudioData.shootSound != null && Time.time >= lastShootSoundTime + shootSoundCooldown)

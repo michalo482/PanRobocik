@@ -80,7 +80,12 @@ public class PlayerMovement : MonoBehaviour
         {
             _movementDirection = Vector3.zero;
 
+
         }
+
+        }
+
+        //_movementDirection = new Vector3(moveInput.x, 0, moveInput.y);
         ApplyGravity();
 
         if (_movementDirection.magnitude > 0)
@@ -121,4 +126,17 @@ public class PlayerMovement : MonoBehaviour
 
 
 
+
+
+
+        float xVelocity = Vector3.Dot(horizontalMovement, transform.right);
+        float zVelocity = Vector3.Dot(horizontalMovement, transform.forward);
+        
+        _animator.SetFloat(XVelocity, xVelocity);
+        _animator.SetFloat(ZVelocity, zVelocity);
+
+        bool playRunAnimation = _isRunning && moveInput.magnitude > 0;
+        
+        _animator.SetBool(IsRunning, playRunAnimation);
+    }  
 }

@@ -44,10 +44,15 @@ public class PlayerAim : MonoBehaviour
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.P))
+        if(_player.ControlsEnabled == false)
         {
-            isAimingPrecisly = !isAimingPrecisly;
+            return;
         }
+
+        //if (Input.GetKeyDown(KeyCode.P))
+        //{
+        //    isAimingPrecisly = !isAimingPrecisly;
+        //}
 
         if (Input.GetKeyDown(KeyCode.L))
         {

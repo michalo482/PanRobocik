@@ -55,6 +55,7 @@ public class Enemy : MonoBehaviour
     public EnemyHealth EnemyHealth { get; private set; }
     public Ragdoll Ragdoll { get; private set; }
 
+
     protected virtual void Awake()
     {
         StateMachine = new EnemyStateMachine();
@@ -226,6 +227,8 @@ public class Enemy : MonoBehaviour
 
         return false;
     }
+}
+
 
     public virtual void MakeEnemyVIP()
     {

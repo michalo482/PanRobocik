@@ -15,14 +15,26 @@ public class EnemyAxe : MonoBehaviour
     private Vector3 _direction;
 
     private float _timer = 1;
+    private float timeSinceLaunch = 0f; 
+    private float lifetime = 4f; 
 
     private int damage;
 
-    
+    [SerializeField] private AudioSource audioSource;       
+    [SerializeField] private AudioClip flySound;           
+
+    private void Start()
+    {
+        if (audioSource != null && flySound != null)
+        {
+            audioSource.clip = flySound;
+            audioSource.loop = true;  
+            audioSource.Play();      
+        }
+    }
     private void Update()
     {
         axeVisuals.Rotate(_rotationSpeed * Time.deltaTime * Vector3.right);
-
         _timer -= Time.deltaTime;
 
         if (_timer > 0)
@@ -31,12 +43,28 @@ public class EnemyAxe : MonoBehaviour
         }
 
         transform.forward = rb.velocity;
+
+        UpdateSoundVolume();
+        timeSinceLaunch += Time.deltaTime;
+
+        if (timeSinceLaunch >= lifetime && audioSource.isPlaying)
+        {
+            audioSource.Stop(); 
+        }
     }
 
     private void FixedUpdate()
     {
         rb.velocity = _direction.normalized * _flySpeed;
         
+    }
+    private void UpdateSoundVolume()
+    {
+        if (_player != null && audioSource != null)
+        {
+            float distance = Vector3.Distance(transform.position, _player.position);
+            audioSource.volume = Mathf.Clamp(1 / (distance + 1), 0.6f, 1f); 
+        }
     }
 
     public void AxeSetup(float flySpeed, Transform player, float timer, int damage)
@@ -53,20 +81,13 @@ public class EnemyAxe : MonoBehaviour
         damagable?.TakeDamage(damage);
 
         GameObject newFx = ObjectPool.Instance.GetObject(impactFX, transform);
-        //newFx.transform.position = transform.position;
+
+
         ObjectPool.Instance.ReturnObject(gameObject);
         ObjectPool.Instance.ReturnObject(newFx, 1f);
     }
 
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    IDamagable damagable = other.GetComponent<IDamagable>();
-    //    if (damagable != null)
-    //    {
 
-            
-    //    }
-        
 
-    //}
 }
+

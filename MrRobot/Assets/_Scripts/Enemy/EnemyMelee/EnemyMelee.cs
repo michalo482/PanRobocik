@@ -73,11 +73,11 @@ public class EnemyMelee : Enemy
 
     [SerializeField] private GameObject meleeAttackFx;
 
+
     protected override void Awake()
     {
         base.Awake();
 
-        
         
         IdleStateMelee = new IdleStateMelee(this, StateMachine, "Idle");
         MoveStateMelee = new MoveStateMelee(this, StateMachine, "Move");
@@ -87,6 +87,8 @@ public class EnemyMelee : Enemy
         DeadStateMelee = new DeadStateMelee(this, StateMachine, "Idle");
         AbilityStateMelee = new AbilityStateMelee(this, StateMachine, "AxeThrow");
     }
+
+
 
     protected override void Start()
     {
@@ -118,6 +120,9 @@ public class EnemyMelee : Enemy
         base.EnterBattleMode();
         StateMachine.ChangeState(RecoveryStateMelee);
     }
+
+
+
 
     public void UpdateAttackData()
     {

@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 133ded964eef1834f942182c8a49eab9, type: 3}
+  m_Name: MeleeAxeEnemy
+  m_EditorClassIdentifier: 
+  attackSound: {fileID: 8300000, guid: 19feb10839b0f3c479912112b949d299, type: 3}
+  AxeThrowSound: {fileID: 8300000, guid: f3106930412efc640ad121555939d38d, type: 3}
+  AxeHitSound: {fileID: 8300000, guid: 8ddf57a09c6c6194cad025e1b34ecc54, type: 3}
+  granadeSound: {fileID: 8300000, guid: 7337a0b5864c4cf4d88d2baf294c079d, type: 3}

@@ -467,6 +467,19 @@ MonoBehaviour:
   - {fileID: 7213966941849338984}
   - {fileID: 3257441492486565635}
   - {fileID: 1859863188629377014}
+  weapon:
+    fireSound: {fileID: 0}
+    reloadSound: {fileID: 0}
+    emptyMagSound: {fileID: 0}
+    equipSound: {fileID: 0}
+    weaponType: 0
+    shootType: 0
+    bulletsInMagazine: 0
+    magazineCapacity: 0
+    totalReserveAmmo: 0
+    fireRate: 0
+    defaultFireRate: 0
+    burstActive: 0
 --- !u!1 &8147344781508767681
 GameObject:
   m_ObjectHideFlags: 0

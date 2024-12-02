@@ -24,7 +24,7 @@ MonoBehaviour:
   baseSpread: 0.25
   maxSpread: 2
   spreadIncreaseRate: 0.15
-  reloadSpeed: 2
+  reloadSpeed: 1.1
   equipmentSpeed: 3
   gunDistance: 9.1
   cameraDistance: 8
@@ -33,5 +33,9 @@ MonoBehaviour:
   burstBulletsPerShot: 0
   burstFireRate: 0
   burstFireDelay: 0
+<<<<<<< HEAD
+  weaponAudioData: {fileID: 11400000, guid: aa4b279d1c146094e9f88f9928120c5f, type: 2}
+=======
   weaponIcon: {fileID: 1068215163, guid: 3477fe9a26e0faa42b5a9b5b258229c1, type: 3}
   weaponInfo: Podstawowe Pew Pew
+>>>>>>> 925deadaba6b035a6698e4c61e8ceeea8d1a09bb

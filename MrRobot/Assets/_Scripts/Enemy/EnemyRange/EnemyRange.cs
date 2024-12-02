@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+
 
 
 public enum CoverPerk
@@ -16,6 +18,8 @@ public enum GrenadePerk
 }
 public class EnemyRange : Enemy
 {
+
+
     [Header("Enemy Perks")]
     public EnemyRangeWeaponType weaponType;
     public CoverPerk coverPerk;
@@ -61,6 +65,9 @@ public class EnemyRange : Enemy
     public Transform Aim;
     public Transform PlayersBody;
     public LayerMask WhatToIgnore;
+
+    [Header("Weapon Audio Data")]
+    [SerializeField] private WeaponAudioDataEnemy weaponAudioDataEnemy;
     
     
     
@@ -104,6 +111,26 @@ public class EnemyRange : Enemy
         StateMachine.currentState.Update();
     }
 
+
+    //audioenemies
+    private void PlayShootSound()
+{
+    if (weaponAudioDataEnemy.shootSound != null)
+    {
+        AudioSource.PlayClipAtPoint(weaponAudioDataEnemy.shootSound, transform.position);
+    }
+}
+
+    private void PlayGrenadeSound()
+    {
+        if (weaponAudioDataEnemy.granadeSound != null)
+        {
+            AudioSource.PlayClipAtPoint(weaponAudioDataEnemy.granadeSound, transform.position);
+        }
+    }
+
+
+
     public override void Die()
     {
         base.Die();
@@ -132,47 +159,61 @@ public class EnemyRange : Enemy
         }
     }
 
-    public bool CanThrowGrenade()
+public bool CanThrowGrenade()
+{
+    if (grenadePerk == GrenadePerk.Unavaible)
     {
-        if(grenadePerk == GrenadePerk.Unavaible)
-        {
-            return false;
-        }
-
-        if(Vector3.Distance(Player.transform.position, transform.position) < safeDistance)
-        {
-            return false;
-        }
-
-        if(Time.time > grenadeCooldown + lastTimeGrenadeThrown)
-        {
-            return true;
-        }
-
         return false;
     }
-    public void ThrowGrenade()
+
+    if (Vector3.Distance(Player.transform.position, transform.position) < safeDistance)
     {
-        lastTimeGrenadeThrown = Time.time;
-        EnemyVisuals.EnableGrenadeModel(false);
-        GameObject newGrenade = ObjectPool.Instance.GetObject(grenadePrefab, grenadeStartPoint);
-        //newGrenade.transform.position = grenadeStartPoint.transform.position;
-
-        EnemyGrenade newGrenadeScript = newGrenade.GetComponent<EnemyGrenade>();
-
-        if(StateMachine.currentState == DeadStateRange)
-        {
-            newGrenadeScript.SetupGrenade(whatIsAlly, transform.position, 1, explosionTimer, impactPower, grenadeDamage);
-            return;
-        }
-
-        newGrenadeScript.SetupGrenade(whatIsAlly, Player.transform.position, timeToTarget, explosionTimer, impactPower, grenadeDamage);
-        Debug.Log("RZUCAAAAM");
+        return false;
     }
+
+    if (Time.time > grenadeCooldown + lastTimeGrenadeThrown)
+    {
+        return true;
+    }
+
+    return false;
+}
+
+   public void ThrowGrenade()
+{
+    lastTimeGrenadeThrown = Time.time;
+
+    EnemyVisuals.EnableGrenadeModel(false);
+
+    GameObject newGrenade = ObjectPool.Instance.GetObject(grenadePrefab, grenadeStartPoint);
+
+    EnemyGrenade newGrenadeScript = newGrenade.GetComponent<EnemyGrenade>();
+
+    // Przypisanie dŸwiêku granata 
+    newGrenadeScript.explosionSound = weaponAudioDataEnemy.granadeSound;
+
+    if (StateMachine.currentState == DeadStateRange)
+    {
+        newGrenadeScript.SetupGrenade(whatIsAlly, transform.position, 1, explosionTimer, impactPower, grenadeDamage);
+        return;
+    }
+
+    newGrenadeScript.SetupGrenade(whatIsAlly, Player.transform.position, timeToTarget, explosionTimer, impactPower, grenadeDamage);
+
+    Debug.Log("RZUCAAAAM");
+}
+
+
+
+    
 
     public void FireSingleBullet()
     {
         Anim.SetTrigger("Shoot");
+
+        //shootsounds
+        PlayShootSound(); 
+
 
         Vector3 bulletDirection = (Aim.position - gunPoint.position).normalized;
 

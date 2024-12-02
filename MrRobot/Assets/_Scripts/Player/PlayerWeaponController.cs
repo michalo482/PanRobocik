@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+
 
 public class PlayerWeaponController : MonoBehaviour
 {
@@ -29,10 +31,30 @@ public class PlayerWeaponController : MonoBehaviour
 
     private bool _weaponReady;
     private bool _isShooting;
+       
+    //audioSO
+    [SerializeField] private AudioEvent weaponPickupAudioEvent;
+
+    [SerializeField] private WeaponAudioData weaponAudioData;
+    private AudioSource audioSource;
+    [Header("Audio Cooldowns")]
+    [SerializeField] private float shootSoundCooldown = 0.1f;
+    public AudioClip weaponSwitchSound;
+
+
+
+    private bool isOutOfAmmo = false;
+    private float lastShootSoundTime = -1f;
+
     
 
-    private void Start()
+private void Start()
+{
+    _player = GetComponent<Player>();
+    audioSource = GetComponent<AudioSource>();
+    if (audioSource == null)
     {
+        audioSource = gameObject.AddComponent<AudioSource>();
         _player = GetComponent<Player>();
 
         AssignInputEvents();
@@ -41,6 +63,11 @@ public class PlayerWeaponController : MonoBehaviour
         //Invoke("EquipStartingWeapon", .1f);
         //currentWeapon.bulletsInMagazine = currentWeapon.totalReserveAmmo;
     }
+
+    AssignInputEvents();
+    Invoke("EquipStartingWeapon", .1f);
+}
+
 
     private void Update()
     {
@@ -62,6 +89,7 @@ public class PlayerWeaponController : MonoBehaviour
         controls.Character.EquipSlot4.performed += context => EquipWeapon(3);
         controls.Character.EquipSlot5.performed += context => EquipWeapon(4);
 
+
         controls.Character.DropCurrentWeapon.performed += context => DropWeapon();
 
         controls.Character.Reload.performed += context =>
@@ -77,20 +105,38 @@ public class PlayerWeaponController : MonoBehaviour
 
     private void Reload()
     {
-        SetWeaponReady(false);
-        _player.WeaponVisuals.PlayReloadAnimation();
+         isOutOfAmmo = false;  // Reset flagi przy prze³adowaniu
+         SetWeaponReady(false);
+         _player.WeaponVisuals.PlayReloadAnimation();
+
+        // Odtwarzanie dŸwiêku prze³adowania
+        if (weaponAudioData != null && weaponAudioData.reloadSound != null)
+            {
+            audioSource.PlayOneShot(weaponAudioData.reloadSound);
+            }
     }
 
     private void EquipWeapon(int i)
-    {
-        if(i >= weaponSlots.Count)
+{
+        if (i >= weaponSlots.Count)
             return;
 
         SetWeaponReady(false);
         currentWeapon = weaponSlots[i];
 
-        //_player.WeaponVisuals.SwitchOffWeaponModels();
+        // Aktualizowanie audioSO dla nowej broni
+        weaponAudioData = currentWeapon.GetWeaponData().weaponAudioData;
+
         _player.WeaponVisuals.PlayWeaponEquipAnimation();
+    
+        // Odtworzenie dŸwiêku zmiany broni
+        if (weaponAudioData.weaponSwitchSound != null)
+        {
+            audioSource.PlayOneShot(weaponAudioData.weaponSwitchSound);
+        }
+
+        CameraManager.instance.ChangeCameraDistance(currentWeapon.CameraDistance);
+}
         
         //CameraManager.instance.ChangeCameraDistance(currentWeapon.CameraDistance);
 
@@ -140,8 +186,15 @@ public class PlayerWeaponController : MonoBehaviour
 
     public bool HasOnlyOneWeapon() => weaponSlots.Count <= 1;
 
-    public void PickupWeapon(Weapon newWeapon)
+public void PickupWeapon(Weapon newWeapon)
+{
+    // Wywo³aj dŸwiêk podniesienia broni
+    weaponPickupAudioEvent?.Raise();
+
+    if (WeaponInSlot(newWeapon.weaponType) != null)
     {
+        WeaponInSlot(newWeapon.weaponType).totalReserveAmmo += newWeapon.bulletsInMagazine;
+        return;
 
         if (WeaponInSlot(newWeapon.weaponType) != null)
         {
@@ -164,6 +217,22 @@ public class PlayerWeaponController : MonoBehaviour
 
         UpdateWeaponUI();
     }
+
+    if (weaponSlots.Count >= maxSlots && newWeapon.weaponType != currentWeapon.weaponType)
+    {
+        int weaponIndex = weaponSlots.IndexOf(currentWeapon);
+        _player.WeaponVisuals.SwitchOffWeaponModels();
+        weaponSlots[weaponIndex] = newWeapon;
+        CreateWeaponOnTheGround();
+        EquipWeapon(weaponIndex);
+        
+        return;
+    }
+    
+    weaponSlots.Add(newWeapon);
+    _player.WeaponVisuals.SwitchOnBackupWeaponModel();
+}
+
     
     public void SetDefaultWeapon(List<WeaponData> newWeaponData)
     {
@@ -206,6 +275,13 @@ public class PlayerWeaponController : MonoBehaviour
         }
     }
 
+private void Shoot()
+{
+    if (!WeaponReady())
+        return;
+
+    if (currentWeapon.bulletsInMagazine <= 0)
+
     public void UpdateWeaponUI()
     {
         UI.instance.inGameUI.UpdateWeaponUI(weaponSlots, currentWeapon);
@@ -213,30 +289,34 @@ public class PlayerWeaponController : MonoBehaviour
 
     private void Shoot()
     {
-        if (WeaponReady() == false)
-            return;
-        
-        if (currentWeapon.CanShoot() == false)
-            return;
-        
-        _player.WeaponVisuals.PlayFireAnimation();
-
-        if (currentWeapon.shootType == ShootType.Single)
-            _isShooting = false;
-
-        if (currentWeapon.BurstActivated() == true)
+        if (!isOutOfAmmo && weaponAudioData != null && weaponAudioData.emptyMagazineSound != null)
         {
-            StartCoroutine(BurstFire());
-            return;
+            audioSource.PlayOneShot(weaponAudioData.emptyMagazineSound);
+            isOutOfAmmo = true;
         }
-        
-        FireSingleBullet();
-        
-        TriggerEnemyDodge();
-
+        return;
     }
 
+    isOutOfAmmo = false;
+    _player.WeaponVisuals.PlayFireAnimation();
+
+    if (currentWeapon.shootType == ShootType.Single)
+        _isShooting = false;
+
+    if (currentWeapon.BurstActivated())
+    {
+        StartCoroutine(BurstFire());
+        return;
+    }
+
+    FireSingleBullet();
+    TriggerEnemyDodge();
+}
+
+
     private void FireSingleBullet()
+{
+    currentWeapon.bulletsInMagazine--;
     {
         currentWeapon.bulletsInMagazine--;
         UpdateWeaponUI();
@@ -247,14 +327,25 @@ public class PlayerWeaponController : MonoBehaviour
         //Instantiate(bulletPrefab, gunPoint.position, Quaternion.LookRotation(gunPoint.forward));
         Rigidbody rbNewBullet = newBullet.GetComponent<Rigidbody>();
 
-        Bullet bulletScript = newBullet.GetComponent<Bullet>();
-        bulletScript.BulletSetup(whatIsAlly,currentWeapon.bulletDamage, currentWeapon.GunDistance, bulletImpactForce);
-        
-        Vector3 bulletsDirection = currentWeapon.ApplySpread(BulletDirection());
-        
-        rbNewBullet.mass = REFERENCE_BULLET_SPEED / bulletSpeed;
-        rbNewBullet.velocity = bulletsDirection * bulletSpeed;
+    // Odtwarzanie dŸwiêku strza³u z CD
+    if (weaponAudioData != null && weaponAudioData.shootSound != null && Time.time >= lastShootSoundTime + shootSoundCooldown)
+    {
+        audioSource.PlayOneShot(weaponAudioData.shootSound);
+        lastShootSoundTime = Time.time;
     }
+
+    GameObject newBullet = ObjectPool.Instance.GetObject(bulletPrefab, GunPoint());
+    newBullet.transform.rotation = Quaternion.LookRotation(GunPoint().forward);
+    Rigidbody rbNewBullet = newBullet.GetComponent<Rigidbody>();
+
+    Bullet bulletScript = newBullet.GetComponent<Bullet>();
+    bulletScript.BulletSetup(whatIsAlly, currentWeapon.bulletDamage, currentWeapon.GunDistance, bulletImpactForce);
+
+    Vector3 bulletsDirection = currentWeapon.ApplySpread(BulletDirection());
+    rbNewBullet.mass = REFERENCE_BULLET_SPEED / bulletSpeed;
+    rbNewBullet.velocity = bulletsDirection * bulletSpeed;
+}
+
 
     public Vector3 BulletDirection()
     {

@@ -42,6 +42,9 @@ public class WeaponData : ScriptableObject
     public float burstFireRate;
     public float burstFireDelay = .1f;
 
+    // AudioSO
+    [Header("Weapon Sounds")]
+    public WeaponAudioData weaponAudioData; // DŸwiêki dla tej broni
     [Header("UI elements")]
     public Sprite weaponIcon;
     public string weaponInfo;

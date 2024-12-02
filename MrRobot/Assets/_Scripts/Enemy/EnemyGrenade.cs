@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+
 
 public class EnemyGrenade : MonoBehaviour
 {
@@ -16,7 +18,8 @@ public class EnemyGrenade : MonoBehaviour
     private bool canExplode = true;
 
     private int grenadeDamage;
-
+    // Dodano pole do dŸwiêku wybuchu granata
+    public AudioClip explosionSound;
 
     private void Awake()
     {
@@ -27,7 +30,7 @@ public class EnemyGrenade : MonoBehaviour
     {
         timer -= Time.deltaTime;
 
-        if(timer < 0 && canExplode)
+        if (timer < 0 && canExplode)
         {
             Explode();
         }
@@ -36,7 +39,14 @@ public class EnemyGrenade : MonoBehaviour
     private void Explode()
     {
         canExplode = false;
+        
         PlayerExplosionFx();
+
+        // Odtwarzanie dŸwiêku wybuchu
+        if (explosionSound != null)
+        {
+            AudioSource.PlayClipAtPoint(explosionSound, transform.position);
+        }
 
         HashSet<GameObject> uniqueEntities = new HashSet<GameObject>();
 
@@ -46,9 +56,6 @@ public class EnemyGrenade : MonoBehaviour
             IDamagable damagable = hit.GetComponent<IDamagable>();
             if (damagable != null)
             {
-
-
-
                 if (IsTargetValid(hit) == false)
                 {
                     continue;
@@ -62,9 +69,7 @@ public class EnemyGrenade : MonoBehaviour
                 damagable.TakeDamage(grenadeDamage);
             }
 
-            //ApplyDamagaTo(hit);
             ApplyPhysicalForceTo(hit);
-
         }
     }
 
@@ -77,12 +82,6 @@ public class EnemyGrenade : MonoBehaviour
         }
     }
 
-    //private static void ApplyDamagaTo(Collider hit)
-    //{
-    //    IDamagable damagable = hit.GetComponent<IDamagable>();
-    //    damagable?.TakeDamage();
-    //}
-
     private void PlayerExplosionFx()
     {
         GameObject newFX = ObjectPool.Instance.GetObject(explosionFX, transform);
@@ -92,12 +91,12 @@ public class EnemyGrenade : MonoBehaviour
 
     private bool IsTargetValid(Collider collider)
     {
-        if(GameManager.Instance.friendlyFire)
+        if (GameManager.Instance.friendlyFire)
         {
             return true;
         }
 
-        if((allyLayerMask.value & (1 << collider.gameObject.layer)) > 0)
+        if ((allyLayerMask.value & (1 << collider.gameObject.layer)) > 0)
         {
             return false;
         }

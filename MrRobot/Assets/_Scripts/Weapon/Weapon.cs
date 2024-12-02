@@ -208,4 +208,8 @@ public class Weapon
             totalReserveAmmo = 0;
         }
     }
+        public WeaponData GetWeaponData()
+{
+    return WeaponData;
+}
 }

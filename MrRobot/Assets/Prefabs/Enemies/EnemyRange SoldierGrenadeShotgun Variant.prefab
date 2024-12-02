@@ -56,6 +56,10 @@ PrefabInstance:
       propertyPath: weaponType
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 7167613049248283082, guid: cfcf1f5337b4b804ab78aa5b6da7e7e7, type: 3}
+      propertyPath: weaponAudioDataEnemy
+      value: 
+      objectReference: {fileID: 11400000, guid: 144402e14182db748a2909b03239e573, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -143,9 +143,9 @@ GameObject:
   - component: {fileID: 6835703941723161101}
   - component: {fileID: 5170006186401613715}
   - component: {fileID: 6632906550281619923}
-  - component: {fileID: 6945543200623424858}
+  - component: {fileID: 8187684750843812460}
   m_Layer: 11
-  m_Name: EnemyMeleeWithKey
+  m_Name: EnemyMelee
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -306,7 +306,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9403d71099d283f45815e6c0d82d751a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  missionObjectKey: {fileID: 9095666355982429289, guid: ca81647267862594b8a16270b0a473be, type: 3}
+  missionObjectKey: {fileID: 0}
 --- !u!114 &6632906550281619923
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -324,9 +324,9 @@ MonoBehaviour:
   damageAudioSource: {fileID: 0}
   healAudioSource: {fileID: 0}
   healAudioSource2: {fileID: 0}
-  deathAudioSource: {fileID: 6945543200623424858}
+  deathAudioSource: {fileID: 8187684750843812460}
   lowHealthAudioSource: {fileID: 0}
---- !u!82 &6945543200623424858
+--- !u!82 &8187684750843812460
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6198,19 +6198,19 @@ GameObject:
   - component: {fileID: 5920612264706570462}
   - component: {fileID: 3134731287913048507}
   - component: {fileID: 8151017597419801764}
-  - component: {fileID: 8978012475841593673}
-  - component: {fileID: 3859051897242553104}
-  - component: {fileID: 951340706206173541}
-  - component: {fileID: 7889854367472072866}
-  - component: {fileID: 4531229341091983518}
-  - component: {fileID: 8869012726918323552}
-  - component: {fileID: 318529178080603726}
-  - component: {fileID: 4228933532290034643}
-  - component: {fileID: 2418642428085222970}
-  - component: {fileID: 9039687191538238832}
-  - component: {fileID: 9001603825765006799}
-  - component: {fileID: 685346972882085461}
-  - component: {fileID: 2260988724053767175}
+  - component: {fileID: 5165487618058916047}
+  - component: {fileID: 4257103517564175609}
+  - component: {fileID: 5497392851520351904}
+  - component: {fileID: 2042850040641824464}
+  - component: {fileID: 6132568019829303830}
+  - component: {fileID: 6519440501395326999}
+  - component: {fileID: 8826594378483838285}
+  - component: {fileID: 2931814193600757831}
+  - component: {fileID: 3625704033707044203}
+  - component: {fileID: 133731883637382840}
+  - component: {fileID: 2697608436913746723}
+  - component: {fileID: 5951609198369347438}
+  - component: {fileID: 1803246787411211142}
   m_Layer: 11
   m_Name: character_enemy_NEW
   m_TagString: Untagged
@@ -6268,7 +6268,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1fb4f077c7f1134695d3249e97121d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &8978012475841593673
+--- !u!114 &5165487618058916047
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6280,11 +6280,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c06d0c2004cfb5c489cc6963645abacb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftSource: {fileID: 3859051897242553104}
-  rightSource: {fileID: 951340706206173541}
-  leftrunSource: {fileID: 7889854367472072866}
-  rightrunSource: {fileID: 4531229341091983518}
---- !u!82 &3859051897242553104
+  leftSource: {fileID: 4257103517564175609}
+  rightSource: {fileID: 5497392851520351904}
+  leftrunSource: {fileID: 2042850040641824464}
+  rightrunSource: {fileID: 6132568019829303830}
+--- !u!82 &4257103517564175609
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6380,7 +6380,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!82 &951340706206173541
+--- !u!82 &5497392851520351904
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6476,7 +6476,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!82 &7889854367472072866
+--- !u!82 &2042850040641824464
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6572,7 +6572,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!82 &4531229341091983518
+--- !u!82 &6132568019829303830
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6668,7 +6668,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &8869012726918323552
+--- !u!114 &6519440501395326999
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6680,14 +6680,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a4f00b711da35e49b28ec8b4482a93c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slashSource: {fileID: 318529178080603726}
-  screamSource: {fileID: 4228933532290034643}
-  spinSource: {fileID: 2418642428085222970}
-  screamtauntSource: {fileID: 9039687191538238832}
-  rollSource: {fileID: 9001603825765006799}
-  tauntmeeleSource: {fileID: 685346972882085461}
-  boxattackSource: {fileID: 2260988724053767175}
---- !u!82 &318529178080603726
+  slashSource: {fileID: 8826594378483838285}
+  screamSource: {fileID: 2931814193600757831}
+  spinSource: {fileID: 3625704033707044203}
+  screamtauntSource: {fileID: 133731883637382840}
+  rollSource: {fileID: 2697608436913746723}
+  tauntmeeleSource: {fileID: 5951609198369347438}
+  boxattackSource: {fileID: 1803246787411211142}
+--- !u!82 &8826594378483838285
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6783,7 +6783,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!82 &4228933532290034643
+--- !u!82 &2931814193600757831
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6879,7 +6879,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!82 &2418642428085222970
+--- !u!82 &3625704033707044203
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6975,7 +6975,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!82 &9039687191538238832
+--- !u!82 &133731883637382840
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -7071,7 +7071,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!82 &9001603825765006799
+--- !u!82 &2697608436913746723
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -7091,8 +7091,8 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
+  MinDistance: 2
+  MaxDistance: 35
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -7127,7 +7127,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -7167,7 +7167,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!82 &685346972882085461
+--- !u!82 &5951609198369347438
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -7263,7 +7263,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!82 &2260988724053767175
+--- !u!82 &1803246787411211142
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

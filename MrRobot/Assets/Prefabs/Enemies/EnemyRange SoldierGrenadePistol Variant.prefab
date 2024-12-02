@@ -57,6 +57,10 @@ PrefabInstance:
       value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 6081745592074298505, guid: ef353c7f5d3cb914ab6183a95bd19694, type: 3}
+      propertyPath: weaponAudioDataEnemy
+      value: 
+      objectReference: {fileID: 11400000, guid: 3db3b108237e92e45983a26032b0134d, type: 2}
+    - target: {fileID: 6081745592074298505, guid: ef353c7f5d3cb914ab6183a95bd19694, type: 3}
       propertyPath: advanceStoppingDistance
       value: 12
       objectReference: {fileID: 0}

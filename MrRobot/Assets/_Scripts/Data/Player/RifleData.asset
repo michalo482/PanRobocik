@@ -33,9 +33,6 @@ MonoBehaviour:
   burstBulletsPerShot: 0
   burstFireRate: 0
   burstFireDelay: 0.1
-<<<<<<< HEAD
   weaponAudioData: {fileID: 11400000, guid: ecbc1cbc33011264b975deae07ad3528, type: 2}
-=======
   weaponIcon: {fileID: -664407478, guid: 3477fe9a26e0faa42b5a9b5b258229c1, type: 3}
   weaponInfo: Pew Pew z daleka
->>>>>>> 925deadaba6b035a6698e4c61e8ceeea8d1a09bb

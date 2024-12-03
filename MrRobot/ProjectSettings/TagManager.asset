@@ -12,16 +12,16 @@ TagManager:
   - Water
   - UI
   - Ground
-  - Obstacles
+  - Environment
   - Player
   - Bullet
   - Aim
   - Enemy
-  - EnemyAxe
-  - IntersectCheck
-  - 
-  - 
-  - 
+  - Enemy's_Ability
+  - IntersectionCheck
+  - ZoneLimit
+  - CarVsEnemy
+  - CarVsPlayer
   - 
   - 
   - 

@@ -114,7 +114,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1990789868430406224}
-  - component: {fileID: 6225406558376523070}
+  - component: {fileID: 7638206237705576950}
   m_Layer: 0
   m_Name: LevelPart - Long Way
   m_TagString: Untagged
@@ -508,7 +508,7 @@ Transform:
   - {fileID: 4881238321217468251}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6225406558376523070
+--- !u!114 &7638206237705576950
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -517,14 +517,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1573959451660874397}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c20c3007ed6b80e49bf420b21d987372, type: 3}
+  m_Script: {fileID: 11500000, guid: 0d9b6d15ca7e3d7499f58b034a3bb8df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   intersectionLayer:
     serializedVersion: 2
     m_Bits: 8192
-  intersectionCheckColliders:
-  - {fileID: 1792569332955052417}
+  intersectionCheckColliders: []
   intersectionCheckParent: {fileID: 5453646219782991086}
 --- !u!1 &1986769216709259779
 GameObject:
@@ -537,9 +536,9 @@ GameObject:
   - component: {fileID: 2768880194734393998}
   - component: {fileID: 8698722960751052175}
   - component: {fileID: 2734840357689946778}
-  - component: {fileID: 3567622662140515155}
+  - component: {fileID: 5191080942313039611}
   m_Layer: 0
-  m_Name: SnapPoint - Exit
+  m_Name: SnapPoint - EXIT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -610,7 +609,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &3567622662140515155
+--- !u!114 &5191080942313039611
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -619,10 +618,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1986769216709259779}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1fab288bdb1975a439edd80a7b43ef43, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e9527045a2070c439633e9b7212ef2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointType: 1
+  SnapPointType: 1
 --- !u!1 &2682159308128161269
 GameObject:
   m_ObjectHideFlags: 0
@@ -895,7 +894,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5453646219782991086}
-  - component: {fileID: 2539074254153217745}
+  - component: {fileID: 8063596967579747355}
   m_Layer: 13
   m_Name: IntersectionCheckParent (1)
   m_TagString: Untagged
@@ -919,7 +918,7 @@ Transform:
   - {fileID: 92195751921710987}
   m_Father: {fileID: 1990789868430406224}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2539074254153217745
+--- !u!114 &8063596967579747355
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -928,7 +927,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5309409259091305088}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25d85d6e637ba6945aa2d5e4edf3fda0, type: 3}
+  m_Script: {fileID: 11500000, guid: 5c834783b7cc3a749a61fa9d816bb877, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &5310597860739361732
@@ -1107,9 +1106,9 @@ GameObject:
   - component: {fileID: 8672487478431544679}
   - component: {fileID: 4674464929898601442}
   - component: {fileID: 8304554882928391143}
-  - component: {fileID: 1372075716223571540}
+  - component: {fileID: 6692019188158740130}
   m_Layer: 0
-  m_Name: SnapPoint - Enter
+  m_Name: SnapPoint - ENTER
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1180,7 +1179,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &1372075716223571540
+--- !u!114 &6692019188158740130
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1189,10 +1188,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 6748203253674164247}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1fab288bdb1975a439edd80a7b43ef43, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e9527045a2070c439633e9b7212ef2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointType: 0
+  SnapPointType: 0
 --- !u!1001 &6340821530840471
 PrefabInstance:
   m_ObjectHideFlags: 0

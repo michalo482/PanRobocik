@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - BGM
+  - BGM_MENU
   layers:
   - Default
   - TransparentFX
@@ -12,16 +14,16 @@ TagManager:
   - Water
   - UI
   - Ground
-  - Environment
+  - Obstacles
   - Player
   - Bullet
   - Aim
   - Enemy
-  - Enemy's_Ability
-  - IntersectionCheck
-  - ZoneLimit
-  - CarVsEnemy
-  - CarVsPlayer
+  - EnemyAxe
+  - IntersectCheck
+  - 
+  - 
+  - 
   - 
   - 
   - 

@@ -114,18 +114,18 @@ public class EnemyRange : Enemy
 
     //audioenemies
     private void PlayShootSound()
-{
-    if (weaponAudioDataEnemy.shootSound != null)
     {
-        AudioSource.PlayClipAtPoint(weaponAudioDataEnemy.shootSound, transform.position);
+        if (weaponAudioDataEnemy.shootSound != null)
+        {
+            AudioManager.Instance.PlaySFX(weaponAudioDataEnemy.shootSound);
+        }
     }
-}
 
     private void PlayGrenadeSound()
     {
         if (weaponAudioDataEnemy.granadeSound != null)
         {
-            AudioSource.PlayClipAtPoint(weaponAudioDataEnemy.granadeSound, transform.position);
+            AudioManager.Instance.PlaySFX(weaponAudioDataEnemy.granadeSound);
         }
     }
 

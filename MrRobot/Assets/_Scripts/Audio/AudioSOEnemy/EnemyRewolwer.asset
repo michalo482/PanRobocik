@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3785bd86e81cd32448078235dc60d963, type: 3}
   m_Name: EnemyRewolwer
   m_EditorClassIdentifier: 
-  shootSound: {fileID: 8300000, guid: 5e897d22ca812234a9f48a50f5d24e1b, type: 3}
+  shootSound: {fileID: 8300000, guid: 91f2a647217ab53419ed15d3fcfaab83, type: 3}
   granadeSound: {fileID: 8300000, guid: 7337a0b5864c4cf4d88d2baf294c079d, type: 3}

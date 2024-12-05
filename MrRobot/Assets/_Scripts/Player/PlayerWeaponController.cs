@@ -99,32 +99,30 @@ public class PlayerWeaponController : MonoBehaviour
 
         // Odtwarzanie dŸwiêku prze³adowania
         if (weaponAudioData != null && weaponAudioData.reloadSound != null)
-            {
-            audioSource.PlayOneShot(weaponAudioData.reloadSound);
-            }
+        {
+            AudioManager.Instance.PlaySFX(weaponAudioData.reloadSound);  // U¿ycie AudioManager
+        }
     }
 
     private void EquipWeapon(int i)
     {
-        if(i >= weaponSlots.Count)
+        if (i >= weaponSlots.Count)
             return;
 
         SetWeaponReady(false);
         currentWeapon = weaponSlots[i];
-        
-        // Aktualizowanie audioSO dla nowej broni
+    
         weaponAudioData = currentWeapon.GetWeaponData().weaponAudioData;
-        //_player.WeaponVisuals.SwitchOffWeaponModels();
         _player.WeaponVisuals.PlayWeaponEquipAnimation();
 
         if (weaponAudioData.weaponSwitchSound != null)
         {
-            audioSource.PlayOneShot(weaponAudioData.weaponSwitchSound);
+            AudioManager.Instance.PlaySFX(weaponAudioData.weaponSwitchSound);
         }
-        //CameraManager.instance.ChangeCameraDistance(currentWeapon.CameraDistance);
 
         UpdateWeaponUI();
     }
+
 
     private void DropWeapon()
     {
@@ -171,15 +169,14 @@ public class PlayerWeaponController : MonoBehaviour
 
     public void PickupWeapon(Weapon newWeapon)
     {
-        // Wywo³aj dŸwiêk podniesienia broni
-        weaponPickupAudioEvent?.Raise();
+        weaponPickupAudioEvent?.Raise(); 
 
         if (WeaponInSlot(newWeapon.weaponType) != null)
         {
             WeaponInSlot(newWeapon.weaponType).totalReserveAmmo += newWeapon.bulletsInMagazine;
             return;
         }
-        
+    
         if (weaponSlots.Count >= maxSlots && newWeapon.weaponType != currentWeapon.weaponType)
         {
             int weaponIndex = weaponSlots.IndexOf(currentWeapon);
@@ -189,12 +186,13 @@ public class PlayerWeaponController : MonoBehaviour
             EquipWeapon(weaponIndex);
             return;
         }
-        
+    
         weaponSlots.Add(newWeapon);
         _player.WeaponVisuals.SwitchOnBackupWeaponModel();
 
         UpdateWeaponUI();
     }
+
     
     public void SetDefaultWeapon(List<WeaponData> newWeaponData)
     {
@@ -251,7 +249,7 @@ public class PlayerWeaponController : MonoBehaviour
         {
             if (!isOutOfAmmo && weaponAudioData != null && weaponAudioData.emptyMagazineSound != null)
             {
-                audioSource.PlayOneShot(weaponAudioData.emptyMagazineSound);
+                AudioManager.Instance.PlaySFX(weaponAudioData.emptyMagazineSound);
                 isOutOfAmmo = true;
             }
             return;
@@ -280,7 +278,7 @@ public class PlayerWeaponController : MonoBehaviour
          // Odtwarzanie dŸwiêku strza³u z CD
         if (weaponAudioData != null && weaponAudioData.shootSound != null && Time.time >= lastShootSoundTime + shootSoundCooldown)
         {
-            audioSource.PlayOneShot(weaponAudioData.shootSound);
+            AudioManager.Instance.PlaySFX(weaponAudioData.shootSound);
             lastShootSoundTime = Time.time;
         }
         

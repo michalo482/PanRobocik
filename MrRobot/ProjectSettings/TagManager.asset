@@ -11,6 +11,8 @@ TagManager:
   - Enemy
   - PathBag
   - LevelParts
+  - EnemySpawn
+  - LevelGenerator
   layers:
   - Default
   - TransparentFX

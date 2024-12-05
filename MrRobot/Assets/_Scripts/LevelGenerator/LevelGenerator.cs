@@ -8,7 +8,10 @@ public class LevelGenerator : MonoBehaviour
 {
     [SerializeField] private NavMeshSurface navMeshs;
     private LevelPartTemplates templates;
-    public List<Enemy> enemyList;
+    public List<GameObject> enemySpawnerList;
+    public List<GameObject> enemyList;
+
+    private Activation playerActivation;
 
     [SerializeField] private SnapPoint nextSnapPoint;
     private SnapPoint defaultSnapPoint;
@@ -22,8 +25,9 @@ public class LevelGenerator : MonoBehaviour
 
     private void Start()
     {
-        templates = GameObject.FindGameObjectWithTag("LevelParts").GetComponent<LevelPartTemplates>(); 
-        enemyList = new List<Enemy>();       
+        templates = GameObject.FindGameObjectWithTag("LevelParts").GetComponent<LevelPartTemplates>();         
+        enemyList = new List<GameObject>(); 
+        playerActivation = GameObject.FindGameObjectWithTag("Player").GetComponent<Activation>();      
         defaultSnapPoint = nextSnapPoint;
         InitializeGeneration();
     }
@@ -65,13 +69,13 @@ public class LevelGenerator : MonoBehaviour
             Destroy(t.gameObject);
         }
 
-        foreach (Enemy enemy in enemyList)
+        foreach (GameObject enemySpawner in enemySpawnerList)
         {
-            Destroy(enemy.gameObject);
+            Destroy(enemySpawner.gameObject);
         }
 
         templates.generatedLevelParts = new List<Transform>();
-        enemyList = new List<Enemy>();
+        enemySpawnerList = new List<GameObject>();
     }    
 
     private void FinishGeneration()
@@ -79,10 +83,10 @@ public class LevelGenerator : MonoBehaviour
         generationOver = true;
         GenerateNextLevelPart();
 
-        foreach (Enemy enemy in enemyList){
-            enemy.transform.parent = null;
-            enemy.gameObject.SetActive(true);
-        }
+        // foreach (Enemy enemy in enemyList){
+        //     enemy.transform.parent = null;
+        //     enemy.gameObject.SetActive(true);
+        // }
     }
 
     private void GenerateNextLevelPart()
@@ -98,27 +102,52 @@ public class LevelGenerator : MonoBehaviour
             
             newPart.position = nextSnapPoint.transform.position;
             newPart.position += newPart.transform.forward * -5f;
+
+            templates.generatedLevelParts.Add(newPart);
+
+            LevelPart levelPartScript = newPart.GetComponent<LevelPart>();
+            levelPartScript.FixedSnapTo(nextSnapPoint);
+
+            if (levelPartScript.OverlapDetected())
+            {
+                InitializeGeneration();
+                return;
+            }
+
+            nextSnapPoint = levelPartScript.GetExitPoint();
             
             StartCoroutine(RebuildNavMeshAsync());
+            
+            foreach (GameObject enemySpawner in enemySpawnerList){
+                if (enemySpawner == null){
+
+                } else {
+                    EnemySpawner spawn = enemySpawner.GetComponent<EnemySpawner>();
+                    spawn.Spawn();
+
+                }
+            }
+            playerActivation.enabled = true;            
         }
         else
         {
             newPart = Instantiate(ChooseRandomPart());
+            templates.generatedLevelParts.Add(newPart);
+
+            LevelPart levelPartScript = newPart.GetComponent<LevelPart>();
+            levelPartScript.FixedSnapTo(nextSnapPoint);
+
+            if (levelPartScript.OverlapDetected())
+            {
+                InitializeGeneration();
+                return;
+            }
+
+            nextSnapPoint = levelPartScript.GetExitPoint();
         }
 
-        templates.generatedLevelParts.Add(newPart);
-
-        LevelPart levelPartScript = newPart.GetComponent<LevelPart>();
-        levelPartScript.FixedSnapTo(nextSnapPoint);
-
-        if (levelPartScript.OverlapDetected())
-        {
-            InitializeGeneration();
-            return;
-        }
-
-        nextSnapPoint = levelPartScript.GetExitPoint();
-        enemyList.AddRange(levelPartScript.MyEnemies());
+        
+        //enemyList.AddRange(levelPartScript.MyEnemies());
     }
 
     private IEnumerator RebuildNavMeshAsync()

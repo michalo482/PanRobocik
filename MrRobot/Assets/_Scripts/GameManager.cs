@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
         player = FindObjectOfType<Player>();
     }
 
+
     public void SetDefaultWeaponsForPlayer()
     {
         List<WeaponData> newList = UI.instance.weaponSelection.SelectedWeaponData();

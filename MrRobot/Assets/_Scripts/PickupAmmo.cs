@@ -1,87 +1,94 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
 public struct AmmoData
 {
-   public WeaponType WeaponType;
-   //public int Amount;
-   [Range(10, 100)] public int minAmount;
-   [Range(10, 100)] public int maxAmount;
+    public WeaponType WeaponType;
+    //public int Amount;
+    [Range(10, 100)] public int minAmount;
+    [Range(10, 100)] public int maxAmount;
 }
 
 public enum AmmoBoxType
 {
-   smallBox,
-   bigBox
+    smallBox,
+    bigBox
 }
 
 public class PickupAmmo : Interactable
 {
-   [SerializeField] private AmmoBoxType boxType;
+    [SerializeField] private AmmoBoxType boxType;
+    [SerializeField]
+    [Range(10, 100)] 
+    public int healthAmount;
+    [SerializeField] private List<AmmoData> smallBoxAmmo;
+    [SerializeField] private List<AmmoData> bigBoxAmmo;
 
-   [SerializeField] private List<AmmoData> smallBoxAmmo;
-   [SerializeField] private List<AmmoData> bigBoxAmmo;
+    [SerializeField] private GameObject[] boxModels;
+    [SerializeField] private AudioEvent pickupAmmoAudioEvent;
 
-   [SerializeField] private GameObject[] boxModels;
-   [SerializeField] private AudioEvent pickupAmmoAudioEvent;
+    protected override void Start()
+    {
+        base.Start();
 
-   protected override void Start()
-   {
-      base.Start();
+        SetupBoxModel();
+    }
 
-      SetupBoxModel();
-   }
+    private int GetBulletsAmount(AmmoData ammoData)
+    {
+        float min = Mathf.Min(ammoData.minAmount, ammoData.maxAmount);
+        float max = Mathf.Max(ammoData.minAmount, ammoData.maxAmount);
 
-   private int GetBulletsAmount(AmmoData ammoData)
-   {
-      float min = Mathf.Min(ammoData.minAmount, ammoData.maxAmount);
-      float max = Mathf.Max(ammoData.minAmount, ammoData.maxAmount);
-      
-      float randomAmmoAmount = Random.Range(min, max);
-      return Mathf.RoundToInt(randomAmmoAmount);
-   }
+        float randomAmmoAmount = Random.Range(min, max);
+        return Mathf.RoundToInt(randomAmmoAmount);
+    }
 
-   private void SetupBoxModel()
-   {
-      for (int i = 0; i < boxModels.Length; i++)
-      {
-         boxModels[i].SetActive(false);
-         
-         if (i == (int)boxType)
-         {
-            boxModels[i].SetActive(true);
-            UpdateMeshAndMaterial(boxModels[i].GetComponent<MeshRenderer>());
-         }
-      }
-   }
+    private void SetupBoxModel()
+    {
+        for (int i = 0; i < boxModels.Length; i++)
+        {
+            boxModels[i].SetActive(false);
 
-   public override void Interaction()
-   {
-      List<AmmoData> currentAmmoList = smallBoxAmmo;
+            if (i == (int)boxType)
+            {
+                boxModels[i].SetActive(true);
+                UpdateMeshAndMaterial(boxModels[i].GetComponent<MeshRenderer>());
+            }
+        }
+    }
 
-      if (boxType == AmmoBoxType.bigBox)
-      {
-         currentAmmoList = bigBoxAmmo;
-      }
+    public override void Interaction()
+    {
+        List<AmmoData> currentAmmoList = smallBoxAmmo;
 
-      foreach (AmmoData ammo in currentAmmoList)
-      {
-         Weapon weapon = _weaponController.WeaponInSlot(ammo.WeaponType);
+        if (boxType == AmmoBoxType.bigBox)
+        {
+            currentAmmoList = bigBoxAmmo;
+        }
 
-         AddBulletsToWeapon(weapon, GetBulletsAmount(ammo));
-      }
-      // Wywo³anie dŸwiêku podnoszenia amunicji
-      pickupAmmoAudioEvent?.Raise();
-      ObjectPool.Instance.ReturnObject(gameObject);
-   }
+        foreach (AmmoData ammo in currentAmmoList)
+        {
+            Weapon weapon = _weaponController.WeaponInSlot(ammo.WeaponType);
 
-   private void AddBulletsToWeapon(Weapon weapon, int amountOfBullets)
-   {
-      if (weapon == null)
-         return;
+            AddBulletsToWeapon(weapon, GetBulletsAmount(ammo), healthAmount);
+        }
+        // Wywo³anie dŸwiêku podnoszenia amunicji
+        pickupAmmoAudioEvent?.Raise();
 
-      weapon.totalReserveAmmo += amountOfBullets;
-   }
+        
+        Destroy(gameObject);
+        //ObjectPool.Instance.ReturnObject(gameObject);
+    }
+
+    private void AddBulletsToWeapon(Weapon weapon, int amountOfBullets, int healAmount = 0)
+    {
+        if (weapon == null)
+            return;
+
+        _weaponController.PickupWeapon(weapon);
+        playerHealth.ReduceHealth(-healAmount);
+        _weaponController.UpdateWeaponUI();
+        //weapon.totalReserveAmmo += amountOfBullets;
+    }
 }

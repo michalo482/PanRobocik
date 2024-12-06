@@ -10,5 +10,6 @@ public class UI_GameOver : MonoBehaviour
     public void ShowGameOverMessage(string message)
     {
         gameOverText.text = message;
+        
     }
 }

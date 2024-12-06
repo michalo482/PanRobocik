@@ -15,6 +15,8 @@ public class DeadStateRange : EnemyState
     public override void Enter()
     {
         base.Enter();
+        MissionObjectHuntTarget huntTarget = _enemyRange.GetComponent<MissionObjectHuntTarget>();
+        huntTarget?.InvokeOnTargetKilled();
 
         if(_enemyRange.ThrowGrenadeStateRange.finishedThrowingGrenade == false && _enemyRange.grenadePerk == GrenadePerk.CanThrowGrenade)
         {
@@ -29,6 +31,7 @@ public class DeadStateRange : EnemyState
         _enemyRange.Ragdoll.RagdollActive(true);
 
         stateTimer = 1.5f;
+
     }
 
     public override void Exit()

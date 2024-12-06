@@ -176,7 +176,6 @@ public class EnemyMelee : Enemy
     {
         base.AbilityTrigger();
         walkSpeed = walkSpeed * 0.6f;
-        Debug.Log("siekiera");
         EnemyVisuals.EnableWeaponModel(false);
     }
 

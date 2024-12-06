@@ -33,6 +33,10 @@ PrefabInstance:
       value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 4308154173256682721, guid: 98303d01e1cfdcb48bbb88e35ee037cb, type: 3}
+      propertyPath: weaponAudioDataEnemy
+      value: 
+      objectReference: {fileID: 11400000, guid: 208399e11e6709649bb4828b1d2ef9af, type: 2}
+    - target: {fileID: 4308154173256682721, guid: 98303d01e1cfdcb48bbb88e35ee037cb, type: 3}
       propertyPath: advanceStoppingDistance
       value: 6
       objectReference: {fileID: 0}
@@ -83,5 +87,25 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1936142128480129758, guid: 98303d01e1cfdcb48bbb88e35ee037cb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2423824278258449196}
   m_SourcePrefab: {fileID: 100100000, guid: 98303d01e1cfdcb48bbb88e35ee037cb, type: 3}
+--- !u!1 &1605291635971736226 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1936142128480129758, guid: 98303d01e1cfdcb48bbb88e35ee037cb, type: 3}
+  m_PrefabInstance: {fileID: 907945078939078780}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2423824278258449196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1605291635971736226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a1d5d53f7f761e4f863583acb4d0799, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

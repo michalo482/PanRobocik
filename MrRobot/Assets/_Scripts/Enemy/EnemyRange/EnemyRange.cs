@@ -199,8 +199,6 @@ public bool CanThrowGrenade()
     }
 
     newGrenadeScript.SetupGrenade(whatIsAlly, Player.transform.position, timeToTarget, explosionTimer, impactPower, grenadeDamage);
-
-    Debug.Log("RZUCAAAAM");
 }
 
 
@@ -268,8 +266,7 @@ public bool CanThrowGrenade()
             Cover cover = collider.GetComponent<Cover>();
 
             if(cover != null && collectedCovers.Contains(cover) == false)
-            {
-                Debug.Log("cover = " + cover.name);
+            {                
                 collectedCovers.Add(cover);
             }
         }

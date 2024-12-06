@@ -14,7 +14,6 @@ public class EnemyDropController : MonoBehaviour
         {
             CreateItem(missionObjectKey);
         }
-        Debug.Log("upuscilem cos");
     }
 
     private void CreateItem(GameObject go)

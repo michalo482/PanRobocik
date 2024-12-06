@@ -55,7 +55,6 @@ public class Enemy : MonoBehaviour
     public EnemyHealth EnemyHealth { get; private set; }
     public Ragdoll Ragdoll { get; private set; }
 
-
     protected virtual void Awake()
     {
         StateMachine = new EnemyStateMachine();
@@ -94,8 +93,7 @@ public class Enemy : MonoBehaviour
 
     public Vector3 GetPatrolDestination()
     {
-        Vector3 destination = _patrolPointsPosition[_currentPatrolIndex];
-        Debug.Log(destination);
+        Vector3 destination = _patrolPointsPosition[_currentPatrolIndex];       
         _currentPatrolIndex++;
         if (_currentPatrolIndex >= patrolPoints.Length)
             _currentPatrolIndex = 0;
@@ -137,6 +135,7 @@ public class Enemy : MonoBehaviour
 
     public virtual void GetHit(int damage)
     {
+        AnalyticManager.instance.HitsToEnemy();
         EnemyHealth.ReduceHealth(damage);
         if(EnemyHealth.ShouldDie())
         {
@@ -149,8 +148,9 @@ public class Enemy : MonoBehaviour
 
     public virtual void Die()
     {
-        MissionObjectHuntTarget huntTarget = GetComponent<MissionObjectHuntTarget>();
-        huntTarget?.InvokeOnTargetKilled();
+        //MissionObjectHuntTarget huntTarget = GetComponent<MissionObjectHuntTarget>();
+        //huntTarget?.InvokeOnTargetKilled();
+        //Debug.Log("invokuje ta jebana funkcje kurwa");
     }
 
     public virtual void AttackCheck(Transform[] damagePoints, float attackRadius, GameObject meleeAttackFx, int damage)
@@ -168,6 +168,7 @@ public class Enemy : MonoBehaviour
                 IDamagable damagable = detectedHits[i].GetComponent<IDamagable>();
                 if (damagable != null)
                 {
+                    AnalyticManager.instance.HitsFromEnemy();
                     damagable.TakeDamage(damage);
                     isMeleeAttackReady = false;
                     GameObject newAttackFx = ObjectPool.Instance.GetObject(meleeAttackFx, attackPoint);
@@ -227,8 +228,6 @@ public class Enemy : MonoBehaviour
 
         return false;
     }
-}
-
 
     public virtual void MakeEnemyVIP()
     {

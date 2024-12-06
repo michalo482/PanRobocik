@@ -215,6 +215,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   highlightMaterial: {fileID: 2100000, guid: c80afe8d35af73d449737efbd74d8cca, type: 2}
   boxType: 0
+  healthAmount: 20
   smallBoxAmmo:
   - WeaponType: 0
     minAmount: 0

@@ -26,16 +26,13 @@ MonoBehaviour:
   spreadIncreaseRate: 0.15
   reloadSpeed: 1.1
   equipmentSpeed: 2
-  gunDistance: 4.5
+  gunDistance: 25
   cameraDistance: 6
   burstAvailable: 0
   burstActive: 0
   burstBulletsPerShot: 0
   burstFireRate: 0
   burstFireDelay: 0.1
-<<<<<<< HEAD
   weaponAudioData: {fileID: 11400000, guid: be9f5c5b1f4290147867f15f77ca3f47, type: 2}
-=======
   weaponIcon: {fileID: 1123339388, guid: 3477fe9a26e0faa42b5a9b5b258229c1, type: 3}
   weaponInfo: Duuuuze Pew Pew
->>>>>>> 925deadaba6b035a6698e4c61e8ceeea8d1a09bb

@@ -19,6 +19,7 @@ public class PlayerHealth : HealthController
 
         if(ShouldDie())
         {
+            ControlsManager.Instance.SwitchToUIControls();
             Die();
         }
 

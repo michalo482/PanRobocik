@@ -20,6 +20,8 @@ public class DeadStateBoss : EnemyState
     public override void Enter()
     {
         base.Enter();
+        MissionObjectHuntTarget huntTarget = _enemyBoss.GetComponent<MissionObjectHuntTarget>();
+        huntTarget?.InvokeOnTargetKilled();
 
         _enemyBoss.AbilityStateBoss.DisableFlamethrower();
 

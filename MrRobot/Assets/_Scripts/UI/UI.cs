@@ -27,8 +27,10 @@ public class UI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        ControlsManager.Instance.SwitchToUIControls();
         AssignInputsUI();
         StartCoroutine(ChangeImageAlpha(0, 1.5f, null));
+
     }
 
     // Update is called once per frame
@@ -62,6 +64,7 @@ public class UI : MonoBehaviour
 
     public void RestartTheGame()
     {
+        AnalyticManager.instance.RestartGame();
         StartCoroutine(ChangeImageAlpha(1, 1f, GameManager.Instance.RestartScene));      
     }
 
@@ -92,6 +95,7 @@ public class UI : MonoBehaviour
 
     public void ShowGameOverUI(string message = "GameOver!")
     {
+        AnalyticManager.instance.RestartAfterDeath();
         SwitchTo(gameOver.gameObject);
         gameOver.ShowGameOverMessage(message);
     }

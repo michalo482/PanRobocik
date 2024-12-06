@@ -17,6 +17,8 @@ public class DeadStateMelee : EnemyState
     public override void Enter()
     {
         base.Enter();
+        MissionObjectHuntTarget huntTarget = enemy.GetComponent<MissionObjectHuntTarget>();
+        huntTarget?.InvokeOnTargetKilled();
 
         _interactionDisabled = false;
 
@@ -26,6 +28,8 @@ public class DeadStateMelee : EnemyState
         enemy.Ragdoll.RagdollActive(true);
 
         stateTimer = 1.5f;
+
+
     }
 
     public override void Update()

@@ -7,7 +7,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewHuntMission", menuName = "Missions/HuntMission")]
 public class MissionEnemyHunt : Mission
 {
-    public int amountToKill = 0;
+    private int amountToKill;
     public EnemyType enemyType;
     //private List<Enemy> enemyList;
 
@@ -15,15 +15,17 @@ public class MissionEnemyHunt : Mission
 
     public override void StartMission()
     {
-
-        killsToGo = amountToKill;
+        //amountToKill = LevelGenerator.
+        List<Enemy> validEnemies = LevelGenerator.instance.GetEnemyList();
+        amountToKill = validEnemies.Count;
+        //Debug.Log("amount to kill" + amountToKill);
+        killsToGo = validEnemies.Count;
 
         UpdateMissionUI();
 
         MissionObjectHuntTarget.OnTargetKIlled += EliminateTarget;
         //throw new System.NotImplementedException();
         //enemyList = FindObjectsOfType<Enemy>().ToList();
-        List<Enemy> validEnemies = new List<Enemy>(FindObjectsOfType<Enemy>());
 
         //if(enemyType == EnemyType.RANDOM)
         //{
@@ -40,18 +42,16 @@ public class MissionEnemyHunt : Mission
         //    //}
         //}
 
-
-
-        for (int i = 0; i < amountToKill; i++)
-        {
-            if(validEnemies.Count <= 0)
-            {
-                return;
-            }
-            int randomIndex = Random.Range(0, validEnemies.Count);
-            validEnemies[randomIndex].AddComponent<MissionObjectHuntTarget>();
-            validEnemies.RemoveAt(randomIndex);
-        }
+        //for (int i = 0; i < amountToKill; i++)
+        //{
+        //    if(validEnemies.Count <= 0)
+        //    {
+        //        return;
+        //    }
+        //    int randomIndex = Random.Range(0, validEnemies.Count);
+        //    validEnemies[randomIndex].AddComponent<MissionObjectHuntTarget>();
+        //    validEnemies.RemoveAt(randomIndex);
+        //}
 
     }
     public override bool MissionCompleted()
@@ -63,9 +63,10 @@ public class MissionEnemyHunt : Mission
     private void EliminateTarget()
     {
         killsToGo--;
+
         UpdateMissionUI();
 
-        if(killsToGo <=0)
+        if(killsToGo <= 0)
         {
             UI.instance.inGameUI.UpdateMissionInfo("zbieraj dupsko");
             MissionObjectHuntTarget.OnTargetKIlled -= EliminateTarget;

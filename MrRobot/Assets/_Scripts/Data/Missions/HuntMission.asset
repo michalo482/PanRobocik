@@ -14,5 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   missionName: Zapoluj na dziadygi
   missionDescription: znajdz dziadygi i je wykoncz pew pew
-  amountToKill: 1
   enemyType: 1

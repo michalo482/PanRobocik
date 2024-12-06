@@ -3,7 +3,9 @@ guid: 29016bde3a1be4a4a9626de1effd19e4
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - highlightMaterial: {instanceID: 0}
+  - pickupAmmoAudioEvent: {fileID: 11400000, guid: a25c1ea628b23bc4aa10745799328b40, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

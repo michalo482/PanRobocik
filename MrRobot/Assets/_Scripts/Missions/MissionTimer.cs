@@ -11,6 +11,8 @@ public class MissionTimer : Mission
     private float currentTime;
     public override void StartMission()
     {
+        Debug.Log(time);
+        
         currentTime = time;
     }
 

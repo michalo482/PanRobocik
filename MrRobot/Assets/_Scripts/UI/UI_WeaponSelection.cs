@@ -34,9 +34,34 @@ public class UI_WeaponSelection : MonoBehaviour
     {
         if(AtLeastOneWeaponSelected())
         {
+            foreach(var weapon in SelectedWeaponData())
+            {
+                if(weapon.weaponType == WeaponType.Pistol)
+                {
+                    AnalyticManager.instance.PistolPicked();
+                }
+                if(weapon.weaponType == WeaponType.AutoRifle)
+                {
+                    AnalyticManager.instance.AutoRiflePicked();
+                }
+                if (weapon.weaponType == WeaponType.Shotgun)
+                {
+                    AnalyticManager.instance.ShotgunPicked();
+                }
+                if (weapon.weaponType == WeaponType.Revolver)
+                {
+                    AnalyticManager.instance.RevolverPicked();
+                }
+                if (weapon.weaponType == WeaponType.Rifle)
+                {
+                    AnalyticManager.instance.RiflePicked();
+                }
+            }
+
             GameManager.Instance.SetDefaultWeaponsForPlayer();
             UI.instance.StartLevelGeneration();
             UI.instance.SwitchTo(nextUIToSwitchOn);
+            ControlsManager.Instance.SwitchToCharacterControls();
         }
         else
         {

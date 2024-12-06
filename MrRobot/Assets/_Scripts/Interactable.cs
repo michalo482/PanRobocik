@@ -8,6 +8,7 @@ public class Interactable : MonoBehaviour
 
     
     protected PlayerWeaponController _weaponController;
+    protected PlayerHealth playerHealth;
     protected MeshRenderer mesh;
     [SerializeField] private Material highlightMaterial;
     protected Material _defaultMaterial;
@@ -15,6 +16,7 @@ public class Interactable : MonoBehaviour
 
     protected virtual void Start()
     {
+        
         if (mesh == null)
         {
             mesh = GetComponentInChildren<MeshRenderer>();
@@ -36,14 +38,16 @@ public class Interactable : MonoBehaviour
 
     public virtual void Interaction()
     {
-        Debug.Log("Interacted with " + gameObject.name);
+        
     }
 
     protected virtual void OnTriggerEnter(Collider other)
     {
         if (_weaponController == null)
             _weaponController = other.GetComponent<PlayerWeaponController>();
-        
+        if(playerHealth == null)
+            playerHealth = other.GetComponent<PlayerHealth>();
+
         PlayerInteraction playerInteraction = other.GetComponent<PlayerInteraction>();
 
         if (playerInteraction == null)

@@ -6,13 +6,13 @@ using UnityEngine;
 public class EnemyAnimationEvents : MonoBehaviour
 {
     private Enemy _enemy;
-    private EnemyMelee _enemyMelee;
+    //private EnemyMelee _enemyMelee;
     private EnemyBoss _enemyBoss;
 
     private void Awake()
     {
         _enemy = GetComponentInParent<Enemy>();
-        _enemyMelee = GetComponentInParent<EnemyMelee>();
+        //_enemyMelee = GetComponentInParent<EnemyMelee>();
         _enemyBoss = GetComponentInParent<EnemyBoss>();
     }
 

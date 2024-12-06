@@ -9,7 +9,7 @@ public class AudioEvent : ScriptableObject
     public UnityEvent OnPlayAudio;    // Event uruchamiaj¹cy dŸwiêk
     private bool isRaising = false;
 
-    private AudioSource audioSource; // Przechowywanie referencji do AudioSource
+    private AudioSource audioSource;
 
     public void Raise()
     {

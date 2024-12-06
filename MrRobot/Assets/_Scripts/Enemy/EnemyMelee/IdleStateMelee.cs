@@ -16,8 +16,7 @@ public class IdleStateMelee : EnemyState
         base.Enter();
 
         stateTimer = enemyBase.idleTime;
-        
-        Debug.Log("i enter idle");
+
     }
 
     public override void Update()
@@ -27,15 +26,11 @@ public class IdleStateMelee : EnemyState
         if(stateTimer < 0)
             stateMachine.ChangeState(enemy.MoveStateMelee);
         
-        Debug.Log("i idling");
     }
 
     public override void Exit()
     {
         base.Exit();
-        
-        Debug.Log("i exit idle state");
-        
-        
+                  
     }
 }

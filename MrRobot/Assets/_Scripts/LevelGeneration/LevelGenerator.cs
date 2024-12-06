@@ -1,13 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.AI.Navigation;
 using UnityEngine;
 
 public class LevelGenerator : MonoBehaviour
-
-
 {
     public static LevelGenerator instance;
-    
+
+
+    private List<Enemy> enemyList;
+
+    [SerializeField] private NavMeshSurface navMeshSurface;
     
     [SerializeField] private Transform lastLevelPart;
     [SerializeField] private List<Transform> levelParts;
@@ -28,6 +31,8 @@ public class LevelGenerator : MonoBehaviour
 
     private void Start()
     {
+
+        enemyList = new List<Enemy>();
         defaultSnapPoint = nextSnapPoint;
         //generatedLevelParts = new List<Transform>();
         //currentLevelParts = new List<Transform>(levelParts);
@@ -70,6 +75,12 @@ public class LevelGenerator : MonoBehaviour
 
     private void DestroyOldLevelParts()
     {
+
+        foreach (Enemy enemy in enemyList)
+        {
+            Destroy(enemy.gameObject);
+        }
+
         foreach (Transform t in generatedLevelParts)
         {
             Destroy(t.gameObject);
@@ -77,6 +88,7 @@ public class LevelGenerator : MonoBehaviour
 
         //generatedLevelParts.Clear();
         generatedLevelParts = new List<Transform>();
+        enemyList = new List<Enemy>();
     }
 
     private void FinishGeneration()
@@ -84,6 +96,12 @@ public class LevelGenerator : MonoBehaviour
         generationOver = true;
         GenerateNextLevelPart();
 
+        navMeshSurface.BuildNavMesh();
+        foreach(Enemy enemy in enemyList)
+        {
+            enemy.transform.parent = null;
+            enemy.gameObject.SetActive(true);
+        }
 
         MissionManager.instance.StartMission();
     }
@@ -114,6 +132,7 @@ public class LevelGenerator : MonoBehaviour
             return;
         }
         nextSnapPoint = levelPartScript.GetExitPoint();
+        enemyList.AddRange(levelPartScript.MyEnemies());
     }
 
     private Transform ChooseRandomPart()
@@ -125,5 +144,10 @@ public class LevelGenerator : MonoBehaviour
         currentLevelParts.RemoveAt(randomIndex);
 
         return chosenPart;
+    }
+
+    public List<Enemy> GetEnemyList()
+    {
+        return enemyList;
     }
 }

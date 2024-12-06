@@ -10,6 +10,15 @@ public class LevelPart : MonoBehaviour
     [SerializeField] private Collider[] intersectionCheckColliders;
     [SerializeField] private Transform intersectionCheckParent;
 
+    private void Start()
+    {
+        if(intersectionCheckColliders.Length <= 0)
+        {
+            intersectionCheckColliders = intersectionCheckParent.GetComponentsInChildren<Collider>();
+        }
+    }
+
+
     public bool IntersectionDetected()
     {
         Physics.SyncTransforms();
@@ -89,5 +98,10 @@ public class LevelPart : MonoBehaviour
         }
 
         return null;
+    }
+
+    public Enemy[] MyEnemies()
+    {
+        return GetComponentsInChildren<Enemy>(true);
     }
 }

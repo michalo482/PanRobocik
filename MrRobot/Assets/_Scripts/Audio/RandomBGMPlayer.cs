@@ -7,6 +7,8 @@ public class RandomBGMPlayer : MonoBehaviour
     public List<AudioSource> bgmSources; // Przypisz AudioSource'y w edytorze Unity
     private List<AudioSource> trackQueue; // Kolejka do odtwarzania
     [SerializeField] private AudioSource missionsfx;
+    private AudioSource currentTrack;
+
 
     void Start()
     {
@@ -29,6 +31,23 @@ public class RandomBGMPlayer : MonoBehaviour
             AudioSource temp = trackQueue[i];
             trackQueue[i] = trackQueue[randomIndex];
             trackQueue[randomIndex] = temp;
+        }
+    }
+
+    public void PlayMusic()
+    {
+        if (currentTrack != null && currentTrack.isPlaying)
+            return; // Jeœli coœ ju¿ gra, nie rób nic
+
+        PlayNextTrack();
+    }
+
+    public void StopMusic()
+    {
+        if (currentTrack != null)
+        {
+            currentTrack.Stop();
+            CancelInvoke(nameof(PlayNextTrack)); // Anuluj zaplanowane odtworzenie
         }
     }
 

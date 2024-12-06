@@ -62,10 +62,16 @@ public class EnemyAxe : MonoBehaviour
     {
         if (_player != null && audioSource != null)
         {
+            // Globalna g³oœnoœæ SFX z AudioManager
+            float globalSFXVolume = PlayerPrefs.GetFloat("SFXVolume", 1.0f);
+
             float distance = Vector3.Distance(transform.position, _player.position);
-            audioSource.volume = Mathf.Clamp(1 / (distance + 1), 0.6f, 1f); 
+            float distanceVolume = Mathf.Clamp(1 / (distance + 1), 0.6f, 1f); // Obliczanie g³oœnoœci na podstawie odleg³oœci
+
+            audioSource.volume = distanceVolume * globalSFXVolume; // Uwzglêdniamy globaln¹ g³oœnoœæ SFX
         }
     }
+
 
     public void AxeSetup(float flySpeed, Transform player, float timer, int damage)
     {

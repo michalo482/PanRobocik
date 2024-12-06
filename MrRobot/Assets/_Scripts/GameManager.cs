@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
     {
         SetDefaultWeaponsForPlayer();
         //LevelGenerator.instance.InitializeGeneration();
+
     }
 
     public void RestartScene()

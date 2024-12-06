@@ -4,16 +4,14 @@ using UnityEngine;
 
 public class AudioRangeEnemies : MonoBehaviour
 {
-
-
     [SerializeField] private AudioSource throwgrenadeSource;
 
-      public void PlayThrowGrenadeSFX()
+    public void PlayThrowGrenadeSFX()
     {
-
         if (throwgrenadeSource != null && !throwgrenadeSource.isPlaying)
         {
             throwgrenadeSource.pitch = Random.Range(0.95f, 1.05f);
+            throwgrenadeSource.volume = PlayerPrefs.GetFloat("SFXVolume", 1.0f);  // Ustawienie g³oœnoœci na podstawie SFX
             throwgrenadeSource.Play();
         }
     }

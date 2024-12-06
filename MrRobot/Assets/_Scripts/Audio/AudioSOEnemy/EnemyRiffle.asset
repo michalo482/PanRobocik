@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3785bd86e81cd32448078235dc60d963, type: 3}
   m_Name: EnemyRiffle
   m_EditorClassIdentifier: 
-  shootSound: {fileID: 8300000, guid: 2a74538ed6c876f47bbc7127cc195bc4, type: 3}
+  shootSound: {fileID: 8300000, guid: 60d97c18ff29d8e48a644b127bdc40fe, type: 3}
   granadeSound: {fileID: 8300000, guid: 7337a0b5864c4cf4d88d2baf294c079d, type: 3}

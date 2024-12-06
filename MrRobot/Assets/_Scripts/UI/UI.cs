@@ -22,14 +22,15 @@ public class UI : MonoBehaviour
         inGameUI = GetComponentInChildren<UI_InGame>(true);
         weaponSelection = GetComponentInChildren<UI_WeaponSelection>(true);
         gameOver = GetComponentInChildren<UI_GameOver>(true);
+
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        ControlsManager.Instance.SwitchToUIControls();
         AssignInputsUI();
         StartCoroutine(ChangeImageAlpha(0, 1.5f, null));
+        AudioManager.Instance.PlayMenuMusic();
 
     }
 
@@ -44,6 +45,7 @@ public class UI : MonoBehaviour
         foreach (var go in uiElements)
         {
             go.SetActive(false);
+
         }
 
         uiToSwitchOn.SetActive(true);
@@ -55,6 +57,7 @@ public class UI : MonoBehaviour
         StartCoroutine(StartGameSecuence());
         //SwitchTo(inGameUI.gameObject);
         //GameManager.Instance.GameStart();
+
     }
 
     public void QuitTheGame()
@@ -64,8 +67,7 @@ public class UI : MonoBehaviour
 
     public void RestartTheGame()
     {
-        AnalyticManager.instance.RestartGame();
-        StartCoroutine(ChangeImageAlpha(1, 1f, GameManager.Instance.RestartScene));      
+        StartCoroutine(ChangeImageAlpha(1, 1f, GameManager.Instance.RestartScene));
     }
 
     public void PauseSwitch()
@@ -95,9 +97,9 @@ public class UI : MonoBehaviour
 
     public void ShowGameOverUI(string message = "GameOver!")
     {
-        AnalyticManager.instance.RestartAfterDeath();
         SwitchTo(gameOver.gameObject);
         gameOver.ShowGameOverMessage(message);
+
     }
 
     private IEnumerator ChangeImageAlpha(float targetAlpha, float duration, System.Action onComplete)
@@ -129,6 +131,7 @@ public class UI : MonoBehaviour
         SwitchTo(inGameUI.gameObject);
         GameManager.Instance.GameStart();
         StartCoroutine(ChangeImageAlpha(0, 1, null));
+
     }
 
     public void StartLevelGeneration() => LevelGenerator.instance.InitializeGeneration();

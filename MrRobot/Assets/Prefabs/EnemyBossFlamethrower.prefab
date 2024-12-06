@@ -15364,23 +15364,23 @@ MonoBehaviour:
   flameDamageCooldown: 0.25
   flamethrower: {fileID: 4761372748362461821}
   flamethrowDuration: 3
-  flameDamage: 6
-  hammerActiveDamage: 0
+  flameDamage: 12
+  hammerActiveDamage: 45
   activationPrefab: {fileID: 0}
   hammerCheckRadius: 0
-  jumpAttackDamage: 25
+  jumpAttackDamage: 50
   impactRadius: 2.5
   impactPower: 7
   upforceMultiplayer: 10
   jumpAttackCooldown: 5
   travelTimeToTarget: 0.6
   minJumpDistanceRange: 5
-  attackRange: 1.6
+  attackRange: 2
   meleeAttackDamage: 40
   damagePoints:
   - {fileID: 4323674121589831088}
   - {fileID: 3353956013191966319}
-  attackRadius: 0.5
+  attackRadius: 2
   meleeAttackFx: {fileID: 2478974657971541182, guid: 28e41163292a439468d443765b6f4062, type: 3}
   whatToIgnore:
     serializedVersion: 2

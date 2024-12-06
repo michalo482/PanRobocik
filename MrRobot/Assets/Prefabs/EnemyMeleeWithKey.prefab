@@ -220,14 +220,14 @@ MonoBehaviour:
   attackList:
   - attackDamage: 21
     attackName: Sword slash
-    attackRange: 1
+    attackRange: 2
     moveSpeed: 0
     attackIndex: 1
     animationSpeed: 1.4
     AttackTypeMelee: 0
   - attackDamage: 25
     attackName: Sword spin
-    attackRange: 1.5
+    attackRange: 2
     moveSpeed: 2.5
     attackIndex: 0
     animationSpeed: 1.04
@@ -322,11 +322,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 10
   currentHealth: 0
-  damageAudioSource: {fileID: 0}
-  healAudioSource: {fileID: 0}
-  healAudioSource2: {fileID: 0}
-  deathAudioSource: {fileID: 6945543200623424858}
-  lowHealthAudioSource: {fileID: 0}
 --- !u!82 &6945543200623424858
 AudioSource:
   m_ObjectHideFlags: 0

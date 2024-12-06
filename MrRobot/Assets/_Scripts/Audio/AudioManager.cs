@@ -11,8 +11,12 @@ public class AudioManager : MonoBehaviour
     public AudioSource deadSource;
     public AudioSource repairSource;
 
-
-    
+    [Header("Playlists")]
+    public List<AudioClip> menuPlaylist;  
+    public List<AudioClip> gamePlaylist;
+    private AudioSource audioSource;
+    private List<AudioClip> currentPlaylist;
+    private int currentTrackIndex = 0; 
 
     private Dictionary<AudioSource, float> originalVolumes = new Dictionary<AudioSource, float>();
 
@@ -29,6 +33,7 @@ public class AudioManager : MonoBehaviour
             return;
         }
 
+        audioSource = GetComponent<AudioSource>();
         SaveOriginalVolumes(); // Zapisujemy bazowe wartoœci
 
         // Odczytanie zapisanych wartoœci i ustawienie g³oœnoœci na podstawie preferencji
@@ -39,6 +44,57 @@ public class AudioManager : MonoBehaviour
         SetSFXVolume(savedSFXVolume);
     }
 
+
+    public void PlayMenuMusic()
+    {
+        if (currentPlaylist == menuPlaylist) return; 
+
+        StopMusic();  
+        currentPlaylist = new List<AudioClip>(menuPlaylist); 
+        ShufflePlaylist();
+        PlayNextTrack();
+    }
+
+    public void PlayGameMusic()
+    {
+        if (currentPlaylist == gamePlaylist) return; 
+
+        StopMusic();
+        currentPlaylist = new List<AudioClip>(gamePlaylist);
+        ShufflePlaylist();
+        PlayNextTrack();
+    }
+
+    void PlayNextTrack()
+    {
+        if (currentPlaylist == null || currentPlaylist.Count == 0) return;
+
+        audioSource.clip = currentPlaylist[currentTrackIndex];
+        audioSource.Play();
+
+        currentTrackIndex = (currentTrackIndex + 1) % currentPlaylist.Count; 
+
+        
+        Invoke(nameof(PlayNextTrack), audioSource.clip.length);
+    }
+
+    void ShufflePlaylist()
+    {
+        for (int i = 0; i < currentPlaylist.Count; i++)
+        {
+            int randomIndex = Random.Range(i, currentPlaylist.Count);
+            AudioClip temp = currentPlaylist[i];
+            currentPlaylist[i] = currentPlaylist[randomIndex];
+            currentPlaylist[randomIndex] = temp;
+        }
+        currentTrackIndex = 0;
+    }
+
+    public void StopMusic()
+    {
+        audioSource.Stop();
+        CancelInvoke(nameof(PlayNextTrack));  
+    }
 
     public void PlayHealthSound(string soundType, bool loop = false)
     {
@@ -121,7 +177,7 @@ public class AudioManager : MonoBehaviour
 
         PlayerPrefs.SetFloat("BGMVolume", volume);
         PlayerPrefs.Save();
-    }
+    } 
 
     public void SetSFXVolume(float volume)
     {
@@ -144,7 +200,7 @@ public class AudioManager : MonoBehaviour
         PlayerPrefs.SetFloat("SFXVolume", volume);
         PlayerPrefs.Save();
     }
-
+    
     public void PlaySFX(AudioClip clip, float volumeScale = 1.0f)
     {
         if (clip == null) return;

@@ -23,6 +23,8 @@ public class UI_InGame : MonoBehaviour
     private void Awake()
     {
         weaponSlots_UI = GetComponentsInChildren<UI_WeaponSlot>(true);
+        AudioManager.Instance.PlayGameMusic();
+
     }
 
     public void UpdateWeaponUI(List<Weapon> weaponSlots, Weapon currentWeapon)

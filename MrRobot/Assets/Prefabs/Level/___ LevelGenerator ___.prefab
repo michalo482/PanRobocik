@@ -105,3 +105,7 @@ MonoBehaviour:
   nextSnapPoint: {fileID: 0}
   levelSize: 6
   generationCooldown: 0
+  snapUsed: []
+  snapAll: []
+  block:
+  - {fileID: 5348694745698329556, guid: 290eb4162c2f97041988a0c45b15bd92, type: 3}

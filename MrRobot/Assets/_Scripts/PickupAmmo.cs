@@ -73,8 +73,7 @@ public class PickupAmmo : Interactable
 
             AddBulletsToWeapon(weapon, GetBulletsAmount(ammo), healthAmount);
         }
-        // Wywo³anie dŸwiêku podnoszenia amunicji
-        pickupAmmoAudioEvent?.Raise();
+
 
         
         Destroy(gameObject);
@@ -89,6 +88,9 @@ public class PickupAmmo : Interactable
         _weaponController.PickupWeapon(weapon);
         playerHealth.ReduceHealth(-healAmount);
         _weaponController.UpdateWeaponUI();
+        pickupAmmoAudioEvent?.Raise();
+        AudioManager.Instance.PlayHealthSound("heal");
+
         //weapon.totalReserveAmmo += amountOfBullets;
     }
 }

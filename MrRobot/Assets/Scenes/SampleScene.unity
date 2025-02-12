@@ -524,7 +524,7 @@ GameObject:
   - component: {fileID: 54680643}
   m_Layer: 8
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5003,7 +5003,7 @@ GameObject:
   - component: {fileID: 472296756}
   m_Layer: 0
   m_Name: '*** LevelGenerator ***'
-  m_TagString: Untagged
+  m_TagString: LevelGenerator
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5020,14 +5020,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b2b73f12f934c14882e0d3d186303a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  navMeshSurface: {fileID: 571501477}
-  lastLevelPart: {fileID: 3966566735694463111, guid: 6cb3d9e910d878c48a0daa1e0848ca0f, type: 3}
-  levelParts:
-  - {fileID: 2761732783408733036, guid: 0e61b6b7d285a9f4bb8e7e798bcdc748, type: 3}
-  - {fileID: 344561504900064319, guid: bc6e99b42c9c96b4087696f3b6ac03bc, type: 3}
-  - {fileID: 7543869285160702219, guid: 2f244dc5ca2d5eb4386a0b0937c0b766, type: 3}
-  nextSnapPoint: {fileID: 999132580}
+  navMeshs: {fileID: 571501477}
+  enemyList: []
+  nextSnapPoint: {fileID: 1780981793}
+  levelSize: 3
   generationCooldown: 0
+  snapUsed: []
+  snapAll: []
+  block:
+  - {fileID: 5348694745698329556, guid: 290eb4162c2f97041988a0c45b15bd92, type: 3}
 --- !u!4 &472296757
 Transform:
   m_ObjectHideFlags: 0
@@ -9455,6 +9456,57 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &864268910
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 864268911}
+  - component: {fileID: 864268912}
+  m_Layer: 0
+  m_Name: LevelPartTemplates
+  m_TagString: LevelParts
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &864268911
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 864268910}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 122.90818, y: 24.272587, z: -36.970688}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &864268912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 864268910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 230a7218f4a00c941bfedad6ea05a81e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lastLevelPart: {fileID: 8265834235643019896, guid: 95a2576a2b761e241a3505cfafaa90cd, type: 3}
+  levelParts:
+  - {fileID: 6219218866129165015, guid: 1b640c4505e43c74cb25286bc2fb59b6, type: 3}
+  - {fileID: 344561504900064319, guid: bc6e99b42c9c96b4087696f3b6ac03bc, type: 3}
+  - {fileID: 7543869285160702219, guid: 2f244dc5ca2d5eb4386a0b0937c0b766, type: 3}
+  currentLevelParts: []
+  generatedLevelParts: []
 --- !u!1 &885419731
 GameObject:
   m_ObjectHideFlags: 0
@@ -10156,6 +10208,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c7b3397159eb674aa63d5d8f64248a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deathSource: {fileID: 0}
+  healSource: {fileID: 0}
+  healSource2: {fileID: 0}
+  damageSource: {fileID: 0}
+  deadSource: {fileID: 0}
+  repairSource: {fileID: 0}
+  menuPlaylist: []
+  gamePlaylist: []
 --- !u!1 &919728087
 GameObject:
   m_ObjectHideFlags: 0
@@ -11226,17 +11286,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 989771601}
   m_CullTransparentMesh: 1
---- !u!114 &999132580 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6310394511100427669, guid: 70b023cb9c6f52342a00c3d4f6ac14ff, type: 3}
-  m_PrefabInstance: {fileID: 1758083103}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e9527045a2070c439633e9b7212ef2f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1006374023
 GameObject:
   m_ObjectHideFlags: 0
@@ -17900,6 +17949,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2032966708598718993, guid: 70b023cb9c6f52342a00c3d4f6ac14ff, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4433517393710392160, guid: 70b023cb9c6f52342a00c3d4f6ac14ff, type: 3}
       propertyPath: m_Name
       value: LevelPart - Start
@@ -17944,11 +17997,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7246047385924273322, guid: 70b023cb9c6f52342a00c3d4f6ac14ff, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7353615614799359410, guid: 70b023cb9c6f52342a00c3d4f6ac14ff, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 70b023cb9c6f52342a00c3d4f6ac14ff, type: 3}
+--- !u!114 &1780981793 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6391615409009213222, guid: 70b023cb9c6f52342a00c3d4f6ac14ff, type: 3}
+  m_PrefabInstance: {fileID: 1758083103}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e9527045a2070c439633e9b7212ef2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1800451475
 GameObject:
   m_ObjectHideFlags: 0
@@ -30083,6 +30155,7 @@ SceneRoots:
   - {fileID: 1396777888}
   - {fileID: 217657629}
   - {fileID: 472296757}
+  - {fileID: 864268911}
   - {fileID: 423294258}
   - {fileID: 1141461636}
   - {fileID: 23768224}

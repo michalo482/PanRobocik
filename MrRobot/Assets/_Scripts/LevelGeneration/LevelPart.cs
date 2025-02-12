@@ -4,71 +4,69 @@ using UnityEngine;
 
 public class LevelPart : MonoBehaviour
 {
-
-    [Header("Intersection check")]
-    [SerializeField] private LayerMask intersectionLayer;
-    [SerializeField] private Collider[] intersectionCheckColliders;
-    [SerializeField] private Transform intersectionCheckParent;
+    [Header("Overlap check")]
+    [SerializeField] private LayerMask overlapLayer;
+    [SerializeField] private Collider[] overlapCheckColliders;
+    [SerializeField] private Transform overlapCheckParent;
+    
 
     private void Start()
     {
-        if(intersectionCheckColliders.Length <= 0)
+        if(overlapCheckColliders.Length <= 0)
         {
-            intersectionCheckColliders = intersectionCheckParent.GetComponentsInChildren<Collider>();
+            overlapCheckColliders = overlapCheckParent.GetComponentsInChildren<Collider>();
         }
     }
 
-
-    public bool IntersectionDetected()
+    public bool OverlapDetected()
     {
         Physics.SyncTransforms();
 
-        foreach (Collider collider in intersectionCheckColliders)
+        foreach (Collider collider in overlapCheckColliders)
         {
-            Collider[] hitColliders = Physics.OverlapBox(collider.bounds.center, collider.bounds.extents, Quaternion.identity, intersectionLayer);
+            Collider[] hitColliders = Physics.OverlapBox(collider.bounds.center, collider.bounds.extents, Quaternion.identity, overlapLayer);
 
-            foreach (Collider hit in hitColliders)
+            foreach (var hit in hitColliders)
             {
-                IntersectionCheck intersectionCheck = hit.GetComponentInParent<IntersectionCheck>();
+                OverlapCheck overlapCheck = hit.GetComponentInParent<OverlapCheck>();
 
-                if(intersectionCheck != null && intersectionCheckParent != intersectionCheck.transform)
+                if (overlapCheck != null && overlapCheckParent != overlapCheck.transform)
                 {
                     return true;
-                }
+                }  
             }
         }
+        
+        return false;        
+    }
 
-        return false;
+    public void FixedSnapTo(SnapPoint targetSnapPoint)
+    {
+        SnapPoint enterPoint = GetEnterPoint();
+
+        AlignTo(enterPoint, targetSnapPoint);
+        SnapTo(enterPoint, targetSnapPoint);
     }
 
     private void AlignTo(SnapPoint ownSnapPoint, SnapPoint targetSnapPoint)
-    {
+    {        
         var rotationOffset = ownSnapPoint.transform.rotation.eulerAngles.y - transform.rotation.eulerAngles.y;
-
+        
         transform.rotation = targetSnapPoint.transform.rotation;
+        
         transform.Rotate(0, 180, 0);
         transform.Rotate(0, -rotationOffset, 0);
     }
 
-    public void SnapAndAlignPartTo(SnapPoint targetSnapPoint)
+    private void SnapTo(SnapPoint actualSnapPoint, SnapPoint targetSnapPoint)
     {
-        SnapPoint entrancePoint = GetEntrancePoint();
-
-        AlignTo(entrancePoint, targetSnapPoint);
-        SnapTo(entrancePoint, targetSnapPoint);
-        
-    }
-
-    private void SnapTo(SnapPoint ownSnapPoint, SnapPoint targetSnapPoint)
-    {
-        var offset = transform.position - ownSnapPoint.transform.position;
-
+        var offset = transform.position - actualSnapPoint.transform.position;
         var newPosition = targetSnapPoint.transform.position + offset;
 
         transform.position = newPosition;
     }
 
-    public SnapPoint GetEntrancePoint()
+    public SnapPoint GetEnterPoint()
     {
         return GetSnapPointOfType(SnapPointType.ENTER);
     }
@@ -78,14 +76,14 @@ public class LevelPart : MonoBehaviour
         return GetSnapPointOfType(SnapPointType.EXIT);
     }
 
-    private SnapPoint GetSnapPointOfType(SnapPointType snapPointType)
+    private SnapPoint GetSnapPointOfType(SnapPointType pointType)
     {
         SnapPoint[] snapPoints = GetComponentsInChildren<SnapPoint>();
         List<SnapPoint> filteredSnapPoints = new List<SnapPoint>();
 
         foreach (SnapPoint snapPoint in snapPoints)
         {
-            if (snapPoint.SnapPointType == snapPointType)
+            if (snapPoint.pointType == pointType)
             {
                 filteredSnapPoints.Add(snapPoint);
             }
@@ -104,4 +102,5 @@ public class LevelPart : MonoBehaviour
     {
         return GetComponentsInChildren<Enemy>(true);
     }
+    
 }

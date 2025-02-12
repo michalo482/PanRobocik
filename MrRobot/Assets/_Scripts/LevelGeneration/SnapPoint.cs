@@ -10,11 +10,12 @@ public enum SnapPointType
 
 public class SnapPoint : MonoBehaviour
 {
-    public SnapPointType SnapPointType;
+    public SnapPointType pointType;
 
 
     private void OnValidate()
     {
-        gameObject.name = "SnapPoint - " + SnapPointType.ToString();
+        gameObject.name = "SnapPoint - " + pointType.ToString();
     }
 }
+ 

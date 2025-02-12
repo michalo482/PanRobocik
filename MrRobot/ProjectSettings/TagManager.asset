@@ -6,6 +6,8 @@ TagManager:
   tags:
   - BGM
   - BGM_MENU
+  - LevelGenerator
+  - LevelParts
   layers:
   - Default
   - TransparentFX
@@ -20,7 +22,7 @@ TagManager:
   - Aim
   - Enemy
   - EnemyAxe
-  - IntersectCheck
+  - OverlapCheck
   - 
   - 
   - 

@@ -11,12 +11,12 @@ GameObject:
   - component: {fileID: 5766155271019641936}
   - component: {fileID: 8962518445897743763}
   - component: {fileID: 4198064522934686263}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: carousel_wheel_small_bottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &5766155271019641936
 Transform:
@@ -97,12 +97,12 @@ GameObject:
   - component: {fileID: 4380873737766009858}
   - component: {fileID: 3477135848580106184}
   - component: {fileID: 8512404902055135566}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: carousel_wheel_small_top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &5255778154648109595
 Transform:

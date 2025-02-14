@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7412920329516823219}
   - component: {fileID: 8624178804119862861}
   - component: {fileID: 2164596816523832521}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: sea_container_blue
   m_TagString: Untagged
   m_Icon: {fileID: 0}

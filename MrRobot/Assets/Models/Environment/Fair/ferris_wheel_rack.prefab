@@ -11,12 +11,12 @@ GameObject:
   - component: {fileID: 3883441881539394445}
   - component: {fileID: 3614224910132191347}
   - component: {fileID: 2800383618281540619}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ferris_wheel_cabin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 0
 --- !u!4 &3883441881539394445
 Transform:
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 3482624182411122762}
   - component: {fileID: 1121626262396615105}
   - component: {fileID: 3932455996039054933}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ferris_wheel_rack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -203,12 +203,12 @@ GameObject:
   - component: {fileID: 5827954295567731111}
   - component: {fileID: 6428623098621298227}
   - component: {fileID: 3878202934996934853}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ferris_wheel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &343369005522526181
 Transform:

@@ -13,12 +13,12 @@ GameObject:
   - component: {fileID: 6519895577447655098}
   - component: {fileID: 6207566106607412884}
   - component: {fileID: 1330969524642348201}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: cart_ice_cream
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &8106085289799362006
 Transform:

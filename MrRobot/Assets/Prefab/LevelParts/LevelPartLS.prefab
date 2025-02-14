@@ -828,7 +828,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3621660039799194699, guid: cab0300263b56ca42b6f7a63d7ced9a9, type: 3}
       propertyPath: m_Name
-      value: SnapPoint - EXIT
+      value: SnapPoint - ENTER
       objectReference: {fileID: 0}
     - target: {fileID: 8303808922457905250, guid: cab0300263b56ca42b6f7a63d7ced9a9, type: 3}
       propertyPath: m_LocalScale.x
@@ -2780,7 +2780,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3621660039799194699, guid: cab0300263b56ca42b6f7a63d7ced9a9, type: 3}
       propertyPath: m_Name
-      value: SnapPoint - EXIT
+      value: SnapPoint - ENTER
       objectReference: {fileID: 0}
     - target: {fileID: 8303808922457905250, guid: cab0300263b56ca42b6f7a63d7ced9a9, type: 3}
       propertyPath: m_LocalScale.x

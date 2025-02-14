@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 323562716098583748}
   - component: {fileID: 5518349008556065224}
   - component: {fileID: 3755326644374192321}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: cart_corn_dog
   m_TagString: Untagged
   m_Icon: {fileID: 0}

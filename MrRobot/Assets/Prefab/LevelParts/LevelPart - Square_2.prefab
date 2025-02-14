@@ -16105,6 +16105,10 @@ PrefabInstance:
       propertyPath: pointType
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2774118136981640153, guid: cab0300263b56ca42b6f7a63d7ced9a9, type: 3}
+      propertyPath: snapPointType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3621660039799194699, guid: cab0300263b56ca42b6f7a63d7ced9a9, type: 3}
       propertyPath: m_Name
       value: SnapPoint - EXIT

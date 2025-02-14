@@ -1,10 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class LevelPart : MonoBehaviour
 {
-    [Header("Overlap check")]
+    [Header("Overlap Check Settings")]
     [SerializeField] private LayerMask overlapLayer;
     [SerializeField] private Collider[] overlapCheckColliders;
     [SerializeField] private Transform overlapCheckParent;
@@ -12,7 +11,13 @@ public class LevelPart : MonoBehaviour
 
     private void Start()
     {
-        if(overlapCheckColliders.Length <= 0)
+        InitializeOverlapColliders();
+    }
+
+    private void InitializeOverlapColliders()
+    {
+        // Automatically fill overlapCheckColliders if not set
+        if (overlapCheckColliders.Length <= 0)
         {
             overlapCheckColliders = overlapCheckParent.GetComponentsInChildren<Collider>();
         }
@@ -20,24 +25,30 @@ public class LevelPart : MonoBehaviour
 
     public bool OverlapDetected()
     {
+        // Ensure physics calculations are up to date
         Physics.SyncTransforms();
 
-        foreach (Collider collider in overlapCheckColliders)
+        foreach (var collider in overlapCheckColliders)
         {
-            Collider[] hitColliders = Physics.OverlapBox(collider.bounds.center, collider.bounds.extents, Quaternion.identity, overlapLayer);
+            Collider[] hitColliders = Physics.OverlapBox(
+                collider.bounds.center,
+                collider.bounds.extents,
+                Quaternion.identity,
+                overlapLayer
+            );
 
             foreach (var hit in hitColliders)
             {
-                OverlapCheck overlapCheck = hit.GetComponentInParent<OverlapCheck>();
+                var overlapCheck = hit.GetComponentInParent<OverlapCheck>();
 
                 if (overlapCheck != null && overlapCheckParent != overlapCheck.transform)
                 {
                     return true;
-                }  
+                }
             }
         }
-        
-        return false;        
+
+        return false;
     }
 
     public void FixedSnapTo(SnapPoint targetSnapPoint)
@@ -49,8 +60,9 @@ public class LevelPart : MonoBehaviour
     }
 
     private void AlignTo(SnapPoint ownSnapPoint, SnapPoint targetSnapPoint)
-    {        
-        var rotationOffset = ownSnapPoint.transform.rotation.eulerAngles.y - transform.rotation.eulerAngles.y;
+    {
+        // Calculate rotation offset and adjust rotation accordingly
+        float rotationOffset = ownSnapPoint.transform.rotation.eulerAngles.y - transform.rotation.eulerAngles.y;
         
         transform.rotation = targetSnapPoint.transform.rotation;
         
@@ -60,10 +72,9 @@ public class LevelPart : MonoBehaviour
 
     private void SnapTo(SnapPoint actualSnapPoint, SnapPoint targetSnapPoint)
     {
-        var offset = transform.position - actualSnapPoint.transform.position;
-        var newPosition = targetSnapPoint.transform.position + offset;
-
-        transform.position = newPosition;
+        // Calculate and apply position offset for snapping
+        Vector3 offset = transform.position - actualSnapPoint.transform.position;
+        transform.position = targetSnapPoint.transform.position + offset;
     }
 
     public SnapPoint GetEnterPoint()
@@ -76,14 +87,14 @@ public class LevelPart : MonoBehaviour
         return GetSnapPointOfType(SnapPointType.EXIT);
     }
 
-    private SnapPoint GetSnapPointOfType(SnapPointType pointType)
+    private SnapPoint GetSnapPointOfType(SnapPointType snapPointType)
     {
         SnapPoint[] snapPoints = GetComponentsInChildren<SnapPoint>();
         List<SnapPoint> filteredSnapPoints = new List<SnapPoint>();
 
         foreach (SnapPoint snapPoint in snapPoints)
         {
-            if (snapPoint.pointType == pointType)
+            if (snapPoint.snapPointType == snapPointType)
             {
                 filteredSnapPoints.Add(snapPoint);
             }
@@ -100,6 +111,7 @@ public class LevelPart : MonoBehaviour
 
     public Enemy[] MyEnemies()
     {
+        // Return all child enemies, including inactive ones
         return GetComponentsInChildren<Enemy>(true);
     }
     

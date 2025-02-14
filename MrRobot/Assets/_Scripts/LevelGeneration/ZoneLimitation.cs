@@ -1,39 +1,51 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ZoneLimitation : MonoBehaviour
 {
-    private ParticleSystem[] lines;
-    private BoxCollider zone;
+    private ParticleSystem[] particleLines;
+    private BoxCollider zoneCollider;
 
-    private void Start(){
-        GetComponent<MeshRenderer>().enabled = false;
-        zone = GetComponent<BoxCollider>();
-        lines = GetComponentsInChildren<ParticleSystem>();
+    private void Start()
+    {
+        InitializeComponents();
         ActivateLimitZone(false);
     }
 
-    private void ActivateLimitZone(bool activate){
-        foreach(var line in lines){
-            if (activate){
+    private void InitializeComponents()
+    {
+        GetComponent<MeshRenderer>().enabled = false;
+        zoneCollider = GetComponent<BoxCollider>();
+        particleLines = GetComponentsInChildren<ParticleSystem>();
+    }
+
+    private void ActivateLimitZone(bool isActive)
+    {
+        foreach (var line in particleLines)
+        {
+            if (isActive)
+            {
                 line.Play();
-            } else {
+            }
+            else
+            {
                 line.Stop();
             }
         }
 
-        zone.isTrigger = !activate;
+        zoneCollider.isTrigger = !isActive;
     }
 
-    IEnumerator LimitActivationCo(){
+    private IEnumerator LimitActivationCoroutine()
+    {
         ActivateLimitZone(true);
         yield return new WaitForSeconds(1);
         ActivateLimitZone(false);
     }
 
-    private void OnTriggerEnter(Collider other){
-        StartCoroutine(LimitActivationCo());
-        Debug.Log("My sensors are going crazy, I think it's dangerous!");
+    private void OnTriggerEnter(Collider other)
+    {
+        StartCoroutine(LimitActivationCoroutine());
+        Debug.Log("I'm picking up unusual sensor readings. Access is not recommended—there is a high risk of danger!!");
     }
 }

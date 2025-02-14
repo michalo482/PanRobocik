@@ -119,7 +119,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e9527045a2070c439633e9b7212ef2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointType: 0
+  snapPointType: 0
 --- !u!114 &3156832344814837609
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public enum SnapPointType
@@ -10,12 +8,12 @@ public enum SnapPointType
 
 public class SnapPoint : MonoBehaviour
 {
-    public SnapPointType pointType;
+    public SnapPointType snapPointType;
 
 
     private void OnValidate()
     {
-        gameObject.name = "SnapPoint - " + pointType.ToString();
+        gameObject.name = $"SnapPoint - {snapPointType}";
     }
 }
  

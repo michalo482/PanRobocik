@@ -1,42 +1,49 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Activation : MonoBehaviour
 {
-    private LevelPartTemplates templates;
-    private float distance = 90f;
-    private LevelGenerator levelGenerator;
-    
-    private float distanceEnemy = 40f;
+    [Header("Activation Settings")]
+    [SerializeField] private float activationDistance = 90f;
+    [SerializeField] private float enemyActivationDistance = 40f;
 
-    // Start is called before the first frame update
-    void Start()
+    private LevelPartTemplates levelPartTemplates;
+    private LevelGenerator levelGenerator;
+    private Transform playerTransform;
+
+    private void Start()
     {
-        templates = GameObject.FindGameObjectWithTag("LevelParts").GetComponent<LevelPartTemplates>();
+        levelPartTemplates = GameObject.FindGameObjectWithTag("LevelParts").GetComponent<LevelPartTemplates>();
         levelGenerator = GameObject.FindGameObjectWithTag("LevelGenerator").GetComponent<LevelGenerator>();
 
+        playerTransform = transform;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        for(int x = 0 ; x < templates.generatedLevelParts.Count; x++){
-            if (Vector3.Distance (templates.generatedLevelParts[x].transform.position, transform.position) < distance) {
-                templates.generatedLevelParts[x].gameObject.SetActive(true);
-            } else {
-                templates.generatedLevelParts[x].gameObject.SetActive(false);
-            }
-        }
+        ActivateLevelParts();
+        ActivateEnemies();
+    }
 
-        for(int x = 0 ; x < levelGenerator.enemyList.Count; x++){
-            if (Vector3.Distance (levelGenerator.enemyList[x].transform.position, transform.position) < distanceEnemy) {
-                levelGenerator.enemyList[x].gameObject.SetActive(true);
-                
-            } else {
-                levelGenerator.enemyList[x].gameObject.SetActive(false);
-                
-            }
+    private void ActivateLevelParts()
+    {
+        foreach (Transform levelPart in levelPartTemplates.generatedLevelParts)
+        {
+            if (levelPart == null) continue;
+            
+            float distanceToPlayer = Vector3.Distance(levelPart.position, playerTransform.position);
+            levelPart.gameObject.SetActive(distanceToPlayer < activationDistance);
+        }
+    }
+
+    private void ActivateEnemies()
+    {
+        foreach (Enemy enemy in levelGenerator.enemyList)
+        {
+            if (enemy == null) continue;
+
+            float distanceToPlayer = Vector3.Distance(enemy.transform.position, playerTransform.position);
+            enemy.gameObject.SetActive(distanceToPlayer < enemyActivationDistance);
         }
     }
 }

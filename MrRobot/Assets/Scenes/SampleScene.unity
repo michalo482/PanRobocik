@@ -5020,15 +5020,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b2b73f12f934c14882e0d3d186303a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  navMeshs: {fileID: 571501477}
-  enemyList: []
+  navMeshSurface: {fileID: 571501477}
   nextSnapPoint: {fileID: 1780981793}
   levelSize: 3
   generationCooldown: 0
-  snapUsed: []
-  snapAll: []
-  block:
+  blockPrefabs:
   - {fileID: 5348694745698329556, guid: 290eb4162c2f97041988a0c45b15bd92, type: 3}
+  availableSnapPoints: []
+  enemyList: []
 --- !u!4 &472296757
 Transform:
   m_ObjectHideFlags: 0
@@ -9500,12 +9499,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 230a7218f4a00c941bfedad6ea05a81e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lastLevelPart: {fileID: 8265834235643019896, guid: 95a2576a2b761e241a3505cfafaa90cd, type: 3}
-  levelParts:
-  - {fileID: 6219218866129165015, guid: 1b640c4505e43c74cb25286bc2fb59b6, type: 3}
+  lastLevelPart: {fileID: 3966566735694463111, guid: 6cb3d9e910d878c48a0daa1e0848ca0f, type: 3}
+  availableLevelParts:
   - {fileID: 344561504900064319, guid: bc6e99b42c9c96b4087696f3b6ac03bc, type: 3}
   - {fileID: 7543869285160702219, guid: 2f244dc5ca2d5eb4386a0b0937c0b766, type: 3}
-  currentLevelParts: []
+  - {fileID: 2761732783408733036, guid: 0e61b6b7d285a9f4bb8e7e798bcdc748, type: 3}
+  activeLevelParts: []
   generatedLevelParts: []
 --- !u!1 &885419731
 GameObject:
@@ -17949,10 +17948,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2032966708598718993, guid: 70b023cb9c6f52342a00c3d4f6ac14ff, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
     - target: {fileID: 4433517393710392160, guid: 70b023cb9c6f52342a00c3d4f6ac14ff, type: 3}
       propertyPath: m_Name
       value: LevelPart - Start
@@ -17996,14 +17991,6 @@ PrefabInstance:
     - target: {fileID: 4657643777315235595, guid: 70b023cb9c6f52342a00c3d4f6ac14ff, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7246047385924273322, guid: 70b023cb9c6f52342a00c3d4f6ac14ff, type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 7353615614799359410, guid: 70b023cb9c6f52342a00c3d4f6ac14ff, type: 3}
-      propertyPath: m_Layer
-      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

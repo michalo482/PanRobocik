@@ -1,38 +1,30 @@
-using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.AI;
 using Unity.AI.Navigation;
-using UnityEngine;
 
 public class LevelGenerator : MonoBehaviour
 {
     public static LevelGenerator instance;
 
 
-    [SerializeField] private NavMeshSurface navMeshs;
-    private LevelPartTemplates templates;
-    //public List<GameObject> enemySpawnerList;
-
-    public List<Enemy> enemyList;
-
-    private Activation playerActivation;
-
+    [Header("Level Generation Settings")]
+    [SerializeField] private NavMeshSurface navMeshSurface;
     [SerializeField] private SnapPoint nextSnapPoint;
+    [SerializeField] private int levelSize = 5;
+    [SerializeField] private float generationCooldown = 1f;
+    [SerializeField] private GameObject[] blockPrefabs;
+
+    private LevelPartTemplates templates;
+    private Activation playerActivation;
     private SnapPoint defaultSnapPoint;
 
-    [SerializeField] private int levelSize;
-
-
-    [SerializeField] private float generationCooldown;
     private float cooldownTimer;
-    private bool generationOver = true;
+    private bool isGenerationComplete = true;
 
-
-    public List<Transform> snapUsed;
-    public List<Transform> snapAll;
-    private SnapPoint snapPoint;
-
-    public GameObject[] block;
+    private List<Transform> usedSnapPoints = new List<Transform>();
+    public List<Transform> availableSnapPoints = new List<Transform>();
+    public List<Enemy> enemyList = new List<Enemy>();
 
 
     private void Awake()
@@ -42,61 +34,60 @@ public class LevelGenerator : MonoBehaviour
 
     private void Start()
     {
-        templates = GameObject.FindGameObjectWithTag("LevelParts").GetComponent<LevelPartTemplates>();         
-        enemyList = new List<Enemy>(); 
-        
-        playerActivation = GameObject.FindGameObjectWithTag("Player").GetComponent<Activation>();        
-        
+        templates = GameObject.FindGameObjectWithTag("LevelParts").GetComponent<LevelPartTemplates>();
+        playerActivation = GameObject.FindGameObjectWithTag("Player").GetComponent<Activation>();
+
         defaultSnapPoint = nextSnapPoint;
-
-        snapUsed.Add(nextSnapPoint.transform);
-
-        //InitializeGeneration();
+        
+        usedSnapPoints.Add(nextSnapPoint.transform);
     }
 
     private void Update()
     {
-        if (generationOver)
+        if (isGenerationComplete)
         {
             return;
         }
 
         cooldownTimer -= Time.deltaTime;
 
-        if (cooldownTimer < 0)
+        if (cooldownTimer <= 0)
         {
-            if(templates.currentLevelParts.Count > 0)
+            if (templates.generatedLevelParts.Count < levelSize)
             {
                 cooldownTimer = generationCooldown;
                 GenerateNextLevelPart();
             }
-            else if (generationOver == false)
+            else if (!isGenerationComplete)
             {
                 FinishGeneration();
             }
-
         }
-
     }
 
     public void InitializeGeneration()
     {
-        snapUsed = new List<Transform>();
+        usedSnapPoints.Clear();
+        availableSnapPoints.Clear();
+        
         nextSnapPoint = defaultSnapPoint;
-        snapUsed.Add(nextSnapPoint.transform);
-        generationOver = false;
-        templates.currentLevelParts = new List<Transform>(templates.levelParts);
+        usedSnapPoints.Add(nextSnapPoint.transform);
 
-        DestroyOldLevelPartsandEnemies();        
+        isGenerationComplete = false;
+        templates.activeLevelParts = new List<Transform>(templates.availableLevelParts);
+
+        DestroyOldLevelPartsAndEnemies();
     }
 
-    private void DestroyOldLevelPartsandEnemies()
+    private void DestroyOldLevelPartsAndEnemies()
     {
-        foreach (Transform t in templates.generatedLevelParts)
+        // Clean up previously generated level parts
+        foreach (Transform part in templates.generatedLevelParts)
         {
-            Destroy(t.gameObject);
+            Destroy(part.gameObject);
         }
 
+        // Clear enemy list and deactivate enemies
         foreach (Enemy enemy in enemyList)
         {
             Destroy(enemy.gameObject);
@@ -109,12 +100,15 @@ public class LevelGenerator : MonoBehaviour
 
     private void FinishGeneration()
     {
-        generationOver = true;
+        isGenerationComplete = true;
         GenerateNextLevelPart();
 
-        navMeshs.BuildNavMesh();
+        // Rebuild NavMesh for pathfinding
+        navMeshSurface.BuildNavMesh();
 
-        foreach (Enemy enemy in enemyList){
+        // Activate all enemies
+        foreach (Enemy enemy in enemyList)
+        {
             enemy.transform.parent = null;
             enemy.gameObject.SetActive(true);
         }
@@ -124,21 +118,15 @@ public class LevelGenerator : MonoBehaviour
 
     private void GenerateNextLevelPart()
     {
-        Transform newPart = null;
+        Transform newPart;
 
-        if (generationOver)
+        if (isGenerationComplete)
         {
+            // Generate the last part of the level
             newPart = Instantiate(templates.lastLevelPart);
-            
-            // newPart.rotation = nextSnapPoint.transform.rotation;
-            // newPart.rotation = Quaternion.Euler(newPart.rotation.eulerAngles.x, newPart.rotation.eulerAngles.y + 180f, newPart.rotation.eulerAngles.z);
-            
-            // newPart.position = nextSnapPoint.transform.position;
-            // newPart.position += newPart.transform.forward * -5f;
-
             templates.generatedLevelParts.Add(newPart);
 
-            LevelPart levelPartScript = newPart.GetComponent<LevelPart>();
+            var levelPartScript = newPart.GetComponent<LevelPart>();
             levelPartScript.FixedSnapTo(nextSnapPoint);
 
             if (levelPartScript.OverlapDetected())
@@ -148,46 +136,31 @@ public class LevelGenerator : MonoBehaviour
             }
 
             nextSnapPoint = levelPartScript.GetExitPoint();
-            //snapUsed.Add(nextSnapPoint.transform);
-            
-            //StartCoroutine(RebuildNavMeshAsync());
-            
-            // foreach (GameObject enemySpawner in enemySpawnerList){
-            //     if (enemySpawner == null){
+            RemoveNullSnapPoints();
+            CompareSnapPoints();
 
-            //     } else {
-            //         EnemySpawner spawn = enemySpawner.GetComponent<EnemySpawner>();
-            //         spawn.Spawn();
-
-            //     }
-            // }
-
-            
-            //playerActivation.enabled = true;
-
-            RemoveNullSnap();            
-
-            SnapCompare();
-
-            foreach (Transform snap in snapAll){
-                snapPoint = snap.GetComponent<SnapPoint>();
-
-                if(snapPoint.pointType == 0)
+            // Generate blocks at unused snap points
+            foreach (Transform snap in availableSnapPoints)
+            {
+                var snapPoint = snap.GetComponent<SnapPoint>();
+                if (snapPoint.snapPointType == SnapPointType.ENTER)
                 {
-                    
-                } else 
+                    continue;
+                }
+                else
                 {
-                    int rand = Random.Range(0, block.Length);
-                    Instantiate(block[rand], snap.position, snap.rotation);
-                }                           
-            }         
+                    int randomIndex = Random.Range(0, blockPrefabs.Length);
+                    Instantiate(blockPrefabs[randomIndex], snap.position, snap.rotation);
+                }
+            }
         }
         else
         {
+            // Generate a random level part
             newPart = Instantiate(ChooseRandomPart());
             templates.generatedLevelParts.Add(newPart);
 
-            LevelPart levelPartScript = newPart.GetComponent<LevelPart>();
+            var levelPartScript = newPart.GetComponent<LevelPart>();
             levelPartScript.FixedSnapTo(nextSnapPoint);
 
             if (levelPartScript.OverlapDetected())
@@ -197,66 +170,50 @@ public class LevelGenerator : MonoBehaviour
             }
 
             nextSnapPoint = levelPartScript.GetExitPoint();
-            snapUsed.Add(nextSnapPoint.transform);
+            usedSnapPoints.Add(nextSnapPoint.transform);
             enemyList.AddRange(levelPartScript.MyEnemies());
         }
-
-        
-      
     }
-
-    // private IEnumerator RebuildNavMeshAsync()
-    // {
-    //     if (navMeshs.navMeshData == null)
-    //     {
-    //         navMeshs.navMeshData = new NavMeshData();
-    //         NavMesh.AddNavMeshData(navMeshs.navMeshData);
-    //     }
-
-    //     var operation = navMeshs.UpdateNavMesh(navMeshs.navMeshData);
-
-    //     while (!operation.isDone)
-    //     {
-    //         yield return null; 
-    //     }
-    // }
-
-
+  
 
     private Transform ChooseRandomPart()
     {
-        int randomIndex = Random.Range(0, templates.currentLevelParts.Count);
+        int randomIndex = Random.Range(0, templates.activeLevelParts.Count);
+        Transform selectedPart = templates.activeLevelParts[randomIndex];
 
-        Transform choosenPart = templates.currentLevelParts[randomIndex];
+        templates.activeLevelParts.RemoveAt(randomIndex);
 
-        templates.currentLevelParts.RemoveAt(randomIndex);
-
-        return choosenPart;
+        return selectedPart;
     }
 
-    private void RemoveNullSnap()
+    private void RemoveNullSnapPoints()
     {
-        for(int x = 0; x<snapAll.Count; x++){          
-            
-            if (snapAll[x] == null){
-                snapAll.RemoveAt(x);
-                x--;
+        // Remove any null entries in available snap points list
+        for (int i = 0; i < availableSnapPoints.Count; i++)
+        {
+            if (availableSnapPoints[i] == null)
+            {
+                availableSnapPoints.RemoveAt(i);
+                i--;
             }
-
-        }         
+        }
     }
 
-    private void SnapCompare()
+    private void CompareSnapPoints()
     {
-        for(int x = 0; x < snapAll.Count; x++){
-                for(int y = 0; y < snapUsed.Count; y++){
-                    if(snapAll[x] == snapUsed[y]){
-                        snapAll.RemoveAt(x);
-                        x=0;
-                        y=0;
-                    }
+        // Remove used snap points from the available list
+        for (int i = 0; i < availableSnapPoints.Count; i++)
+        {
+            for (int j = 0; j < usedSnapPoints.Count; j++)
+            {
+                if (availableSnapPoints[i] == usedSnapPoints[j])
+                {
+                    availableSnapPoints.RemoveAt(i);
+                    i = 0;
+                    j = 0;
                 }
             }
+        }
     }
 
     public List<Enemy> GetEnemyList()

@@ -9,6 +9,6 @@ public class AddSnap : MonoBehaviour
     void Start()
     {
         levelGenerator = GameObject.FindGameObjectWithTag("LevelGenerator").GetComponent<LevelGenerator>();
-        levelGenerator.snapAll.Add(this.transform);
+        levelGenerator.availableSnapPoints.Add(this.transform);
     }
 }

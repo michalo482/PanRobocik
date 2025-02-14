@@ -114,14 +114,12 @@ public class PlayerWeaponController : MonoBehaviour
         
         // Aktualizowanie audioSO dla nowej broni
         weaponAudioData = currentWeapon.GetWeaponData().weaponAudioData;
-        //_player.WeaponVisuals.SwitchOffWeaponModels();
         _player.WeaponVisuals.PlayWeaponEquipAnimation();
 
         if (weaponAudioData.weaponSwitchSound != null)
         {
             audioSource.PlayOneShot(weaponAudioData.weaponSwitchSound);
         }
-        //CameraManager.instance.ChangeCameraDistance(currentWeapon.CameraDistance);
 
         UpdateWeaponUI();
     }

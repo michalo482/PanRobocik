@@ -54,7 +54,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4992614610154389235, guid: 02b7e32c3313fd24ba41e97738a5f655, type: 3}
       propertyPath: axeDamage
-      value: 70
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 4992614610154389235, guid: 02b7e32c3313fd24ba41e97738a5f655, type: 3}
       propertyPath: axeAimTimer

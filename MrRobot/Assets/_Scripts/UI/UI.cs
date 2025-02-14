@@ -28,6 +28,7 @@ public class UI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        ControlsManager.Instance.SwitchToUIControls();
         AssignInputsUI();
         StartCoroutine(ChangeImageAlpha(0, 1.5f, null));
         AudioManager.Instance.PlayMenuMusic();

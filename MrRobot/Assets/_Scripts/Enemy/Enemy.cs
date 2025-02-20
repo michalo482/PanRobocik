@@ -93,11 +93,22 @@ public class Enemy : MonoBehaviour
 
     public Vector3 GetPatrolDestination()
     {
-        Vector3 destination = _patrolPointsPosition[_currentPatrolIndex];       
+        Vector3 destination = _patrolPointsPosition[_currentPatrolIndex];   
+        again:    
         _currentPatrolIndex++;
         if (_currentPatrolIndex >= patrolPoints.Length)
             _currentPatrolIndex = 0;
-        return destination;
+        
+        NavMeshHit closestHit;
+        if( NavMesh.SamplePosition(  destination, out closestHit, 500, 1 ) ){
+            destination = closestHit.position;
+            return destination;
+        }
+        else{
+            Debug.Log("...");
+            goto again;
+        }
+        
     }
 
     public void FaceTarget(Vector3 target, float turnSpeed = 0)

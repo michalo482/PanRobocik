@@ -14,6 +14,8 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private int levelSize = 5;
     [SerializeField] private float generationCooldown = 1f;
     [SerializeField] private GameObject[] blockPrefabs;
+    [SerializeField] private GameObject[] envoStarts;
+    [SerializeField] private GameObject envoStart;
 
     private LevelPartTemplates templates;
     private Activation playerActivation;
@@ -67,6 +69,7 @@ public class LevelGenerator : MonoBehaviour
 
     public void InitializeGeneration()
     {
+        playerActivation.enabled = false;
         usedSnapPoints.Clear();
         availableSnapPoints.Clear();
         
@@ -77,6 +80,16 @@ public class LevelGenerator : MonoBehaviour
         templates.activeLevelParts = new List<Transform>(templates.availableLevelParts);
 
         DestroyOldLevelPartsAndEnemies();
+        
+        envoStart.SetActive(false);
+        EnvoStart();      
+    }
+
+    private void EnvoStart()
+    {
+        int randomIndex = Random.Range(0, envoStarts.Length);
+        envoStart = envoStarts[randomIndex];
+        envoStart.SetActive(true);
     }
 
     private void DestroyOldLevelPartsAndEnemies()
@@ -111,9 +124,10 @@ public class LevelGenerator : MonoBehaviour
         {
             enemy.transform.parent = null;
             enemy.gameObject.SetActive(true);
-        }
-
+        }    
+  
         MissionManager.instance.StartMission();
+        playerActivation.enabled = true;
     }
 
     private void GenerateNextLevelPart()
@@ -123,7 +137,7 @@ public class LevelGenerator : MonoBehaviour
         if (isGenerationComplete)
         {
             // Generate the last part of the level
-            newPart = Instantiate(templates.lastLevelPart);
+            newPart = Instantiate(ChooseRandomFinish());
             templates.generatedLevelParts.Add(newPart);
 
             var levelPartScript = newPart.GetComponent<LevelPart>();
@@ -135,7 +149,7 @@ public class LevelGenerator : MonoBehaviour
                 return;
             }
 
-            nextSnapPoint = levelPartScript.GetExitPoint();
+            //nextSnapPoint = levelPartScript.GetExitPoint();
             RemoveNullSnapPoints();
             CompareSnapPoints();
 
@@ -150,14 +164,24 @@ public class LevelGenerator : MonoBehaviour
                 else
                 {
                     int randomIndex = Random.Range(0, blockPrefabs.Length);
-                    Instantiate(blockPrefabs[randomIndex], snap.position, snap.rotation);
+                    
+                    GameObject instance = Instantiate(blockPrefabs[randomIndex], snap.position, snap.rotation);
+                    instance.transform.SetParent(transform);
                 }
             }
         }
         else
         {
-            // Generate a random level part
-            newPart = Instantiate(ChooseRandomPart());
+            if(templates.generatedLevelParts.Count == 1)
+            {
+                newPart = Instantiate(ChooseRandomSpecialPart());
+            }
+            else
+            {
+                // Generate a random level part
+                newPart = Instantiate(ChooseRandomPart());
+            }    
+
             templates.generatedLevelParts.Add(newPart);
 
             var levelPartScript = newPart.GetComponent<LevelPart>();
@@ -172,6 +196,7 @@ public class LevelGenerator : MonoBehaviour
             nextSnapPoint = levelPartScript.GetExitPoint();
             usedSnapPoints.Add(nextSnapPoint.transform);
             enemyList.AddRange(levelPartScript.MyEnemies());
+
         }
     }
   
@@ -185,6 +210,23 @@ public class LevelGenerator : MonoBehaviour
 
         return selectedPart;
     }
+
+    private Transform ChooseRandomSpecialPart()
+    {
+        int randomIndex = Random.Range(0, templates.specialLevelParts.Count);
+        Transform selectedPart = templates.specialLevelParts[randomIndex];
+
+        return selectedPart;
+    }
+
+    private Transform ChooseRandomFinish()
+    {
+        int randomIndex = Random.Range(0, templates.lastLevelPart.Count);
+        Transform selectedPart = templates.lastLevelPart[randomIndex];
+
+        return selectedPart;
+    }
+
 
     private void RemoveNullSnapPoints()
     {

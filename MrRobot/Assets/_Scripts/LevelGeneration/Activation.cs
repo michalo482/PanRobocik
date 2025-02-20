@@ -4,8 +4,8 @@ using UnityEngine;
 public class Activation : MonoBehaviour
 {
     [Header("Activation Settings")]
-    [SerializeField] private float activationDistance = 90f;
-    [SerializeField] private float enemyActivationDistance = 40f;
+    [SerializeField] public float activationDistance = 90f;
+    [SerializeField] public float enemyActivationDistance = 40f;
 
     private LevelPartTemplates levelPartTemplates;
     private LevelGenerator levelGenerator;

@@ -59,10 +59,10 @@ public class LevelPart : MonoBehaviour
         SnapTo(enterPoint, targetSnapPoint);
     }
 
-    private void AlignTo(SnapPoint ownSnapPoint, SnapPoint targetSnapPoint)
+    private void AlignTo(SnapPoint actualSnapPoint, SnapPoint targetSnapPoint)
     {
         // Calculate rotation offset and adjust rotation accordingly
-        float rotationOffset = ownSnapPoint.transform.rotation.eulerAngles.y - transform.rotation.eulerAngles.y;
+        float rotationOffset = actualSnapPoint.transform.rotation.eulerAngles.y - transform.rotation.eulerAngles.y;
         
         transform.rotation = targetSnapPoint.transform.rotation;
         

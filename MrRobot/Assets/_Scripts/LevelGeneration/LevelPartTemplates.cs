@@ -4,8 +4,8 @@ using UnityEngine;
 public class LevelPartTemplates : MonoBehaviour
 {
     [Header("Level Part Settings")]
-    [Tooltip("Finish part of the level.")]
-    public Transform lastLevelPart;
+    [Tooltip("Finish parts of the level.")]
+    public List<Transform> lastLevelPart = new List<Transform>();
 
     [Tooltip("All available level parts for spawning.")]
     public List<Transform> availableLevelParts = new List<Transform>();
@@ -15,4 +15,7 @@ public class LevelPartTemplates : MonoBehaviour
 
     [Tooltip("Generated level parts during gameplay.")]
     public List<Transform> generatedLevelParts = new List<Transform>();
+
+    [Tooltip("Special mission parts")]
+    public List<Transform> specialLevelParts = new List<Transform>();
 }

@@ -166,7 +166,7 @@ public class LevelGenerator : MonoBehaviour
                     int randomIndex = Random.Range(0, blockPrefabs.Length);
                     
                     GameObject instance = Instantiate(blockPrefabs[randomIndex], snap.position, snap.rotation);
-                    instance.transform.SetParent(transform);
+                    instance.transform.SetParent(snapPoint.transform);
                 }
             }
         }

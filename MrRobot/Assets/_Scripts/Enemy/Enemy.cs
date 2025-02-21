@@ -97,7 +97,15 @@ public class Enemy : MonoBehaviour
         _currentPatrolIndex++;
         if (_currentPatrolIndex >= patrolPoints.Length)
             _currentPatrolIndex = 0;
-        return destination;
+
+        NavMeshHit hit;
+        Vector3 finalDestination = destination;
+
+        if (NavMesh.SamplePosition(destination, out hit, 2f, 1))
+        {
+            finalDestination = hit.position;
+        }
+        return finalDestination;
         
     }
 

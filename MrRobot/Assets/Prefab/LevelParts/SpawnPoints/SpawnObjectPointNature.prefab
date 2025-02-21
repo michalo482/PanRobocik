@@ -27,7 +27,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -14.4, y: 0, z: 14.4}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 0.3274582, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -53,16 +53,6 @@ MonoBehaviour:
   - {fileID: 1479299878969222048, guid: 188aa355a6202ff47a89c5b265f729b0, type: 3}
   - {fileID: 3207458751297020982, guid: 7f343fef3c8b6d145abfeba49ad8c717, type: 3}
   - {fileID: 8097348054869305685, guid: 72c8b6e27a71bdc48951cf1f7fc5816e, type: 3}
-  - {fileID: 4650122907537765934, guid: 13286d55861ae754db27b2f985a94cef, type: 3}
-  - {fileID: 256884950408035765, guid: a0e08522c1deebd43b3fc667dd76aa76, type: 3}
-  - {fileID: 7132551019396708166, guid: a8d8d79bb4169e64e93d99575e930778, type: 3}
-  - {fileID: 4136132483226470050, guid: d1ecc037f0ab6cc48a417a3386622842, type: 3}
-  - {fileID: 6029278095909777831, guid: 115635786b7dd574c9cc2ded5464b75a, type: 3}
-  - {fileID: 5236266841629620463, guid: 60bfc391f02b8114183da6b63d3a9b91, type: 3}
-  - {fileID: 520627951578131429, guid: 8ff6de8849be34c4f8b52e8ce2d3038f, type: 3}
-  - {fileID: 558107695037078898, guid: 033ef71b32c0dcb4bbb3d2dd11863527, type: 3}
-  - {fileID: 2417693406305417003, guid: bed8d1cb465e8cf4db4f8285a434acb8, type: 3}
-  - {fileID: 5530244300296206467, guid: c49578018e0a7bb4c8bb8902e0460a4c, type: 3}
   - {fileID: 1261779966670387322, guid: 80d07edc05e0cc949b832a95260e8386, type: 3}
   - {fileID: 3047034830903276056, guid: 71ac3fda727bcaf4890ea77fdead7f98, type: 3}
   - {fileID: 7440061402880583071, guid: 8be8b4f98d6c83244adb3f56abb4074f, type: 3}

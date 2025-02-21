@@ -21,8 +21,8 @@ public class Activation : MonoBehaviour
 
     private void Update()
     {
-        ActivateLevelParts();
-        ActivateEnemies();
+        // ActivateLevelParts();
+        // ActivateEnemies();
     }
 
     private void ActivateLevelParts()
